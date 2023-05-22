@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Fashionism Client</string>
+    <string name="boldSplashScreen">Style with Ease</string>
+    <string name="lightSplashScreen">Confidence with Fashionism</string>
+    <string name="loginTitle">Login</string>
+    <string name="skipLoginText">Skip</string>
+
+    <string name="emailHint">Email ID</string>
+    <string name="passwordHint">Password</string>
+    <string name="loginButton">Login</string>
+    <string name="loginButtonDescription">This is a login</string>
+    <string name="signupText">Don\'t have an account?</string>
+    <string name="signupButton">Sign Up</string>
 </resources>
