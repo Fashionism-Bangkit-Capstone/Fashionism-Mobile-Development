@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:fontFamily">@font/roboto_light</item> <!-- Replace "your_font" with the desired font file -->
+        <item name="android:textColor">@color/black_70percent</item> <!-- Replace "your_text_color" with the desired text color -->
+        <item name="colorControlNormal">@color/black_30percent</item> <!-- Replace "your_line_color" with the desired line color -->
+
+    </style>
+
+    <style name="CustomButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:fontFamily">@font/sansation_bold</item> <!-- Replace "your_custom_font" with the desired font file -->
+    </style>
+
+    <style name="CustomTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+    </style>
+
+    <style name="TitleLoginAndSignUp">
+        <item name="android:fontFamily">@font/garamond_regular</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">35sp</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.CornerRadius" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item> <!-- Ubah ukuran radius sesuai kebutuhan Anda -->
+    </style>
+
+</resources>
