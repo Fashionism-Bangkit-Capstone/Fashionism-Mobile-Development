@@ -9,7 +9,7 @@ import com.alcorp.fashionism_umkm.R
 class LoadingDialog(context: Context) {
     private var dialog: Dialog = Dialog(context)
 
-    fun showDialog() {
+    private fun showDialog() {
         dialog.setContentView(R.layout.dialog_loading)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCancelable(false)
@@ -17,7 +17,7 @@ class LoadingDialog(context: Context) {
         dialog.show()
     }
 
-    fun hideDialog() {
+    private fun hideDialog() {
         dialog.dismiss()
     }
 

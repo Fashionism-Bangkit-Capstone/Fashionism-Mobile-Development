@@ -16,17 +16,17 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/ivPreviewImage"
                 android:layout_width="125dp"
                 android:layout_height="125dp"
                 android:layout_marginTop="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/shirt" />
+                app:srcCompat="@drawable/default_image" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btnUpload"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -37,7 +37,7 @@
                 android:textAllCaps="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+                app:layout_constraintTop_toBottomOf="@+id/ivPreviewImage" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout5"
@@ -48,10 +48,11 @@
                 android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button2"
+                app:layout_constraintTop_toBottomOf="@+id/btnUpload"
                 app:startIconDrawable="@drawable/ic_baseline_edit_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtOutfitName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/txt_outfit_name" />
@@ -107,7 +108,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/btnSubmit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
