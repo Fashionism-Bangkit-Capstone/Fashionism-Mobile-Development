@@ -8,20 +8,22 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageView"
-        android:layout_width="198dp"
-        android:layout_height="207dp"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
         android:layout_marginBottom="50dp"
+        android:adjustViewBounds="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/fashionism_logo_light" />
+        app:layout_constraintVertical_bias="0.501"
+        app:srcCompat="@drawable/logo_deletebg" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/garamond_medium"
         android:text="@string/boldSplashScreen"
@@ -35,7 +37,6 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:fontFamily="@font/roboto_light"
         android:text="@string/lightSplashScreen"
         android:textColor="#4C4C6D"

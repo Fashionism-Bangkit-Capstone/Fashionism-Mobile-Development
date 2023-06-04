@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="CustomEditTextStyle" parent="Widget.AppCompat.EditText">
-        <item name="android:fontFamily">@font/roboto_light</item> <!-- Replace "your_font" with the desired font file -->
-        <item name="android:textColor">@color/black_70percent</item> <!-- Replace "your_text_color" with the desired text color -->
+        <item name="android:fontFamily">@font/poppins_medium</item> <!-- Replace "your_font" with the desired font file -->
+        <item name="android:textColor">#595959</item> <!-- Replace "your_text_color" with the desired text color -->
         <item name="colorControlNormal">@color/black_30percent</item> <!-- Replace "your_line_color" with the desired line color -->
-
     </style>
 
     <style name="CustomButtonStyle" parent="Widget.MaterialComponents.Button">
@@ -24,9 +23,12 @@
         <item name="android:textSize">35sp</item>
     </style>
 
-    <style name="ShapeAppearanceOverlay.App.CornerRadius" parent="">
+    <style name="ShapeAppearanceOverlay.App.CornerRadius" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">10dp</item> <!-- Ubah ukuran radius sesuai kebutuhan Anda -->
+        <item name="cornerFamilyTopRight">cut</item>
+        <item name="cornerFamilyBottomRight">cut</item>
+        <item name="cornerSizeTopLeft">32dp</item>
+        <item name="cornerSizeBottomLeft">32dp</item>
     </style>
 
 </resources>

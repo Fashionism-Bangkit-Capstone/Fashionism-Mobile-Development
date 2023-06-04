@@ -1,4 +1,4 @@
-package com.fashionism.fashionismuserapp.ui.notifications
+package com.fashionism.fashionismuserapp.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,8 +13,6 @@ import com.fashionism.fashionismuserapp.data.session.UserSession
 import com.fashionism.fashionismuserapp.data.session.UserSessionViewModel
 import com.fashionism.fashionismuserapp.data.session.UserSessionViewModelFactory
 import com.fashionism.fashionismuserapp.databinding.FragmentProfileBinding
-import com.fashionism.fashionismuserapp.ui.LoginActivity
-import com.fashionism.fashionismuserapp.ui.dataStore
 
 class ProfileFragment : Fragment() {
 

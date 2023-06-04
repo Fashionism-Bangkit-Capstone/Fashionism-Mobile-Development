@@ -12,6 +12,7 @@
     <string name="passwordHint">Password</string>
     <string name="confirmPasswordHint">Retype Password</string>
     <string name="nameHint">Full Name</string>
+    <string name="phoneHint">Phone</string>
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -21,10 +22,13 @@
 
     <!--  Login  -->
     <string name="loginTitle">Login</string>
+    <string name="signInTitle">Sign In</string>
+    <string name="signInDescription">Welcome back. You’ve been missed !</string>
     <string name="loginButton">Login</string>
     <string name="loginButtonDescription">This is a login</string>
+    <string name="backgrounLoginDescription">Just an background</string>
     <string name="signupText">Don\'t have an account?</string>
-    <string name="signupNavigateTo">Sign Up</string>
+    <string name="signupNavigateTo">Register Now</string>
     <string name="emailRequired">Email harus diisi</string>
     <string name="emailInvalid">Email tidak valid</string>
     <string name="passwordRequired">Password harus diisi</string>
@@ -34,7 +38,8 @@
     <string name="registerTitle">Sign Up</string>
     <string name="registerButton">Continue</string>
     <string name="registerButtonDescription">This is a register</string>
-    <string name="loginText">Joined us before?</string>
+    <string name="backButtonRegisterDescription">For back to Welcome Activity</string>
+    <string name="loginText">Have an account?</string>
     <string name="loginNavigateTo">Login</string>
     <string name="nameRequired">Nama harus diisi</string>
     <string name="nameInvalid">Nama minimal 3 karakter</string>
@@ -49,4 +54,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <!--  Profile  -->
+    <string name="informationAccount">Account Information</string>
+    <string name="logoutAccountProfile">Logout</string>
 </resources>

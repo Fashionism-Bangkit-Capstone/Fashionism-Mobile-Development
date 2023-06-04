@@ -1,4 +1,4 @@
-package com.fashionism.fashionismuserapp.ui.dashboard
+package com.fashionism.fashionismuserapp.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
