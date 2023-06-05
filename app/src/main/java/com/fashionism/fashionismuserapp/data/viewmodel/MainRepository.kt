@@ -19,6 +19,9 @@ class MainRepository(private val apiService: APIService) {
     private val _userLogin = MutableLiveData<LoginResponse>()
     val userLogin: LiveData<LoginResponse> = _userLogin
 
+    private val _userProfile = MutableLiveData<ResponseGetProfile>()
+    val userProfile: LiveData<ResponseGetProfile> = _userProfile
+
     fun login(loginDataAccount: LoginDataAccount) {
         _isLoading.value = true
         val api = APIConfig.getApiService().loginUser(loginDataAccount)
@@ -85,7 +88,7 @@ class MainRepository(private val apiService: APIService) {
 
     fun getProfileUser(idUser: Int, token: String) {
         _isLoading.value = true
-        val api = APIConfig.getApiService().getUser(idUser, token)
+        val api = APIConfig.getApiService().getUser(idUser, "Bearer $token")
         api.enqueue(object : Callback<ResponseGetProfile> {
             override fun onResponse(
                 call: Call<ResponseGetProfile>,
@@ -94,7 +97,8 @@ class MainRepository(private val apiService: APIService) {
                 _isLoading.value = false
 
                 if (response.isSuccessful) {
-                    _message.value = "Berhasil mengubah data"
+                    _message.value = "Berhasil mendapatkan data"
+                    _userProfile.value = response.body()
                 } else {
                     when (response.code()) {
                         401 -> _message.value =
@@ -116,7 +120,7 @@ class MainRepository(private val apiService: APIService) {
 
     fun updateProfileUser(idUser: Int, requestUpdate: ProfileDetail, token: String) {
         _isLoading.value = true
-        val api = APIConfig.getApiService().updateUser(idUser, requestUpdate, token)
+        val api = APIConfig.getApiService().updateUser(idUser, requestUpdate, "Bearer $token")
         api.enqueue(object : Callback<ResponseUpdateProfile> {
             override fun onResponse(
                 call: Call<ResponseUpdateProfile>,
@@ -147,7 +151,7 @@ class MainRepository(private val apiService: APIService) {
 
     fun changePasswordUser(idUser: Int, requestUpdate: ChangePassword, token: String) {
         _isLoading.value = true
-        val api = APIConfig.getApiService().changePassword(idUser, requestUpdate, token)
+        val api = APIConfig.getApiService().changePassword(idUser, requestUpdate, "Bearer $token")
         api.enqueue(object : Callback<ResponseChangePassword> {
             override fun onResponse(
                 call: Call<ResponseChangePassword>,

@@ -8,6 +8,7 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
     val message: LiveData<String> = mainRepository.message
     val isLoading: LiveData<Boolean> = mainRepository.isLoading
     val userLogin: LiveData<LoginResponse> = mainRepository.userLogin
+    val userProfile: LiveData<ResponseGetProfile> = mainRepository.userProfile
 
     fun login(loginDataAccount: LoginDataAccount) {
         mainRepository.login(loginDataAccount)

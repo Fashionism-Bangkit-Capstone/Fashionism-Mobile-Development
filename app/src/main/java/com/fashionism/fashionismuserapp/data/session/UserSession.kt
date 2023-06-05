@@ -2,6 +2,7 @@ package com.fashionism.fashionismuserapp.data.session
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
+import com.fashionism.fashionismuserapp.data.db.UserData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -77,6 +78,30 @@ class UserSession private constructor(private val dataStore: DataStore<Preferenc
             preferences.remove(EMAIL)
         }
     }
+
+    suspend fun setAllUserData(loginSession: Boolean, token: String, name: String, idUser: Int, email: String) {
+        dataStore.edit { preferences ->
+            preferences[LOGIN_SESSION] = loginSession
+            preferences[TOKEN] = token
+            preferences[NAME] = name
+            preferences[ID_USER] = idUser
+            preferences[EMAIL] = email
+        }
+    }
+
+    fun getAllUserData(): Flow<UserData> {
+        return dataStore.data.map { preferences ->
+            UserData(
+                loginSession = preferences[LOGIN_SESSION] ?: false,
+                token = preferences[TOKEN] ?: "",
+                name = preferences[NAME] ?: "",
+                idUser = preferences[ID_USER] ?: 0,
+                email = preferences[EMAIL] ?: ""
+            )
+        }
+    }
+
+
 
     companion object {
         @Volatile

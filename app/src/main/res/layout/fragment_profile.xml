@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:paddingBottom="16dp"
         tools:context=".ui.ProfileFragment">
 
         <ProgressBar
@@ -28,7 +28,7 @@
             android:id="@+id/backgroundProfile"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:adjustViewBounds="true"
             android:src="@drawable/aksen3"
             app:layout_constraintEnd_toEndOf="parent"

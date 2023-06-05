@@ -1,5 +1,13 @@
 package com.fashionism.fashionismuserapp.data.db
 
+data class UserData(
+    val loginSession: Boolean,
+    val token: String,
+    val name: String,
+    val idUser: Int,
+    val email: String
+)
+
 data class RegisterResponse(
     var error: String,
     var message: String,

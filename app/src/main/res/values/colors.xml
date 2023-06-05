@@ -14,4 +14,5 @@
     <color name="switch_true_colortext">#5388A0</color>
     <color name="button_colorbackground">#0085FF</color>
     <color name="login_statusBar">#1E91F9</color>
+    <color name="login_statusBarDark">#0085FF</color>
 </resources>

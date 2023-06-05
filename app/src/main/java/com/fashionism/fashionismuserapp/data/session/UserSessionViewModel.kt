@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.fashionism.fashionismuserapp.data.db.UserData
 import kotlinx.coroutines.launch
 
 class UserSessionViewModel(private val pref: UserSession) : ViewModel() {
@@ -64,4 +65,16 @@ class UserSessionViewModel(private val pref: UserSession) : ViewModel() {
         }
     }
 
+    fun setAllUserData(token: String, idUser: Int, name: String, email: String) {
+        viewModelScope.launch {
+            pref.saveToken(token)
+            pref.saveIdUser(idUser)
+            pref.saveName(name)
+            pref.saveEmail(email)
+        }
+    }
+
+    fun getAllUserData(): LiveData<UserData> {
+        return pref.getAllUserData().asLiveData()
+    }
 }
