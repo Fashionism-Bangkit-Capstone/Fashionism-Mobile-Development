@@ -25,7 +25,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
             // Check login status before starting MainActivity or HomeActivity
             val intent = if (isLoggedIn) {
-                Intent(this, WelcomeActivity::class.java)
+                Intent(this, MainActivity::class.java)
             } else {
                 Intent(this, WelcomeActivity::class.java)
             }

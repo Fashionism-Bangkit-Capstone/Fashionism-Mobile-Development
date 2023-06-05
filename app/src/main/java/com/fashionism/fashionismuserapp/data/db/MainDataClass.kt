@@ -39,6 +39,17 @@ data class ResponseUpdateProfile(
     var message: String
 )
 
+data class ResponseChangePassword(
+    var error: Boolean,
+    var message: String,
+)
+
+data class ChangePassword(
+    var old_password: String,
+    var new_password: String,
+    var confirm_password: String
+)
+
 data class ResponseGetAllPreferences(
     var error: Boolean,
     var data: List<PreferenceDetail>
@@ -76,5 +87,5 @@ data class ProfileDetail(
     var email: String,
     var phone: String? = null,
     var address: String? = null,
-    var avatar: String,
+    var avatar: String? = null,
 )

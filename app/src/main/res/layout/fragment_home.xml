@@ -19,27 +19,85 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/shapeableImageView2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/assethome2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/circleImageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="32dp"
+                android:elevation="3dp"
+                android:src="@drawable/dummy_baju"
+                app:layout_constraintBottom_toBottomOf="@+id/greetingUserName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/greetingUserTitle" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/searchBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/poppins"
+                android:letterSpacing="-0.01"
+                android:text="search by image"
+                app:iconPadding="20dp"
+                android:gravity="start|center_vertical"
+                android:textAllCaps="false"
+                android:drawableEnd="@drawable/baseline_camera_alt_24"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:drawablePadding="20dp"
+                android:textColor="#A4CADC"
+                android:textSize="12sp"
+                app:cornerRadius="20dp"
+                app:layout_constraintEnd_toEndOf="@+id/circleImageView"
+                app:layout_constraintStart_toStartOf="@+id/greetingUserName"
+                app:layout_constraintTop_toBottomOf="@+id/greetingUserName" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/greetingUserTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/poppins"
-                android:text="Hi Surya!"
-                android:textColor="@color/black"
-                android:textSize="18sp"
+                android:text="Welcome back,"
+                android:textColor="@color/white"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/greetingUserDesc"
+                android:id="@+id/productUserLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Most product you like"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/shapeableImageView2" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/greetingUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semibold"
                 android:textSize="20sp"
-                android:textColor="@color/black"
-                android:text="Let’s find your confidence now"
+                android:textColor="@color/white"
+                android:text="Kevin Malik Fajar"
                 app:layout_constraintStart_toStartOf="@+id/greetingUserTitle"
                 app:layout_constraintTop_toBottomOf="@+id/greetingUserTitle" />
 
@@ -52,7 +110,7 @@
                 android:fontFamily="@font/poppins_medium"
                 android:text="Suggested for you"
                 android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="@+id/greetingUserDesc"
+                app:layout_constraintStart_toStartOf="@+id/greetingUserName"
                 app:layout_constraintTop_toBottomOf="@id/rv_ads_top" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -73,11 +131,11 @@
                 android:id="@+id/rv_ads_top"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="-8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/greetingUserDesc"
+                app:layout_constraintStart_toStartOf="@+id/productUserLike"
+                app:layout_constraintTop_toBottomOf="@+id/productUserLike"
                 tools:listitem="@layout/item_ads" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

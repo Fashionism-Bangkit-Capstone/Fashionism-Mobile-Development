@@ -26,12 +26,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/materialTextView2"
+        android:id="@+id/changeConfirmationNotify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/poppins_medium"
-        android:text="Konfirmasi Perubahan"
+        android:text="@string/changeConfirm"
         android:textColor="@color/black"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@+id/warnIconSave"
@@ -39,30 +39,29 @@
         app:layout_constraintTop_toBottomOf="@+id/warnIconSave" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/materialTextView6"
+        android:id="@+id/changeConfirmationNotifyDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/poppins"
-        android:text="Apakah anda yakin ingin merubah data?"
+        android:text="@string/changeConfirmDesc"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/warnIconSave"
         app:layout_constraintStart_toStartOf="@+id/warnIconSave"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextView2" />
+        app:layout_constraintTop_toBottomOf="@+id/changeConfirmationNotify" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/saveProfileChanges"
+        android:id="@+id/saveDataBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="53dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="53dp"
         android:backgroundTint="@color/button_colorbackground"
-        android:contentDescription="@string/loginButtonDescription"
         android:fontFamily="@font/poppins_semibold"
         android:padding="16dp"
-        android:text="Simpan"
+        android:text="@string/changeConfirmYes"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="15sp"
@@ -71,20 +70,19 @@
         app:iconPadding="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextView6" />
+        app:layout_constraintTop_toBottomOf="@+id/changeConfirmationNotifyDesc" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/cancelProfileChanges"
+        android:id="@+id/cancelDataChanges"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="53dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="53dp"
         android:backgroundTint="#EC2929"
-        android:contentDescription="@string/loginButtonDescription"
         android:fontFamily="@font/poppins_semibold"
         android:padding="16dp"
-        android:text="Batalkan"
+        android:text="@string/changeConfirmNo"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="15sp"
@@ -93,6 +91,6 @@
         app:iconPadding="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/saveProfileChanges" />
+        app:layout_constraintTop_toBottomOf="@+id/saveDataBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

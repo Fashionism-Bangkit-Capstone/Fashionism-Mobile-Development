@@ -10,6 +10,7 @@
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="70dp"
+        android:contentDescription="@string/bottomNavDesc"
         app:backgroundColor="@color/white"
         app:iconTint="#A4CADC"
         app:iconTintActive="#11009E"

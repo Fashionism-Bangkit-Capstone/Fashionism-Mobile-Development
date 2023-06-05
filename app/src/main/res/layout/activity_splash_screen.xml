@@ -7,7 +7,7 @@
     tools:context=".ui.SplashScreenActivity">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageView"
+        android:id="@+id/splashLogo"
         android:layout_width="wrap_content"
         android:layout_height="250dp"
         android:layout_marginBottom="50dp"
@@ -20,7 +20,7 @@
         app:srcCompat="@drawable/logo_deletebg" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textView"
+        android:id="@+id/splashTextOne"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -29,20 +29,20 @@
         android:text="@string/boldSplashScreen"
         android:textColor="#4C4C6D"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintEnd_toEndOf="@+id/splashLogo"
+        app:layout_constraintStart_toStartOf="@+id/splashLogo"
+        app:layout_constraintTop_toBottomOf="@+id/splashLogo" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textView2"
+        android:id="@+id/splashText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_light"
         android:text="@string/lightSplashScreen"
         android:textColor="#4C4C6D"
         android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintEnd_toEndOf="@+id/splashTextOne"
+        app:layout_constraintStart_toStartOf="@+id/splashTextOne"
+        app:layout_constraintTop_toBottomOf="@+id/splashTextOne" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

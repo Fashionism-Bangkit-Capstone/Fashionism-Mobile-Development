@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -37,6 +38,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupClickListeners()
+        window.statusBarColor = ContextCompat.getColor(this, R.color.login_statusBar)
 
         val userSession = UserSession.getInstance(dataStore)
         val userSessionViewModel =

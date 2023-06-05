@@ -109,6 +109,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun isDataValid(): Boolean {
         val name = binding.inputNameRegisterField.text.toString().trim()
         val email = binding.inputEmailRegisterField.text.toString().trim()
+        val phone = binding.inputPhoneRegisterField.text.toString().trim()
         val passwordEditText = binding.inputPasswordRegisterField
         val password = passwordEditText.text.toString().trim()
         val retypePasswordEditText = binding.inputRetypePasswordRegisterField
@@ -117,6 +118,10 @@ class RegisterActivity : AppCompatActivity() {
         val nameErrorRes = if (name.isEmpty()) R.string.nameRequired else null
         val emailErrorRes = if (email.isEmpty()) R.string.emailRequired
         else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) R.string.emailInvalid
+        else null
+
+        val phoneErrorRes = if (phone.isEmpty()) R.string.phoneRequired
+        else if (phone.length < 10 || phone.length > 13) R.string.phoneInvalid
         else null
 
         val passwordErrorRes = if (password.isEmpty()) R.string.passwordRequired
@@ -129,10 +134,11 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.inputNameRegister.error = nameErrorRes?.let { getString(it) }
         binding.inputEmailRegister.error = emailErrorRes?.let { getString(it) }
+        binding.inputPhoneRegister.error = phoneErrorRes?.let { getString(it) }
         binding.inputPasswordRegister.error = passwordErrorRes?.let { getString(it) }
         binding.inputRetypePasswordRegister.error = retypePasswordErrorRes?.let { getString(it) }
 
-        return nameErrorRes == null && emailErrorRes == null && passwordErrorRes == null && retypePasswordErrorRes == null
+        return nameErrorRes == null && emailErrorRes == null && phoneErrorRes == null && passwordErrorRes == null && retypePasswordErrorRes == null
     }
 
     private fun responseLogin(

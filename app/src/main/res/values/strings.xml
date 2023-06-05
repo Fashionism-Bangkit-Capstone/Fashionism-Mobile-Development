@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Fashionism User App</string>
+    <string name="app_name">Fashionism</string>
     <string name="title_activity_navigation">NavigationActivity</string>
 
     <string name="boldSplashScreen">Style with Ease</string>
@@ -43,6 +43,8 @@
     <string name="loginNavigateTo">Login</string>
     <string name="nameRequired">Nama harus diisi</string>
     <string name="nameInvalid">Nama minimal 3 karakter</string>
+    <string name="phoneRequired">Nomor telepon harus diisi</string>
+    <string name="phoneInvalid">Nomor telepon tidak valid</string>
     <string name="PasswordRequired">Password harus diisi</string>
     <string name="confirmPasswordRequired">Konfirmasi Password harus diisi</string>
     <string name="confirmPasswordInvalid">Konfirmasi password tidak sama</string>
@@ -54,8 +56,22 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="bottomNavDesc">For navigate from one to another fragment</string>
 
     <!--  Profile  -->
     <string name="informationAccount">Account Information</string>
     <string name="logoutAccountProfile">Logout</string>
+
+    <!--  Welcome Screen  -->
+    <string name="welcomeTitleText">Discover your Perfect style here !</string>
+    <string name="welcomeDescText">Explore all style of outfit recommendations easily based on your preferences and get the products you want in one touch</string>
+
+    <!--  Save Pop Up  -->
+    <string name="changeConfirm">Change Confirmation</string>
+    <string name="changeConfirmDesc">Are you sure you want to change the data?</string>
+    <string name="changeConfirmYes">Yes</string>
+    <string name="changeConfirmNo">Cancel</string>
+    <string name="changeConfirmDescFailed">Failed to change data</string>
+    <string name="changeConfirmDescSuccessTitle">Success</string>
+    <string name="changeConfirmDescSuccess">Data has been changed</string>
 </resources>

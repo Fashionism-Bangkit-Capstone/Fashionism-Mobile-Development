@@ -15,6 +15,8 @@ class WelcomeActivity : AppCompatActivity() {
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        window.statusBarColor = ContextCompat.getColor(this, R.color.button_colorbackground)
+
         binding.switchOnOff.setOnCheckedChangeListener { _, checked ->
             when {
                 checked -> {

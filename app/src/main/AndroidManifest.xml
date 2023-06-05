@@ -15,6 +15,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".FavoriteActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.ChangeProfileActivity"
             android:exported="false" />
         <activity
@@ -41,10 +44,6 @@
         <activity
             android:name=".ui.LoginActivity"
             android:exported="false" />
-        <activity
-            android:name=".NavigationActivity"
-            android:exported="false"
-            android:label="@string/title_activity_navigation" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
