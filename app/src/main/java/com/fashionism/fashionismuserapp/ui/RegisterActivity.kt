@@ -1,12 +1,12 @@
 package com.fashionism.fashionismuserapp.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.fashionism.fashionismuserapp.MainActivity
 import com.fashionism.fashionismuserapp.R
@@ -79,7 +79,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setupClickListeners() {
         with(binding) {
-            registerButton.setOnClickListener {
+            registerBtn.setOnClickListener {
                 inputNameRegisterField.clearFocus()
                 inputEmailRegisterField.clearFocus()
                 inputPasswordRegisterField.clearFocus()
@@ -95,9 +95,13 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
 
-            loginClick.setOnClickListener {
+            signinNavigate.setOnClickListener {
                 val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                 startActivity(intent)
+            }
+
+            btnBackRegister.setOnClickListener {
+                finish()
             }
         }
     }
@@ -158,7 +162,10 @@ class RegisterActivity : AppCompatActivity() {
                 resources.getString(R.string.registerSuccess),
                 Toast.LENGTH_SHORT
             ).show()
-            Log.d("data akun1", "responseRegister: ${binding.inputEmailRegisterField.text.toString()} and ${binding.inputPasswordRegisterField.text.toString()}")
+            Log.d(
+                "data akun1",
+                "responseRegister: ${binding.inputEmailRegisterField.text.toString()} and ${binding.inputPasswordRegisterField.text.toString()}"
+            )
             val userLogin = LoginDataAccount(
                 binding.inputEmailRegisterField.text.toString(),
                 binding.inputPasswordRegisterField.text.toString()

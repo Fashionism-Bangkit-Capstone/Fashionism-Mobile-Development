@@ -42,11 +42,17 @@ class ProfileFragment : Fragment() {
         val userSessionViewModel =
             ViewModelProvider(this, UserSessionViewModelFactory(pref))[UserSessionViewModel::class.java]
 
-        userSessionViewModel.getName().observe(viewLifecycleOwner) {
-            binding.textNotifications.text = it
+//        userSessionViewModel.getName().observe(viewLifecycleOwner) {
+//            binding.textNotifications.text = it
+//        }
+        binding.informationAccountBtn.setOnClickListener {
+            val intent = Intent(requireContext(), ChangeProfileActivity::class.java)
+            // intent.putExtra("token", token)
+            startActivity(intent)
+            activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
-        binding.btnLogout.setOnClickListener {
+        binding.logoutProfileBtn.setOnClickListener {
             logout()
         }
 

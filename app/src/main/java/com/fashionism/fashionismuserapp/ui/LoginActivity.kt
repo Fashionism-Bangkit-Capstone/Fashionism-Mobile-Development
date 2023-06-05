@@ -68,8 +68,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun isDataValid(): Boolean {
-        val email = binding.inputEmailLogin.text.toString().trim()
-        val password = binding.inputPasswordLogin.text.toString().trim()
+        val email = binding.inputEmailLoginField.text.toString().trim()
+        val password = binding.inputPasswordLoginField.text.toString().trim()
 
         val emailErrorRes = if (email.isEmpty()) R.string.emailRequired
         else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) R.string.emailInvalid
@@ -79,35 +79,33 @@ class LoginActivity : AppCompatActivity() {
         else if (password.length < 6) R.string.passwordInvalid
         else null
 
-        binding.inputEmailItem.error = emailErrorRes?.let { getString(it) }
-        binding.inputPasswordItem.error = passwordErrorRes?.let { getString(it) }
+        binding.inputEmailLogin.error = emailErrorRes?.let { getString(it) }
+        binding.inputPasswordLogin.error = passwordErrorRes?.let { getString(it) }
 
         return emailErrorRes == null && passwordErrorRes == null
     }
 
     private fun setupClickListeners() {
         with(binding) {
-            loginButton.setOnClickListener {
+            loginBtn.setOnClickListener {
                 inputEmailLogin.clearFocus()
                 inputPasswordLogin.clearFocus()
 
                 if (isDataValid()) {
                     val requestLogin = LoginDataAccount(
-                        inputEmailLogin.text.toString().trim(),
-                        inputPasswordLogin.text.toString().trim()
+                        inputEmailLoginField.text.toString().trim(),
+                        inputPasswordLoginField.text.toString().trim()
                     )
                     loginViewModel.login(requestLogin)
                 }
             }
 
-            signupClick.setOnClickListener {
+            signupNavigate.setOnClickListener {
                 val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
                 startActivity(intent)
             }
 
-            skipLogin.setOnClickListener {
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                startActivity(intent)
+            btnBackLogin.setOnClickListener {
                 finish()
             }
         }

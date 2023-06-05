@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:fillViewport="true"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="15dp"
+        android:paddingBottom="25dp"
         android:background="@drawable/bg_register"
         tools:context=".ui.RegisterActivity">
 
@@ -186,7 +187,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/loginBtn"
+            android:id="@+id/registerBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -209,12 +210,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@id/loginBtn"
-            app:layout_constraintStart_toStartOf="@id/loginBtn"
-            app:layout_constraintTop_toBottomOf="@+id/loginBtn">
+            app:layout_constraintEnd_toEndOf="@id/registerBtn"
+            app:layout_constraintStart_toStartOf="@id/registerBtn"
+            app:layout_constraintTop_toBottomOf="@+id/registerBtn">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/signupNavigateHint"
+                android:id="@+id/signinNavigateHint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
@@ -225,7 +226,7 @@
                 android:textSize="10sp" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/signupNavigate"
+                android:id="@+id/signinNavigate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
@@ -234,6 +235,15 @@
                 android:textSize="10sp" />
 
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBarRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline9"

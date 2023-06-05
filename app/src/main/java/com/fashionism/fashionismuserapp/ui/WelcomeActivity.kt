@@ -1,11 +1,11 @@
 package com.fashionism.fashionismuserapp.ui
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.fashionism.fashionismuserapp.R
 import com.fashionism.fashionismuserapp.databinding.ActivityWelcomeBinding
-import com.fashionism.fashionismuserapp.tools.SwitchTrackTextDrawable
 
 class WelcomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWelcomeBinding
@@ -14,14 +14,6 @@ class WelcomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val switchButton = binding.switch1
-
-        val leftTextId = R.string.loginTitle // ID dari string untuk teks kiri
-        val rightTextId = R.string.registerTitle // ID dari string untuk teks kanan
-
-        val switchTrackTextDrawable = SwitchTrackTextDrawable(this, leftTextId, rightTextId)
-        switchButton.trackDrawable = switchTrackTextDrawable
 
         binding.switchOnOff.setOnCheckedChangeListener { _, checked ->
             when {
@@ -35,5 +27,16 @@ class WelcomeActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.tvSwitchNo.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.tvSwitchYes.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 }
