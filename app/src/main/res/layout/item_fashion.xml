@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="10dp">
+    app:cardCornerRadius="15dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -11,27 +12,71 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivFashionImage"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:adjustViewBounds="true"
             android:src="@drawable/dummy_baju"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/CornerRadiusImageItem" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvFashionName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="#F8F8F8"
-            android:gravity="center_vertical|center_horizontal"
-            android:padding="16dp"
-            android:text="Baju Style 1"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:gravity="start|center_vertical"
+            android:text="Black White Style for Working"
             android:textColor="@color/black"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/ivFashionImage"
             app:layout_constraintTop_toBottomOf="@+id/ivFashionImage" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvStoreName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:gravity="start|center_vertical"
+            android:text="Black White Style for Working"
+            android:textColor="#6C6C6C"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="@+id/tvFashionName"
+            app:layout_constraintStart_toStartOf="@+id/tvFashionName"
+            app:layout_constraintTop_toBottomOf="@+id/tvFashionName" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:gravity="start|center_vertical"
+            android:text="IDR 99.000"
+            android:textColor="@color/button_colorbackground"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+            app:layout_constraintEnd_toStartOf="@+id/imageView3"
+            app:layout_constraintStart_toStartOf="@+id/ivFashionImage"
+            app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/baseline_favorite_border_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvStoreName" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

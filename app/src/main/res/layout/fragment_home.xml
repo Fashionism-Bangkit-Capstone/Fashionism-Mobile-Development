@@ -19,109 +19,65 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:padding="5dp"
-                android:background="@drawable/edittext_bottom_line"
-                android:id="@+id/constraintLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/shapeableImageView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/baseline_favorite_border_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center">
-
-                        <com.google.android.material.imageview.ShapeableImageView
-                            android:id="@+id/shapeableImageView3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:adjustViewBounds="true"
-                            android:src="@drawable/fashionism_logo_light" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Fashion" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="ism" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/circleImageView"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/dummy_baju"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
-
-
-
-            <TextView
-                android:id="@+id/textView3"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/greetingUserTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Find your outfit"
-                app:layout_constraintStart_toStartOf="@+id/circleImageView"
-                app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/poppins"
+                android:text="Hi Surya!"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/greetingUserDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:text="Let’s find your confidence now"
+                app:layout_constraintStart_toStartOf="@+id/greetingUserTitle"
+                app:layout_constraintTop_toBottomOf="@+id/greetingUserTitle" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/suggestUserTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:elevation="3dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Suggested for you"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="@+id/greetingUserDesc"
+                app:layout_constraintTop_toBottomOf="@id/rv_ads_top" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_fashion_data"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                tools:listitem="@layout/item_fashion"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rv_ads_top" />
+                app:layout_constraintStart_toStartOf="@+id/suggestUserTitle"
+                app:layout_constraintTop_toBottomOf="@+id/suggestUserTitle"
+                app:spanCount="2"
+                tools:listitem="@layout/item_fashion" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_ads_top"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                app:layout_constraintTop_toBottomOf="@+id/greetingUserDesc"
                 tools:listitem="@layout/item_ads" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

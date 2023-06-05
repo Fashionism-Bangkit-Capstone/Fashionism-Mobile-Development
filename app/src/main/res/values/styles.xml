@@ -27,8 +27,11 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerFamilyTopRight">cut</item>
         <item name="cornerFamilyBottomRight">cut</item>
-        <item name="cornerSizeTopLeft">32dp</item>
-        <item name="cornerSizeBottomLeft">32dp</item>
+    </style>
+
+    <style name="CornerRadiusImageItem" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
     </style>
 
 </resources>
