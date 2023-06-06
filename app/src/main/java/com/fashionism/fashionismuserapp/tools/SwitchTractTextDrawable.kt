@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
 import com.fashionism.fashionismuserapp.R
 
 class SwitchTrackTextDrawable(
@@ -59,7 +58,7 @@ class SwitchTrackTextDrawable(
 //        )
 //    }
 
-        override fun draw(canvas: Canvas) {
+    override fun draw(canvas: Canvas) {
         val textBounds = Rect()
         mTextPaint.getTextBounds(mRightText, 0, mRightText.length, textBounds)
 

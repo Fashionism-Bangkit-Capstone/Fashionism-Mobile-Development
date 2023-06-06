@@ -70,8 +70,8 @@ class ChangeProfileActivity : AppCompatActivity() {
         }
 
         binding.editProfileBtn.setOnClickListener {
-            binding.titleSeeProfile.text = "Edit Profile"
-            binding.editProfileBtn.text = "Save"
+            binding.titleSeeProfile.text = resources.getString(R.string.editProfileBtnChangeProfile)
+            binding.editProfileBtn.text = resources.getString(R.string.saveBtn)
             hiddenTextView()
             showEditText()
             mainViewModel.userProfile.observe(this) { userProfile ->

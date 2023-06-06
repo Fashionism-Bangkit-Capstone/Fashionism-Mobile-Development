@@ -13,49 +13,35 @@
         tools:context=".ui.ProfileFragment">
 
         <ProgressBar
-            android:id="@+id/progressBarSetting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="3dp"
-            android:visibility="gone"
             android:indeterminateTint="#4942E4"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/backgroundProfile"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/aksen3"
+            android:src="@drawable/aksen4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/btnBackProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="53dp"
-            android:layout_marginTop="40dp"
-            android:contentDescription="@string/backButtonRegisterDescription"
-            android:elevation="3dp"
-            android:src="@drawable/baseline_arrow_back_register_ios_24"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/nameUserProfile" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="32dp"
             android:src="@drawable/dummy_baju"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnBackProfile" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/nameUserProfile"
@@ -90,124 +76,71 @@
             app:layout_constraintTop_toBottomOf="@+id/nameUserProfile"
             tools:text="kevinmf@gmail.com" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/informationAccountBtn"
+            style="@style/ButtonProfile"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="53dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="53dp"
-            android:backgroundTint="#F4F4F4"
-            android:contentDescription="@string/loginButtonDescription"
-            android:drawableLeft="@drawable/user_icon"
-            android:fontFamily="@font/poppins"
-            android:gravity="start|center_vertical"
-            android:letterSpacing="0.01"
-            android:paddingStart="26dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp"
-            android:text="Profile"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="13sp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="50dp"
+            android:text="@string/profileBtnTitle"
             app:cornerRadius="9dp"
+            app:icon="@drawable/user_icon"
             app:iconGravity="start"
             app:iconPadding="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/backgroundProfile" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/favoriteProfileBtn"
+            style="@style/ButtonProfile"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="53dp"
-            android:layout_marginEnd="53dp"
-            android:backgroundTint="#F4F4F4"
-            android:contentDescription="@string/loginButtonDescription"
-            android:drawableLeft="@drawable/baseline_favorite_border_24"
-            android:fontFamily="@font/poppins"
-            android:gravity="start|center_vertical"
-            android:letterSpacing="0.01"
-            android:paddingStart="26dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp"
-            android:text="My Favorite"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="13sp"
+            android:text="@string/favoritesBtnTitle"
             app:cornerRadius="9dp"
+            app:icon="@drawable/baseline_favorite_border_24"
             app:iconGravity="start"
             app:iconPadding="18dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/informationAccountBtn"
+            app:layout_constraintStart_toStartOf="@+id/informationAccountBtn"
             app:layout_constraintTop_toBottomOf="@+id/informationAccountBtn" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/changePasswordAccountBtn"
+            style="@style/ButtonProfile"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="53dp"
-            android:layout_marginEnd="53dp"
-            android:backgroundTint="#F4F4F4"
-            android:contentDescription="@string/loginButtonDescription"
-            android:drawableLeft="@drawable/baseline_lock_open_24"
-            android:fontFamily="@font/poppins"
-            android:gravity="start|center_vertical"
-            android:paddingStart="26dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp"
-            android:letterSpacing="0.01"
-            android:text="Change Password"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="13sp"
+            android:text="@string/changePasswordBtnTitle"
             app:cornerRadius="9dp"
+            app:icon="@drawable/baseline_lock_open_24"
             app:iconGravity="start"
             app:iconPadding="18dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/favoriteProfileBtn"
+            app:layout_constraintStart_toStartOf="@+id/favoriteProfileBtn"
             app:layout_constraintTop_toBottomOf="@+id/favoriteProfileBtn" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/helpCenterBtn"
+            style="@style/ButtonProfile"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="53dp"
-            android:layout_marginEnd="53dp"
-            android:backgroundTint="#F4F4F4"
-            android:contentDescription="@string/loginButtonDescription"
-            android:drawableLeft="@drawable/baseline_help_outline_24"
-            android:fontFamily="@font/poppins"
-            android:letterSpacing="0.01"
-            android:gravity="start|center_vertical"
-            android:paddingStart="26dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp"
-            android:text="Help Center"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="13sp"
+            android:text="@string/helpCenterBtnTitle"
             app:cornerRadius="9dp"
+            app:icon="@drawable/baseline_help_outline_24"
             app:iconGravity="start"
             app:iconPadding="18dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/changePasswordAccountBtn"
+            app:layout_constraintStart_toStartOf="@+id/changePasswordAccountBtn"
             app:layout_constraintTop_toBottomOf="@+id/changePasswordAccountBtn" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/logoutProfileBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="53dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="53dp"
             android:backgroundTint="@color/button_colorbackground"
-            android:contentDescription="@string/loginButtonDescription"
             android:fontFamily="@font/poppins_semibold"
             android:padding="16dp"
             android:text="@string/logoutAccountProfile"
@@ -217,8 +150,8 @@
             app:cornerRadius="9dp"
             app:iconGravity="start"
             app:iconPadding="18dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/helpCenterBtn"
+            app:layout_constraintStart_toStartOf="@+id/helpCenterBtn"
             app:layout_constraintTop_toBottomOf="@+id/helpCenterBtn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

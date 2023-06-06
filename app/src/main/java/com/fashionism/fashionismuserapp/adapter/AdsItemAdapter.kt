@@ -1,19 +1,21 @@
 package com.fashionism.fashionismuserapp.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fashionism.fashionismuserapp.data.dummy.DummyData2
-import com.fashionism.fashionismuserapp.databinding.ItemAdsBinding
+import com.fashionism.fashionismuserapp.databinding.ItemFavoriteBinding
 
-class AdsItemAdapter(private val list: List<DummyData2>, private val context: Context) :
+class AdsItemAdapter(private val list: List<DummyData2>) :
     RecyclerView.Adapter<AdsItemAdapter.ViewHolder>() {
 
-    class ViewHolder(private val binding: ItemAdsBinding) :
+    class ViewHolder(private val binding: ItemFavoriteBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: DummyData2) {
-            binding.ivTopbar.setImageResource(data.imageOne)
+            binding.ivProductFavImage.setImageResource(data.imageOne)
+            binding.productFavTitle.text = data.name
+            binding.productFavPrice.text = data.price
+            binding.productFavStoreName.text = data.storeName
         }
     }
 
@@ -21,7 +23,8 @@ class AdsItemAdapter(private val list: List<DummyData2>, private val context: Co
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        val binding = ItemAdsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemFavoriteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 

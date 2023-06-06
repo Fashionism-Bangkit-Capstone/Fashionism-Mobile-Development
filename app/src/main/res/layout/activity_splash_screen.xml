@@ -34,7 +34,6 @@
         app:layout_constraintTop_toBottomOf="@+id/splashLogo" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/splashText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_light"

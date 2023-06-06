@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/welcomeLogo" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/welconeDesc"
+        android:id="@+id/welcomeDesc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins"
@@ -74,8 +74,8 @@
         android:background="@drawable/bg_switch"
         android:padding="2.5dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
-        app:layout_constraintEnd_toEndOf="@+id/welconeDesc"
-        app:layout_constraintStart_toStartOf="@+id/welconeDesc">
+        app:layout_constraintEnd_toEndOf="@+id/welcomeDesc"
+        app:layout_constraintStart_toStartOf="@+id/welcomeDesc">
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switchOnOff"

@@ -1,13 +1,12 @@
 package com.fashionism.fashionismuserapp.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fashionism.fashionismuserapp.data.dummy.DummyData
 import com.fashionism.fashionismuserapp.databinding.ItemFashionBinding
 
-class FashionItemAdapter(private val list: List<DummyData>, private val context: Context) :
+class FashionItemAdapter(private val list: List<DummyData>) :
     RecyclerView.Adapter<FashionItemAdapter.ViewHolder>() {
 
     class ViewHolder(private val binding: ItemFashionBinding) :
@@ -15,6 +14,8 @@ class FashionItemAdapter(private val list: List<DummyData>, private val context:
         fun bind(data: DummyData) {
             binding.ivFashionImage.setImageResource(data.imageOne)
             binding.tvFashionName.text = data.name
+            binding.tvPrice.text = data.price
+            binding.tvStoreName.text = data.storeName
         }
     }
 

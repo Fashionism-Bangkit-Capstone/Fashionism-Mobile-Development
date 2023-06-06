@@ -2,7 +2,6 @@ package com.fashionism.fashionismuserapp.data.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.fashionism.fashionismuserapp.data.api.APIConfig
 import com.fashionism.fashionismuserapp.data.api.APIService
 import com.fashionism.fashionismuserapp.data.db.*
 import retrofit2.Call
@@ -24,7 +23,7 @@ class MainRepository(private val apiService: APIService) {
 
     fun login(loginDataAccount: LoginDataAccount) {
         _isLoading.value = true
-        val api = APIConfig.getApiService().loginUser(loginDataAccount)
+        val api = apiService.loginUser(loginDataAccount)
         api.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(
                 call: Call<LoginResponse>,
@@ -57,7 +56,7 @@ class MainRepository(private val apiService: APIService) {
 
     fun register(registerDataAccount: RegisterDataAccount) {
         _isLoading.value = true
-        val api = APIConfig.getApiService().registerUser(registerDataAccount)
+        val api = apiService.registerUser(registerDataAccount)
         api.enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(
                 call: Call<RegisterResponse>,
@@ -88,7 +87,7 @@ class MainRepository(private val apiService: APIService) {
 
     fun getProfileUser(idUser: Int, token: String) {
         _isLoading.value = true
-        val api = APIConfig.getApiService().getUser(idUser, "Bearer $token")
+        val api = apiService.getUser(idUser, "Bearer $token")
         api.enqueue(object : Callback<ResponseGetProfile> {
             override fun onResponse(
                 call: Call<ResponseGetProfile>,
@@ -120,7 +119,7 @@ class MainRepository(private val apiService: APIService) {
 
     fun updateProfileUser(idUser: Int, requestUpdate: ProfileDetail, token: String) {
         _isLoading.value = true
-        val api = APIConfig.getApiService().updateUser(idUser, requestUpdate, "Bearer $token")
+        val api = apiService.updateUser(idUser, requestUpdate, "Bearer $token")
         api.enqueue(object : Callback<ResponseUpdateProfile> {
             override fun onResponse(
                 call: Call<ResponseUpdateProfile>,
@@ -151,7 +150,7 @@ class MainRepository(private val apiService: APIService) {
 
     fun changePasswordUser(idUser: Int, requestUpdate: ChangePassword, token: String) {
         _isLoading.value = true
-        val api = APIConfig.getApiService().changePassword(idUser, requestUpdate, "Bearer $token")
+        val api = apiService.changePassword(idUser, requestUpdate, "Bearer $token")
         api.enqueue(object : Callback<ResponseChangePassword> {
             override fun onResponse(
                 call: Call<ResponseChangePassword>,

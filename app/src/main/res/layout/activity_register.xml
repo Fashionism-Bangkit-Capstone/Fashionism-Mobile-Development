@@ -205,7 +205,6 @@
             app:layout_constraintTop_toBottomOf="@+id/inputRetypePasswordRegister" />
 
         <LinearLayout
-            android:id="@+id/ll_loginNavigate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -215,7 +214,6 @@
             app:layout_constraintTop_toBottomOf="@+id/registerBtn">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/signinNavigateHint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
@@ -226,7 +224,6 @@
                 android:textSize="10sp" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/signinNavigate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"

@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
-            android:text="Profile"
+            android:text="@string/profileBtnTitle"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/profile_image"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:fontFamily="@font/poppins"
-            android:text="Name"
+            android:text="@string/nameTitleChangeProfile"
             app:layout_constraintStart_toStartOf="@+id/btnBackRegister"
             app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:fontFamily="@font/poppins"
-            android:text="Name"
+            android:text="@string/nameTitleChangeProfile"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="@+id/btnBackRegister"
             app:layout_constraintTop_toBottomOf="@+id/profile_image" />
@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins"
-            android:text="Email"
+            android:text="@string/emailTitleChangeProfile"
             app:layout_constraintStart_toStartOf="@+id/nameSeeProfile"
             app:layout_constraintTop_toBottomOf="@+id/nameSeeProfileValue" />
 
@@ -136,7 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins"
-            android:text="Email"
+            android:text="@string/emailTitleChangeProfile"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="@+id/nameSeeEditProfile"
             app:layout_constraintTop_toBottomOf="@+id/inputNameProfile" />
@@ -187,19 +187,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins"
-            android:text="Address"
+            android:text="@string/addressTitleChangeProfile"
             app:layout_constraintStart_toStartOf="@+id/emailSeeProfile"
             app:layout_constraintTop_toBottomOf="@+id/emailSeeProfileValue" />
-
-<!--        <com.google.android.material.textview.MaterialTextView-->
-<!--            android:id="@+id/addressSeeProfile"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="16dp"-->
-<!--            android:fontFamily="@font/poppins"-->
-<!--            android:text="Address"-->
-<!--            app:layout_constraintStart_toStartOf="@+id/emailSeeEditProfile"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/inputEmailProfile" />-->
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/addressSeeEditProfile"
@@ -207,7 +197,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins"
-            android:text="Address"
+            android:text="@string/addressTitleChangeProfile"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="@+id/emailSeeEditProfile"
             app:layout_constraintTop_toBottomOf="@+id/inputEmailProfile" />
@@ -259,7 +249,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins"
-            android:text="Phone"
+            android:text="@string/phoneTitleChangeProfile"
             app:layout_constraintStart_toStartOf="@+id/addressSeeProfile"
             app:layout_constraintTop_toBottomOf="@+id/addressSeeProfileValue" />
 
@@ -268,7 +258,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
-            android:text="Phone"
+            android:text="@string/phoneTitleChangeProfile"
             android:visibility="gone"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="@+id/addressSeeProfile"
@@ -327,7 +317,7 @@
             android:contentDescription="@string/loginButtonDescription"
             android:fontFamily="@font/poppins_semibold"
             android:padding="16dp"
-            android:text="Edit Profile"
+            android:text="@string/editProfileBtnChangeProfile"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="15sp"
@@ -349,7 +339,7 @@
             android:contentDescription="@string/loginButtonDescription"
             android:fontFamily="@font/poppins_semibold"
             android:padding="16dp"
-            android:text="Save"
+            android:text="@string/saveBtn"
             android:visibility="gone"
             android:textAllCaps="false"
             android:textColor="@color/white"

@@ -39,18 +39,18 @@ class HomeFragment : Fragment() {
 
         activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.login_statusBarDark)
 
-        binding.circleImageView.setOnClickListener {
+        binding.profileAccountNavigate.setOnClickListener {
             val intent = Intent(requireContext(), ChangeProfileActivity::class.java)
             startActivity(intent)
             activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
-        recyclerView2 = binding.rvAdsTop
+        recyclerView2 = binding.rvFavorite
         recyclerView2?.setHasFixedSize(true)
         recyclerView2?.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerView2?.adapter = adapter2
-        recyclerView2?.adapter = AdsItemAdapter(DummyAds.dummy, requireActivity())
+        recyclerView2?.adapter = AdsItemAdapter(DummyAds.dummy)
 
         recyclerView = binding.rvFashionData
         val layoutManager = GridLayoutManager(requireContext(), 2)
@@ -66,7 +66,7 @@ class HomeFragment : Fragment() {
         )
         recyclerView?.setHasFixedSize(true)
         recyclerView?.adapter = adapter1
-        recyclerView?.adapter = FashionItemAdapter(DummyFashion.dummy, requireActivity())
+        recyclerView?.adapter = FashionItemAdapter(DummyFashion.dummy)
 
         return root
     }

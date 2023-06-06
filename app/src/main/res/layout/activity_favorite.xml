@@ -13,7 +13,6 @@
         tools:context=".ui.FavoriteActivity">
 
         <ProgressBar
-            android:id="@+id/progressBarFavorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="3dp"
@@ -41,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
-            android:text="Favorite"
+            android:text="@string/favoritePageTitle"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/btnBackFavorite"

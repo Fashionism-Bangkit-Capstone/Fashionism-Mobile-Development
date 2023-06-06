@@ -56,6 +56,6 @@ class FavoriteActivity : AppCompatActivity() {
         )
         recyclerView?.setHasFixedSize(true)
         recyclerView?.adapter = adapter1
-        recyclerView?.adapter = FashionItemAdapter(DummyFashion.dummy, this)
+        recyclerView?.adapter = FashionItemAdapter(DummyFashion.dummy)
     }
 }
