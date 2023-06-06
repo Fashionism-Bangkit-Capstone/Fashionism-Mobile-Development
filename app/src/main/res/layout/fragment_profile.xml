@@ -177,7 +177,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
-                android:text="@string/txt_update_profile"
+                android:text="@string/txt_logout"
                 android:textSize="18sp"
                 android:backgroundTint="@color/primary"
                 android:fontFamily="@font/sansation_bold"

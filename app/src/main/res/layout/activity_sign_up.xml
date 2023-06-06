@@ -53,10 +53,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtNamaToko"
+                    android:id="@+id/edtShopName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
+                    android:lines="1"
+                    android:singleLine="true"
                     android:hint="@string/txt_shop_name" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,6 +77,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
+                    android:lines="1"
+                    android:singleLine="true"
                     android:hint="@string/txt_email" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,6 +98,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
+                    android:lines="1"
+                    android:singleLine="true"
                     android:hint="@string/txt_password" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,6 +119,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
+                    android:lines="1"
+                    android:singleLine="true"
                     android:hint="@string/txt_confirm_password" />
             </com.google.android.material.textfield.TextInputLayout>
 

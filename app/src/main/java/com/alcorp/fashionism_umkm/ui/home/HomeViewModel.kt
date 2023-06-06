@@ -21,10 +21,10 @@ class HomeViewModel(private val repository: AppRepository) : ViewModel() {
 
     val homeState = _homeState
 
-    fun getOutfitList() {
+    fun getOutfitList(token: String, idUser: String) {
         _homeState.value = UiState.loading()
         viewModelScope.launch {
-            repository.getOutfitList()
+            repository.getOutfitList(token, idUser)
                 .catch {
                     _homeState.value = UiState.error(it.message)
                 }

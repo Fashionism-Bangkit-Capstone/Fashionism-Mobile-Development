@@ -55,6 +55,9 @@
                     android:id="@+id/edtOutfitName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:singleLine="true"
                     android:hint="@string/txt_outfit_name" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -69,6 +72,7 @@
                 app:startIconDrawable="@drawable/ic_baseline_edit_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName | textMultiLine"
@@ -86,8 +90,13 @@
                 app:startIconDrawable="@drawable/ic_baseline_edit_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtStock"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:singleLine="true"
                     android:hint="@string/txt_stock" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,8 +111,13 @@
                 app:startIconDrawable="@drawable/ic_baseline_edit_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:singleLine="true"
                     android:hint="@string/txt_price" />
             </com.google.android.material.textfield.TextInputLayout>
 

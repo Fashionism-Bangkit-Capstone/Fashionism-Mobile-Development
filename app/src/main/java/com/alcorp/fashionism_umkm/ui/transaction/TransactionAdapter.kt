@@ -8,6 +8,7 @@ import com.alcorp.fashionism_umkm.data.remote.response.CartsList
 import com.alcorp.fashionism_umkm.databinding.ItemTransactionBinding
 import com.alcorp.fashionism_umkm.ui.home.detail_outfit.DetailOutfitActivity
 import com.alcorp.fashionism_umkm.ui.transaction.detail.ProductActivity
+import com.alcorp.fashionism_umkm.ui.transaction.detail.ProductActivity.Companion.EXTRA_ID_TRANSACTION
 
 class TransactionAdapter(private val listTransaction: List<CartsList>): RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -22,7 +23,7 @@ class TransactionAdapter(private val listTransaction: List<CartsList>): Recycler
 
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, ProductActivity::class.java)
-                    intent.putExtra(DetailOutfitActivity.EXTRA_ID_OUTFIT, this.id.toString())
+                    intent.putExtra(EXTRA_ID_TRANSACTION, this.id.toString())
                     itemView.context.startActivity(intent)
                 }
             }

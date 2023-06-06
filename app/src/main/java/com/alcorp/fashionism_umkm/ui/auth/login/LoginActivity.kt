@@ -7,15 +7,19 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.alcorp.fashionism_umkm.MainActivity
+import com.alcorp.fashionism_umkm.R
 import com.alcorp.fashionism_umkm.ViewModelFactory
 import com.alcorp.fashionism_umkm.databinding.ActivityLoginBinding
 import com.alcorp.fashionism_umkm.ui.auth.signup.SignUpActivity
+import com.alcorp.fashionism_umkm.utils.Helper.checkEmailFormat
 import com.alcorp.fashionism_umkm.utils.Helper.showToast
 import com.alcorp.fashionism_umkm.utils.LoadingDialog
+import com.alcorp.fashionism_umkm.utils.PrefData
 import com.alcorp.fashionism_umkm.utils.Status
 import kotlinx.coroutines.launch
 
@@ -66,11 +70,54 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun checkLogin() {
-        val token = pref.getString("token", "")
+        val token = pref.getString("access_token", "")
         if (token != null && token != "") {
             val i = Intent(this@LoginActivity, MainActivity::class.java)
             startActivity(i)
             finish()
+        }
+    }
+
+    private fun loginUser() {
+        val email = binding.edtEmail.text.toString().trim()
+        val password = binding.edtPassword.text.toString().trim()
+
+        if (checkEmailFormat(email)) {
+            if (password.length >= 6) {
+                lifecycleScope.launch {
+                    loginViewModel.loginUser(email, password)
+                    loginViewModel.loginState.collect {
+                        when (it.status) {
+                            Status.LOADING -> loadingDialog.showLoading(true)
+
+                            Status.SUCCESS -> {
+                                loadingDialog.showLoading(false)
+                                it.data?.let { login ->
+                                    prefEdit = pref.edit()
+                                    prefEdit.putString("id", login.data?.id!!)
+                                    prefEdit.putString("access_token", login.data.access_token)
+                                    prefEdit.apply()
+
+                                    showToast(this@LoginActivity, login.message.toString())
+
+                                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                }
+                            }
+
+                            else -> {
+                                loadingDialog.showLoading(false)
+                                showToast(this@LoginActivity, it.data?.message.toString())
+                            }
+                        }
+                    }
+                }
+            } else {
+                Toast.makeText(this, getString(R.string.toast_password_min_length), Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, getString(R.string.toast_email_validate), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -80,65 +127,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(this, SignUpActivity::class.java)
                 startActivity(intent)
             }
-            binding.btnLogin -> {
-                val email = binding.edtEmail.text.toString().trim()
-                val password = binding.edtPassword.text.toString().trim()
-
-//                if (checkEmailFormat(email)) {
-//                    if (password.length >= 8) {
-                        lifecycleScope.launch {
-                            loginViewModel.loginUser(email, password)
-                            loginViewModel.loginState.collect {
-                                when (it.status) {
-                                    Status.LOADING -> {
-                                        loadingDialog.showLoading(true)
-                                    }
-
-                                    Status.SUCCESS -> {
-                                        loadingDialog.showLoading(false)
-                                        it.data?.let { data ->
-                                            prefEdit = pref.edit()
-                                            prefEdit.putInt("id", data.id!!)
-                                            prefEdit.putString("image", data.image)
-                                            prefEdit.putString("email", data.email)
-                                            prefEdit.putString("name", data.username)
-                                            prefEdit.putString("token", data.token)
-                                            prefEdit.apply()
-
-                                            showToast(this@LoginActivity, "Login Success")
-
-                                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                                            startActivity(intent)
-                                            finish()
-                                        }
-                                    }
-
-                                    else -> {
-                                        loadingDialog.showLoading(false)
-                                        showToast(this@LoginActivity, it.message.toString())
-                                    }
-                                }
-                            }
-                        }
-//                    } else {
-//                        Toast.makeText(this, getString(R.string.toast_password_min_length), Toast.LENGTH_SHORT).show()
-//                    }
-//                } else {
-//                    Toast.makeText(this, getString(R.string.toast_email_validate), Toast.LENGTH_SHORT).show()
-//                }
-            }
+            binding.btnLogin -> loginUser()
         }
     }
-
-    override fun onPause() {
-        super.onPause()
-        loadingDialog.showLoading(false)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        loadingDialog.showLoading(false)
-    }
 }
-
-//hi my name is nicola yanni alivant. I have 4+ year experience coding in general and 2+ year experience in mobile development. i'm from trunojoyo university and my major is informatics engineering. when i in college i have handled certain projectl, my most project is web project but some is android project

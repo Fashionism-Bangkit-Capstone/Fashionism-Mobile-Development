@@ -25,6 +25,9 @@
         android:theme="@style/Theme.FashionismUMKM"
         tools:targetApi="31">
         <activity
+            android:name=".ui.profile.change_password.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.home.add_or_edit_outfit.camera.CameraActivity"
             android:exported="false" />
         <activity

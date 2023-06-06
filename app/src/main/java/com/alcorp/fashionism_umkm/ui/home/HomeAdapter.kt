@@ -9,7 +9,7 @@ import com.alcorp.fashionism_umkm.R
 import com.alcorp.fashionism_umkm.data.remote.response.OutfitData
 import com.alcorp.fashionism_umkm.databinding.ItemOutfitBinding
 import com.alcorp.fashionism_umkm.ui.home.detail_outfit.DetailOutfitActivity
-import com.alcorp.fashionism_umkm.ui.home.detail_outfit.DetailOutfitActivity.Companion.EXTRA_ID_OUTFIT
+import com.alcorp.fashionism_umkm.ui.home.detail_outfit.DetailOutfitActivity.Companion.EXTRA_DETAIL_OUTFIT
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
@@ -23,20 +23,16 @@ class HomeAdapter(private val listOufit: List<OutfitData>): RecyclerView.Adapter
         with(holder) {
             with(listOufit[position]) {
                 Glide.with(itemView.context)
-                    .load(this.thumbnail)
-                    .apply(
-                        RequestOptions
-                            .centerCropTransform()
-                            .placeholder(ContextCompat.getDrawable(itemView.context, R.drawable.default_image))
-                            .error(ContextCompat.getDrawable(itemView.context, R.drawable.default_image))
-                    )
+                    .load(this.product_image)
+                    .placeholder(ContextCompat.getDrawable(itemView.context, R.drawable.default_image))
+                    .error(ContextCompat.getDrawable(itemView.context, R.drawable.default_image))
                     .into(binding.ivOutfit)
 
-                binding.tvOutfitTitle.text = this.title
+                binding.tvOutfitTitle.text = this.name
 
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailOutfitActivity::class.java)
-                    intent.putExtra(EXTRA_ID_OUTFIT, this.id.toString())
+                    intent.putExtra(EXTRA_DETAIL_OUTFIT, this.id.toString())
                     itemView.context.startActivity(intent)
                 }
             }

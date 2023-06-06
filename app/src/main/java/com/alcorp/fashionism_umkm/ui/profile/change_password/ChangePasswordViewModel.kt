@@ -1,4 +1,4 @@
-package com.alcorp.fashionism_umkm.ui.auth.signup
+package com.alcorp.fashionism_umkm.ui.profile.change_password
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
-class SignUpViewModel(private val repository: AppRepository) : ViewModel() {
-    private val _signUpState = MutableStateFlow(
+class ChangePasswordViewModel(private val repository: AppRepository) : ViewModel() {
+    private val _changePasswordState = MutableStateFlow(
         UiState(
             Status.LOADING,
             ApiResponse(),
@@ -20,17 +20,17 @@ class SignUpViewModel(private val repository: AppRepository) : ViewModel() {
         )
     )
 
-    val signUpState = _signUpState
+    val changePasswordState = _changePasswordState
 
-    fun signUpUser(name: String, email: String, password: String) {
-        _signUpState.value = UiState.loading()
+    fun changePassword(token: String, idUser: String, old_password: String, new_password: String, confirm_password: String) {
+        _changePasswordState.value = UiState.loading()
         viewModelScope.launch {
-            repository.signUpUser(name, email, password)
+            repository.changePassword(token, idUser, old_password, new_password, confirm_password)
                 .catch {
-                    _signUpState.value = UiState.error(it.message.toString())
+                    _changePasswordState.value = UiState.error(it.message.toString())
                 }
                 .collect {
-                    _signUpState.value = UiState.success(it.data)
+                    _changePasswordState.value = UiState.success(it.data)
                 }
         }
     }

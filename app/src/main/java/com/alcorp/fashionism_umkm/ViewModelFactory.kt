@@ -11,6 +11,7 @@ import com.alcorp.fashionism_umkm.ui.home.HomeViewModel
 import com.alcorp.fashionism_umkm.ui.home.add_or_edit_outfit.AddEditOutfitViewModel
 import com.alcorp.fashionism_umkm.ui.home.detail_outfit.DetailOutfitViewModel
 import com.alcorp.fashionism_umkm.ui.profile.ProfileViewModel
+import com.alcorp.fashionism_umkm.ui.profile.change_password.ChangePasswordViewModel
 import com.alcorp.fashionism_umkm.ui.profile.edit_profile.EditProfileViewModel
 import com.alcorp.fashionism_umkm.ui.transaction.TransactionViewModel
 import com.alcorp.fashionism_umkm.ui.transaction.detail.ProductViewModel
@@ -44,6 +45,9 @@ class ViewModelFactory(private val repository: AppRepository) : ViewModelProvide
         }
         if(modelClass.isAssignableFrom(EditProfileViewModel::class.java)) {
             return EditProfileViewModel(repository) as T
+        }
+        if(modelClass.isAssignableFrom(ChangePasswordViewModel::class.java)) {
+            return ChangePasswordViewModel(repository) as T
         }
 
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.simpleName)

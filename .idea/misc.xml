@@ -9,8 +9,9 @@
         <entry key="app/src/main/res/drawable/ic_capture.xml" value="0.1735" />
         <entry key="app/src/main/res/layout/activity_add_edit_outfit.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_camera.xml" value="0.16077898550724637" />
+        <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_chart.xml" value="0.13722826086956522" />
-        <entry key="app/src/main/res/layout/activity_detail_outfit.xml" value="0.16" />
+        <entry key="app/src/main/res/layout/activity_detail_outfit.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_detail_transaction.xml" value="0.16077898550724637" />
         <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.22" />
@@ -24,6 +25,7 @@
         <entry key="app/src/main/res/layout/item_outfit.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_transaction.xml" value="0.5" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.2015625" />
+        <entry key="app/src/main/res/menu/menu_detail_outfit.xml" value="0.20052083333333334" />
         <entry key="app/src/main/res/menu/menu_home.xml" value="0.2015625" />
         <entry key="app/src/main/res/menu/menu_profile.xml" value="0.1" />
         <entry key="app/src/main/res/menu/menu_transaction.xml" value="0.2015625" />

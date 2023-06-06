@@ -16,6 +16,7 @@
     <string name="txt_shop_name">Shop Name</string>
     <string name="txt_confirm_password">Confirm Password</string>
     <string name="txt_already_have_account">Already have account? Login</string>
+    <string name="txt_logout">Logout</string>
 
     <string name="txt_outfit_title">Gembel Starter Pack V2</string>
     <string name="txt_description">Description</string>
@@ -25,7 +26,6 @@
     <string name="txt_price_value">Rp. 20.000</string>
     <string name="txt_address">Address</string>
     <string name="txt_phone_number">Phone Number</string>
-    <string name="txt_update_profile">Update Profile</string>
 
     <string name="txt_upload_image">Upload image</string>
     <string name="txt_outfit_name">Outfit name</string>
@@ -33,6 +33,9 @@
     <string name="txt_none">-</string>
     <string name="txt_date">2022</string>
     <string name="txt_choose_picture">Choose a Picture</string>
+    <string name="txt_old_password">Old Password</string>
+    <string name="txt_new_password">New Password</string>
+    <string name="txt_confirm_new_password">Confirm new Password</string>
     <!--    End of View-->
 
     <!--    Dialog-->
@@ -45,19 +48,19 @@
     <!--    End Of Dialog-->
 
     <!--    Toolbar-->
-    <string name="logout">Logout</string>
-    <string name="add">Add</string>
-    <string name="chart">Chart</string>
-
     <string name="title_add_outfit">Add Outfit</string>
     <string name="title_detail_outfit">Detail Outfit</string>
     <string name="title_product_list">Product List</string>
     <string name="title_chart">Transaction Statistic</string>
     <string name="title_update_profile">Update Profile</string>
+    <string name="title_update">Update</string>
+    <string name="title_delete">Delete</string>
+    <string name="title_change_password">Change Password</string>
     <!--    End of Toolbar-->
 
     <!--    Toast-->
-    <string name="toast_password_min_length">Password must be at least 8 characters long</string>
+    <string name="toast_password_min_length">Password must be at least 6 characters long</string>
+    <string name="toast_password_match">Password must be the same</string>
     <string name="toast_email_validate">Email is not valid</string>
     <string name="toast_permission">Feature not working. Please allow the permission</string>
     <string name="toast_failed_camera">Failed to start camera</string>

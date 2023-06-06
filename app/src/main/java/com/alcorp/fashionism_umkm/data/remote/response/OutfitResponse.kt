@@ -3,13 +3,10 @@ package com.alcorp.fashionism_umkm.data.remote.response
 import com.google.gson.annotations.SerializedName
 
 data class OutfitResponse(
-//    @field:SerializedName("error")
-//    val error: Boolean,
-//
-//    @field:SerializedName("message")
-//    val message: String,
+    @field:SerializedName("error")
+    val error: Boolean? = null,
 
-    @field:SerializedName("products")
+    @field:SerializedName("data")
     val data: List<OutfitData>? = null
 )
 
@@ -17,8 +14,8 @@ data class OutfitData(
     @field:SerializedName("id")
     val id: Int? = null,
 
-    @field:SerializedName("title")
-    val title: String? = null,
+    @field:SerializedName("name")
+    val name: String? = null,
 
     @field:SerializedName("description")
     val description: String? = null,
@@ -29,6 +26,6 @@ data class OutfitData(
     @field:SerializedName("price")
     val price: String? = null,
 
-    @field:SerializedName("thumbnail")
-    val thumbnail: String? = null
+    @field:SerializedName("product_image")
+    val product_image: String? = null
 )

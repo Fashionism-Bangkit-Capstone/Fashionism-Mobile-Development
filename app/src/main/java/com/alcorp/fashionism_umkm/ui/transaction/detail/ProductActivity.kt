@@ -44,7 +44,7 @@ class ProductActivity : AppCompatActivity() {
     }
 
     private fun setupView() {
-        id = intent.getStringExtra(DetailOutfitActivity.EXTRA_ID_OUTFIT).toString()
+        id = intent.getStringExtra(EXTRA_ID_TRANSACTION).toString()
 
         loadingDialog = LoadingDialog(this)
     }

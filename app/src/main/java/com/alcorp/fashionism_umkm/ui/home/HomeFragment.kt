@@ -11,13 +11,18 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.alcorp.fashionism_umkm.R
 import com.alcorp.fashionism_umkm.ViewModelFactory
+import com.alcorp.fashionism_umkm.data.remote.response.DetailOutfitData
 import com.alcorp.fashionism_umkm.databinding.FragmentHomeBinding
 import com.alcorp.fashionism_umkm.ui.auth.login.LoginActivity
 import com.alcorp.fashionism_umkm.ui.home.add_or_edit_outfit.AddEditOutfitActivity
 import com.alcorp.fashionism_umkm.utils.Helper
+import com.alcorp.fashionism_umkm.utils.Helper.showToast
 import com.alcorp.fashionism_umkm.utils.LoadingDialog
+import com.alcorp.fashionism_umkm.utils.PrefData
 import com.alcorp.fashionism_umkm.utils.Status
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment() {
 
@@ -52,7 +57,9 @@ class HomeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_add -> {
-                startActivity(Intent(requireActivity(), AddEditOutfitActivity::class.java))
+                val intent = Intent(requireContext(), AddEditOutfitActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -65,7 +72,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun checkLogin() {
-        val token = pref.getString("token", "").toString()
+        val token = pref.getString("access_token", "").toString()
+        PrefData.token = "Bearer $token"
+        PrefData.idUser = pref.getString("id", "").toString()
         if (token == null && token == "") {
             val i = Intent(requireActivity(), LoginActivity::class.java)
             startActivity(i)
@@ -80,12 +89,10 @@ class HomeFragment : Fragment() {
 
     private fun loadData() {
         lifecycleScope.launch {
-            homeViewModel.getOutfitList()
+            homeViewModel.getOutfitList(PrefData.token, PrefData.idUser)
             homeViewModel.homeState.collect {
                 when (it.status) {
-                    Status.LOADING -> {
-                        loadingDialog.showLoading(true)
-                    }
+                    Status.LOADING -> loadingDialog.showLoading(true)
 
                     Status.SUCCESS -> {
                         loadingDialog.showLoading(false)
@@ -99,7 +106,7 @@ class HomeFragment : Fragment() {
 
                     else -> {
                         loadingDialog.showLoading(false)
-                        Helper.showToast(requireContext(), it.message.toString())
+                        showToast(requireContext(), it.message.toString())
                     }
                 }
             }

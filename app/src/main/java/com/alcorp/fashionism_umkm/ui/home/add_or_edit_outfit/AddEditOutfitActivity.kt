@@ -17,16 +17,28 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
+import com.alcorp.fashionism_umkm.MainActivity
 import com.alcorp.fashionism_umkm.R
 import com.alcorp.fashionism_umkm.ViewModelFactory
+import com.alcorp.fashionism_umkm.data.remote.response.DetailOutfitData
 import com.alcorp.fashionism_umkm.databinding.ActivityAddEditOutfitBinding
 import com.alcorp.fashionism_umkm.ui.home.add_or_edit_outfit.camera.CameraActivity
+import com.alcorp.fashionism_umkm.ui.home.detail_outfit.DetailOutfitActivity
+import com.alcorp.fashionism_umkm.ui.home.detail_outfit.DetailOutfitActivity.Companion.EXTRA_DETAIL_OUTFIT
 import com.alcorp.fashionism_umkm.utils.Helper.showToast
 import com.alcorp.fashionism_umkm.utils.UploadImage.rotateFile
 import com.alcorp.fashionism_umkm.utils.UploadImage.uriToFile
 import com.alcorp.fashionism_umkm.utils.LoadingDialog
+import com.alcorp.fashionism_umkm.utils.PrefData
+import com.alcorp.fashionism_umkm.utils.Status
 import com.alcorp.fashionism_umkm.utils.UploadImage.reduceFileImage
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeoutOrNull
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -37,6 +49,7 @@ import java.io.File
 class AddEditOutfitActivity : AppCompatActivity(), View.OnClickListener {
 
     private var getFile: File? = null
+    private var idOutfit: Int = 0
     private lateinit var binding: ActivityAddEditOutfitBinding
     private lateinit var loadingDialog: LoadingDialog
     private val addEditOutfitViewModel: AddEditOutfitViewModel by viewModels {
@@ -56,11 +69,9 @@ class AddEditOutfitActivity : AppCompatActivity(), View.OnClickListener {
 
             getFile = myFile
 
-            val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
+//            val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
 
             myFile?.let { file ->
-                rotateFile(file, isBackCamera)
-
                 Glide.with(this@AddEditOutfitActivity)
                     .load(BitmapFactory.decodeFile(file.path))
                     .into(binding.ivPreviewImage)
@@ -114,6 +125,7 @@ class AddEditOutfitActivity : AppCompatActivity(), View.OnClickListener {
 
         setupToolbar()
         setupView()
+        loadData()
     }
 
     private fun setupToolbar() {
@@ -148,58 +160,179 @@ class AddEditOutfitActivity : AppCompatActivity(), View.OnClickListener {
         builder.setPositiveButton(getString(R.string.dialog_camera)) { _, _ -> startCameraX() }
         builder.setNegativeButton(getString(R.string.dialog_gallery)) { _, _ -> startGallery() }
         builder.setNeutralButton(getString(R.string.dialog_cancel)) { dialog, _ -> dialog.cancel() }
+        builder.setCancelable(true)
         builder.create().show()
+    }
+
+    private fun loadData() {
+        val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra(EXTRA_EDIT_OUTFIT, DetailOutfitData::class.java)
+        } else {
+            intent.getParcelableExtra(EXTRA_EDIT_OUTFIT)
+        }
+
+        if (intent.hasExtra(EXTRA_EDIT_OUTFIT)) {
+            idOutfit = data?.id!!
+            Glide.with(this@AddEditOutfitActivity)
+                .load(data.product_image)
+                .placeholder(ContextCompat.getDrawable(this@AddEditOutfitActivity, R.drawable.default_image))
+                .error(ContextCompat.getDrawable(this@AddEditOutfitActivity, R.drawable.default_image))
+                .into(binding.ivPreviewImage)
+
+            binding.edtOutfitName.setText(data.name)
+            binding.edtDescription.setText(data.description)
+            binding.edtStock.setText(data.stock)
+            binding.edtPrice.setText(data.price)
+        }
+    }
+
+    private fun submitData() {
+        if (getFile != null || intent.hasExtra(EXTRA_EDIT_OUTFIT)) {
+            val txtOutfitName = binding.edtOutfitName.text.toString()
+            val txtDesc = binding.edtDescription.text.toString()
+            val txtStock = binding.edtStock.text.toString()
+            val txtPrice = binding.edtPrice.text.toString()
+
+            if (txtOutfitName != "" || txtDesc != ""|| txtStock != "" || txtPrice != "") {
+
+                val outfitName = txtOutfitName . toRequestBody("text/plain" . toMediaType())
+                val desc = txtDesc . toRequestBody("text/plain" . toMediaType())
+                val stock = txtStock . toRequestBody("text/plain" . toMediaType())
+                val price = txtPrice . toRequestBody("text/plain" . toMediaType())
+
+                if (intent.hasExtra(EXTRA_EDIT_OUTFIT)) {
+                    val imageMultiPart = if (getFile == null) {
+                        MultipartBody.Part.createFormData(
+                            "product_image",
+                            ""
+                        )
+                    } else {
+                        val file = reduceFileImage(getFile as File)
+                        val requestImageFile = file.asRequestBody("image/jpeg" . toMediaTypeOrNull())
+                        MultipartBody.Part.createFormData(
+                            "product_image",
+                            file.name,
+                            requestImageFile
+                        )
+                    }
+                    lifecycleScope.launch {
+                        addEditOutfitViewModel.updateOutfit(
+                            PrefData.token,
+                            PrefData.idUser,
+                            idOutfit.toString(),
+                            outfitName,
+                            desc,
+                            stock,
+                            price,
+                            imageMultiPart
+                        )
+                        addEditOutfitViewModel.addEditState.collect {
+                            when (it.status) {
+                                Status.LOADING -> loadingDialog.showLoading(true)
+
+                                Status.SUCCESS -> {
+                                    loadingDialog.showLoading(false)
+                                    it.data?.let { data ->
+                                        showToast(
+                                            this@AddEditOutfitActivity,
+                                            data.message.toString()
+                                        )
+                                        val intent = Intent(this@AddEditOutfitActivity, DetailOutfitActivity::class.java)
+                                        intent.putExtra(EXTRA_DETAIL_OUTFIT, idOutfit.toString())
+                                        startActivity(intent)
+                                        finish()
+                                    }
+                                }
+
+                                else -> {
+                                    loadingDialog.showLoading(false)
+                                    showToast(this@AddEditOutfitActivity, it.data?.message.toString())
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    val file = reduceFileImage(getFile as File)
+                    val requestImageFile = file.asRequestBody("image/jpeg" . toMediaTypeOrNull())
+                    val imageMultiPart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                        "product_image",
+                        file.name,
+                        requestImageFile
+                    )
+                    lifecycleScope.launch {
+                        addEditOutfitViewModel.insertOutfit(
+                            PrefData.token,
+                            PrefData.idUser,
+                            outfitName,
+                            desc,
+                            stock,
+                            price,
+                            imageMultiPart
+                        )
+                        addEditOutfitViewModel.addEditState.collect {
+                            when (it.status) {
+                                Status.LOADING -> loadingDialog.showLoading(true)
+
+                                Status.SUCCESS -> {
+                                    loadingDialog.showLoading(false)
+                                    it.data?.let { data ->
+                                        showToast(
+                                            this@AddEditOutfitActivity,
+                                            data.message.toString()
+                                        )
+                                        val intent = Intent(this@AddEditOutfitActivity, MainActivity::class.java)
+                                        startActivity(intent)
+                                        finish()
+                                    }
+                                }
+
+                                else -> {
+                                    loadingDialog.showLoading(false)
+                                    showToast(this@AddEditOutfitActivity, it.data?.message.toString())
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                Toast.makeText(this, getString(R.string.toast_insert_columns), Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, getString(R.string.toast_insert_image), Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onClick(view: View) {
         when (view) {
             binding.btnUpload -> uploadDialog()
-            binding.btnSubmit -> {
-                if (getFile != null) {
-                    val txtOutfitName = binding.edtOutfitName.text.toString()
+            binding.btnSubmit -> submitData()
+        }
+    }
 
-                    if (txtOutfitName != "") {
-
-                        val file = reduceFileImage(getFile as File)
-
-                        val description = txtOutfitName . toRequestBody("text/plain" . toMediaType())
-                        val requestImageFile = file.asRequestBody("image/jpeg" . toMediaTypeOrNull())
-                        val imageMultiPart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                            "photo",
-                            file.name,
-                            requestImageFile
-                        )
-
-//                        addViewModel.addStory(PrefData.token, description, imageMultiPart, lat, lon)
-//                        addViewModel.storyResponse.observe(this) {
-//                            setResult(1)
-//                            finish()
-//                        }
-//                        addViewModel.isLoading.observe(this) {
-//                            showLoading(it)
-//                        }
-//                        addViewModel.message.observe(this ) {
-//                            Toast.makeText(this@AddStoryActivity, it, Toast.LENGTH_SHORT).show()
-//                        }
-                    } else {
-                        Toast.makeText(this, getString(R.string.toast_insert_columns), Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    Toast.makeText(this, getString(R.string.toast_insert_image), Toast.LENGTH_SHORT).show()
-                }
-            }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (intent.hasExtra(EXTRA_EDIT_OUTFIT)) {
+            val intent = Intent(this@AddEditOutfitActivity, DetailOutfitActivity::class.java)
+            intent.putExtra(EXTRA_DETAIL_OUTFIT, idOutfit.toString())
+            startActivity(intent)
+            finish()
+        } else {
+            val intent = Intent(this@AddEditOutfitActivity, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            finish()
+            onBackPressed()
         }
         return super.onOptionsItemSelected(item)
     }
 
     companion object {
         const val CAMERA_X_RESULT = 200
+        const val EXTRA_EDIT_OUTFIT = "extra_edit_outfit"
 
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
