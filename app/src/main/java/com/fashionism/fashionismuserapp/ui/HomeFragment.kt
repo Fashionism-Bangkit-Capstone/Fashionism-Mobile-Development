@@ -1,5 +1,6 @@
 package com.fashionism.fashionismuserapp.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +38,12 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
 
         activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.login_statusBarDark)
+
+        binding.circleImageView.setOnClickListener {
+            val intent = Intent(requireContext(), ChangeProfileActivity::class.java)
+            startActivity(intent)
+            activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
 
         recyclerView2 = binding.rvAdsTop
         recyclerView2?.setHasFixedSize(true)

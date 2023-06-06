@@ -97,3 +97,29 @@ data class ProfileDetail(
     var address: String? = null,
     var avatar: String? = null,
 )
+
+data class ItemFavorite(
+    var user_account_id: Int,
+    var product_id: Int,
+)
+
+data class ResponseFavorite(
+    var error: Boolean,
+    var message: String,
+)
+
+data class ResponseGetFavorites(
+    var error: Boolean,
+    var data: List<FavoriteDetail>
+)
+
+data class FavoriteDetail(
+    var id: Int,
+    var name: String,
+    var description: String,
+    var stock: Int,
+    var price: Int,
+    var image: String,
+    var msme_account_id: Int,
+    var user_account_favorite: ItemFavorite,
+)

@@ -55,6 +55,12 @@ class ProfileFragment : Fragment() {
             activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
+        binding.favoriteProfileBtn.setOnClickListener {
+            val intent = Intent(requireContext(), FavoriteActivity::class.java)
+            startActivity(intent)
+            activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+
         binding.changePasswordAccountBtn.setOnClickListener {
             val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
             startActivity(intent)

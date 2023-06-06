@@ -33,5 +33,13 @@ interface APIService {
     @POST("preferences/unset-user-account-preference")
     fun unsetUserPreferences(@Body requestUnsetPreferences: UserAccountPreferences, @Header("Authorization") token: String): Call<ResponseSetPreferences>
 
+    @POST("favorites/add")
+    fun addFavorite(@Body productFavorite: ItemFavorite, @Header("Authorization") token: String): Call<ResponseFavorite>
+
+    @POST("favorites/remove")
+    fun removeFavorite(@Body productFavorite: ItemFavorite, @Header("Authorization") token: String): Call<ResponseFavorite>
+
+    @GET("favorites/{id}")
+    fun getFavoritesUser(@Path("id") userId: Int, @Header("Authorization") token: String): Call<ResponseGetFavorites>
 
 }
