@@ -27,7 +27,7 @@ class SearchFragment : Fragment() {
 
         activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
 
-        val textView: TextView = binding.textDashboard
+        val textView: TextView = binding.textSearch
         textView.text = "Search Fragment"
         return root
     }

@@ -1,5 +1,8 @@
 package com.fashionism.fashionismuserapp.data.db
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 data class UserData(
     val loginSession: Boolean,
     val token: String,
@@ -123,3 +126,13 @@ data class FavoriteDetail(
     var msme_account_id: Int,
     var user_account_favorite: ItemFavorite,
 )
+
+@Parcelize
+data class ProductDetail(
+    var imageFashion: String,
+    var storeName: String,
+    var product: String,
+    var price: String,
+    var description: String,
+    var id: String,
+) : Parcelable

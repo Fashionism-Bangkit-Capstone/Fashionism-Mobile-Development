@@ -41,6 +41,7 @@
                 app:layout_constraintTop_toTopOf="@+id/greetingUserTitle" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/materialButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
@@ -113,8 +114,9 @@
                 app:layout_constraintTop_toBottomOf="@id/rvFavorite" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvFashionItem"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:nestedScrollingEnabled="false"
@@ -129,7 +131,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvFavorite"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="-8dp"
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -137,6 +139,17 @@
                 app:layout_constraintStart_toStartOf="@+id/productUserLike"
                 app:layout_constraintTop_toBottomOf="@+id/productUserLike"
                 tools:listitem="@layout/item_favorite" />
+
+            <ProgressBar
+                android:id="@+id/progressBarHome"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

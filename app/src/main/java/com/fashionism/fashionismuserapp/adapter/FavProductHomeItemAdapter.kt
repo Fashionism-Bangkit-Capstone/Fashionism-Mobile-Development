@@ -7,10 +7,11 @@ import com.bumptech.glide.Glide
 import com.fashionism.fashionismuserapp.R
 import com.fashionism.fashionismuserapp.data.db.ProductDetail
 import com.fashionism.fashionismuserapp.data.dummy.DummyData
-import com.fashionism.fashionismuserapp.databinding.ItemFashionBinding
+import com.fashionism.fashionismuserapp.data.dummy.DummyData2
+import com.fashionism.fashionismuserapp.databinding.ItemFavoriteBinding
 
-class FashionItemAdapter(private val list: List<ProductDetail>) :
-    RecyclerView.Adapter<FashionItemAdapter.ViewHolder>() {
+class FavProductHomeItemAdapter(private val list: List<ProductDetail>) :
+    RecyclerView.Adapter<FavProductHomeItemAdapter.ViewHolder>() {
 
     private lateinit var onItemClickCallback: OnItemClickCallback
 
@@ -22,7 +23,7 @@ class FashionItemAdapter(private val list: List<ProductDetail>) :
         fun onItemClicked(data: ProductDetail)
     }
 
-    class ViewHolder(private val binding: ItemFashionBinding) :
+    class ViewHolder(private val binding: ItemFavoriteBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: ProductDetail) {
             Glide.with(itemView.context)
@@ -30,10 +31,11 @@ class FashionItemAdapter(private val list: List<ProductDetail>) :
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .error(R.drawable.ic_launcher_foreground)
                 .fallback(R.drawable.ic_launcher_foreground)
-                .into(binding.ivFashionImage)
-            binding.tvFashionName.text = data.product
-            binding.tvPrice.text = data.price
-            binding.tvStoreName.text = data.storeName
+                .into(binding.ivProductFavImage)
+
+            binding.productFavTitle.text = data.product
+            binding.productFavPrice.text = data.price
+            binding.productFavStoreName.text = data.storeName
         }
     }
 
@@ -41,7 +43,8 @@ class FashionItemAdapter(private val list: List<ProductDetail>) :
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        val binding = ItemFashionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemFavoriteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 

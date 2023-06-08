@@ -1,12 +1,17 @@
 package com.fashionism.fashionismuserapp.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fashionism.fashionismuserapp.R
 import com.fashionism.fashionismuserapp.adapter.FashionItemAdapter
+import com.fashionism.fashionismuserapp.adapter.FavProductHomeItemAdapter
+import com.fashionism.fashionismuserapp.data.dummy.DummyAds
+import com.fashionism.fashionismuserapp.data.dummy.DummyData2
 import com.fashionism.fashionismuserapp.data.dummy.DummyFashion
 import com.fashionism.fashionismuserapp.data.session.UserSession
 import com.fashionism.fashionismuserapp.data.session.UserSessionViewModel
@@ -15,6 +20,7 @@ import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModel
 import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModelFactory
 import com.fashionism.fashionismuserapp.databinding.ActivityFavoriteBinding
 import com.fashionism.fashionismuserapp.tools.GridSpacingItemDecoration
+import com.fashionism.fashionismuserapp.ui.DetailFashionActivity.Companion.EXTRA_FASHION_ITEM
 
 class FavoriteActivity : AppCompatActivity() {
     private val binding by lazy {
@@ -56,6 +62,6 @@ class FavoriteActivity : AppCompatActivity() {
         )
         recyclerView?.setHasFixedSize(true)
         recyclerView?.adapter = adapter1
-        recyclerView?.adapter = FashionItemAdapter(DummyFashion.dummy)
+//        recyclerView?.adapter = FashionItemAdapter(DummyFashion.dummy)
     }
 }

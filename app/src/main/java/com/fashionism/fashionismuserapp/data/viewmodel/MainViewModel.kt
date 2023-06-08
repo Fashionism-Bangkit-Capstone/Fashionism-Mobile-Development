@@ -9,6 +9,7 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
     val isLoading: LiveData<Boolean> = mainRepository.isLoading
     val userLogin: LiveData<LoginResponse> = mainRepository.userLogin
     val userProfile: LiveData<ResponseGetProfile> = mainRepository.userProfile
+    val product: LiveData<List<ProductDetail>> = mainRepository.product
 
     fun login(loginDataAccount: LoginDataAccount) {
         mainRepository.login(loginDataAccount)
@@ -28,5 +29,9 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
 
     fun updatePassword(id: Int, dataPassword: ChangePassword, token: String) {
         mainRepository.changePasswordUser(id, dataPassword, token)
+    }
+
+    fun getProducts() {
+        mainRepository.getProductLiked()
     }
 }

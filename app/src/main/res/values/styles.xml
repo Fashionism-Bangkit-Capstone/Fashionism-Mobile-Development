@@ -42,4 +42,11 @@
         <item name="android:backgroundTint">#F4F4F4</item>
     </style>
 
+    <style name="ShapeAppearanceOverlay.MyApp.Button.Circle" parent="Widget.MaterialComponents.Button.OutlinedButton.Icon">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+        <item name="strokeColor">@color/button_colorbackground</item>
+        <item name="strokeWidth">2dp</item>
+    </style>
+
 </resources>

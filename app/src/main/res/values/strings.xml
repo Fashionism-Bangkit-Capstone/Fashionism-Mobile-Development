@@ -78,6 +78,8 @@
     <string name="changeConfirmNo">Cancel</string>
 
     <!--  Loading Pop Up Search Data  -->
+    <string name="titleAwaitData">Identification</string>
+    <string name="descAwaitData">Understanding and Analysis</string>
 
     <!--  Fashion Cardview  -->
     <string name="favoriteIconContentDescription">For favorite item in case you like</string>
@@ -86,6 +88,7 @@
     <string name="favoritePageTitle">Favorite</string>
     <string name="currentPasswordHint">Current Password</string>
     <string name="newPasswordHint">New Password</string>
+    <string name="buyProductCharBtn">Purchase Now</string>
 
 
 

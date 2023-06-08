@@ -13,6 +13,7 @@
         tools:context=".ui.login.LoginActivity">
 
         <ImageView
+            android:id="@+id/backButtonLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
@@ -138,6 +139,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
+            android:id="@+id/ll_signupNavigate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -147,6 +149,7 @@
             app:layout_constraintTop_toBottomOf="@+id/loginBtn">
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/signUpText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
@@ -157,6 +160,7 @@
                 android:textSize="10sp" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/signUpNavigate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"

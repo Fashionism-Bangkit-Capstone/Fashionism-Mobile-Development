@@ -42,4 +42,6 @@ interface APIService {
     @GET("favorites/{id}")
     fun getFavoritesUser(@Path("id") userId: Int, @Header("Authorization") token: String): Call<ResponseGetFavorites>
 
+    @GET("data")
+    fun getProductLiked(): Call<List<ProductDetail>>
 }

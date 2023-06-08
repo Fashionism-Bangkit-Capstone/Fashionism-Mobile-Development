@@ -102,12 +102,12 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
 
-            signupNavigate.setOnClickListener {
+            signUpNavigate.setOnClickListener {
                 val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
                 startActivity(intent)
             }
 
-            btnBackLogin.setOnClickListener {
+            backButtonLogin.setOnClickListener {
                 finish()
             }
         }

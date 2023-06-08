@@ -15,6 +15,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ResultSearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.FavoriteActivity"
             android:exported="false" />
         <activity
