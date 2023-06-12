@@ -5,20 +5,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.fashionism.fashionismuserapp.R
 import com.fashionism.fashionismuserapp.adapter.FashionItemAdapter
 import com.fashionism.fashionismuserapp.adapter.FavProductHomeItemAdapter
 import com.fashionism.fashionismuserapp.data.db.ProductDetail
+import com.fashionism.fashionismuserapp.data.session.UserSession
+import com.fashionism.fashionismuserapp.data.session.UserSessionViewModel
+import com.fashionism.fashionismuserapp.data.session.UserSessionViewModelFactory
 import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModel
 import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModelFactory
 import com.fashionism.fashionismuserapp.databinding.FragmentHomeBinding
 import com.fashionism.fashionismuserapp.tools.GridSpacingItemDecoration
+import com.fashionism.fashionismuserapp.tools.Helper.showLoading
+import com.fashionism.fashionismuserapp.tools.shortenText
 import com.fashionism.fashionismuserapp.ui.DetailFashionActivity.Companion.EXTRA_FASHION_ITEM
 
 class HomeFragment : Fragment() {
@@ -47,7 +54,7 @@ class HomeFragment : Fragment() {
         binding.profileAccountNavigate.setOnClickListener {
             val intent = Intent(requireContext(), ChangeProfileActivity::class.java)
             startActivity(intent)
-            activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            activity?.overridePendingTransition(R.anim.slidefromtop_in, R.anim.slidefromtop_out)
         }
 
         rvLikedProduct = binding.rvFavorite
@@ -81,7 +88,7 @@ class HomeFragment : Fragment() {
                 }
             })
 
-            val suggestionsProductAdapter = FashionItemAdapter(products)
+            val suggestionsProductAdapter = FashionItemAdapter(products, false)
             rvSuggestionsProduct.adapter = suggestionsProductAdapter
 
             suggestionsProductAdapter.setOnItemClickCallback(object :
@@ -92,33 +99,40 @@ class HomeFragment : Fragment() {
             })
         }
 
-        mainViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            showLoading(isLoading)
+        val userSession = UserSession.getInstance(requireActivity().dataStore)
+        val userSessionViewModel =
+            ViewModelProvider(
+                this,
+                UserSessionViewModelFactory(userSession)
+            )[UserSessionViewModel::class.java]
+
+        userSessionViewModel.getAllUserData().observe(viewLifecycleOwner) { dataUser ->
+            mainViewModel.getProfile(dataUser.idUser, dataUser.token)
         }
 
-        // showRecyclerList()
+        mainViewModel.userProfile.observe(viewLifecycleOwner) { userProfile ->
+            binding.greetingUserName.text = shortenText(userProfile.data.name, 30)
+            Glide.with(requireContext())
+                .load(userProfile.data.avatar)
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .error(R.drawable.ic_launcher_foreground)
+                .into(binding.profileAccountNavigate)
+        }
 
-//        rvSuggestionsProduct = binding.rvFashionItem
-//        val layoutManager = GridLayoutManager(requireContext(), 2)
-//        val spacing = resources.getDimensionPixelSize(R.dimen.grid_spacing)
-//        val includeBottom = true
-//
-//        rvSuggestionsProduct.layoutManager = layoutManager
-//        rvSuggestionsProduct.addItemDecoration(
-//            GridSpacingItemDecoration(
-//                spacing,
-//                includeBottom
-//            )
-//        )
-//        rvSuggestionsProduct.setHasFixedSize(true)
-//        val suggestionsProductAdapter = FashionItemAdapter(DummyFashion.dummy)
-//        rvSuggestionsProduct.adapter = suggestionsProductAdapter
+//        binding.searchFashionItem.setOnClickListener {
+//            val intent = Intent(requireContext(), SearchActivity::class.java)
+//            startActivity(intent)
+//        }
+
+        mainViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            showLoading(isLoading, binding.progressBarHome)
+        }
+
+        mainViewModel.message.observe(viewLifecycleOwner) { message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        }
 
         return root
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBarHome.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun showSelectedFashion(fashionItem: ProductDetail) {

@@ -36,12 +36,29 @@
             app:layout_constraintStart_toStartOf="@+id/profile_image"
             app:layout_constraintTop_toTopOf="@+id/btnBackRegister" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/editImageIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="-5dp"
+            android:layout_marginBottom="32dp"
+            android:visibility="gone"
+            android:src="@drawable/baseline_edit_24"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_image"
+            app:layout_constraintEnd_toEndOf="@+id/profile_image"
+            app:layout_constraintTop_toTopOf="@+id/profile_image" />
+
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profile_image"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginTop="40dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:elevation="-1dp"
+            android:padding="5dp"
             android:src="@drawable/ic_local_account"
+            app:shapeAppearanceOverlay="@style/CircleImage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnBackRegister" />
@@ -72,8 +89,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="3dp"
-            android:visibility="gone"
             android:indeterminateTint="#4942E4"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -98,8 +115,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="53dp"
-            app:hintEnabled="false"
             android:visibility="gone"
+            app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/nameSeeEditProfile"
             app:layout_constraintTop_toBottomOf="@+id/nameSeeEditProfile">
@@ -208,8 +225,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:elevation="3dp"
-            app:hintEnabled="false"
             android:visibility="gone"
+            app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="@+id/inputEmailProfile"
             app:layout_constraintStart_toStartOf="@+id/addressSeeEditProfile"
             app:layout_constraintTop_toBottomOf="@+id/addressSeeEditProfile">
@@ -257,10 +274,10 @@
             android:id="@+id/phoneSeeEditProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins"
             android:text="@string/phoneTitleChangeProfile"
             android:visibility="gone"
-            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="@+id/addressSeeProfile"
             app:layout_constraintTop_toBottomOf="@+id/inputAddressProfile" />
 
@@ -284,8 +301,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="53dp"
             android:elevation="3dp"
-            app:hintEnabled="false"
             android:visibility="gone"
+            app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/phoneSeeEditProfile"
             app:layout_constraintTop_toBottomOf="@+id/phoneSeeEditProfile">
@@ -333,17 +350,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="53dp"
-            android:layout_marginEnd="53dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="53dp"
             android:backgroundTint="@color/button_colorbackground"
             android:contentDescription="@string/loginButtonDescription"
             android:fontFamily="@font/poppins_semibold"
             android:padding="16dp"
             android:text="@string/saveBtn"
-            android:visibility="gone"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="15sp"
+            android:visibility="gone"
             app:cornerRadius="9dp"
             app:iconGravity="start"
             app:iconPadding="18dp"

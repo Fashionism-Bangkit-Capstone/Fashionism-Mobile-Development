@@ -2,7 +2,6 @@ package com.fashionism.fashionismuserapp.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -18,6 +17,7 @@ import com.fashionism.fashionismuserapp.data.session.UserSessionViewModelFactory
 import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModel
 import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModelFactory
 import com.fashionism.fashionismuserapp.databinding.ActivityRegisterBinding
+import com.fashionism.fashionismuserapp.tools.Helper.showLoading
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -30,6 +30,13 @@ class RegisterActivity : AppCompatActivity() {
         ViewModelProvider(this, MainViewModelFactory(this))[MainViewModel::class.java]
     }
 
+    private val userSessionViewModel by lazy {
+        ViewModelProvider(
+            this,
+            UserSessionViewModelFactory(UserSession.getInstance(dataStore))
+        )[UserSessionViewModel::class.java]
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -37,20 +44,12 @@ class RegisterActivity : AppCompatActivity() {
 
         setupClickListeners()
 
-        // access dataStore from UserPreferences and when login session is true, go to HomePageActivity and finish this activity
-        val userSession = UserSession.getInstance(dataStore)
-        val userSessionViewModel =
-            ViewModelProvider(
-                this,
-                UserSessionViewModelFactory(userSession)
-            )[UserSessionViewModel::class.java]
-
         userSessionViewModel.getLoginSession().observe(this) { sessionTrue ->
             if (sessionTrue) {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                overridePendingTransition(R.anim.slidefromright_in, R.anim.slidefromright_out)
             }
         }
 
@@ -61,7 +60,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         registerViewModel.isLoading.observe(this) {
-            showLoading(it)
+            showLoading(it, binding.progressBarRegister)
         }
 
         loginViewModel.message.observe(this) { messageLogin ->
@@ -72,7 +71,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         loginViewModel.isLoading.observe(this) {
-            showLoading(it)
+            showLoading(it, binding.progressBarRegister)
         }
 
     }
@@ -98,10 +97,12 @@ class RegisterActivity : AppCompatActivity() {
             loginNavigate.setOnClickListener {
                 val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                 startActivity(intent)
+                overridePendingTransition(R.anim.slide_up_enter, R.anim.slide_up_exit)
             }
 
             btnBackRegister.setOnClickListener {
                 finish()
+                overridePendingTransition(R.anim.slidefromleft_in, R.anim.slidefromleft_out)
             }
         }
     }
@@ -168,15 +169,10 @@ class RegisterActivity : AppCompatActivity() {
                 resources.getString(R.string.registerSuccess),
                 Toast.LENGTH_SHORT
             ).show()
-            Log.d(
-                "data akun1",
-                "responseRegister: ${binding.inputEmailRegisterField.text.toString()} and ${binding.inputPasswordRegisterField.text.toString()}"
-            )
             val userLogin = LoginDataAccount(
                 binding.inputEmailRegisterField.text.toString(),
                 binding.inputPasswordRegisterField.text.toString()
             )
-            Log.d("data akun", "responseRegister: $userLogin")
             loginViewModel.login(userLogin)
         } else {
             if (message.contains("already")) {
@@ -191,7 +187,4 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBarRegister.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
 }

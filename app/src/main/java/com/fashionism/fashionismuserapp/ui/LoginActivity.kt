@@ -21,6 +21,7 @@ import com.fashionism.fashionismuserapp.data.session.UserSessionViewModelFactory
 import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModel
 import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModelFactory
 import com.fashionism.fashionismuserapp.databinding.ActivityLoginBinding
+import com.fashionism.fashionismuserapp.tools.Helper.showLoading
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 
@@ -52,8 +53,7 @@ class LoginActivity : AppCompatActivity() {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-
+                overridePendingTransition(R.anim.slidefromright_in, R.anim.slidefromright_out)
             }
         }
 
@@ -65,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginViewModel.isLoading.observe(this) {
-            showLoading(it)
+            showLoading(it, binding.progressBarLogin)
         }
     }
 
@@ -105,16 +105,14 @@ class LoginActivity : AppCompatActivity() {
             signUpNavigate.setOnClickListener {
                 val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
                 startActivity(intent)
+                overridePendingTransition(R.anim.slide_up_enter, R.anim.slide_up_exit)
             }
 
             backButtonLogin.setOnClickListener {
                 finish()
+                overridePendingTransition(R.anim.slidefromleft_in, R.anim.slidefromleft_out)
             }
         }
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBarLogin.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun responseLogin(

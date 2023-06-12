@@ -11,8 +11,14 @@ import com.fashionism.fashionismuserapp.R
 import com.fashionism.fashionismuserapp.data.session.UserSession
 import com.fashionism.fashionismuserapp.data.session.UserSessionViewModel
 import com.fashionism.fashionismuserapp.data.session.UserSessionViewModelFactory
+import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModel
+import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModelFactory
 
 class SplashScreenActivity : AppCompatActivity() {
+    private val mainViewModel: MainViewModel by lazy {
+        ViewModelProvider(this, MainViewModelFactory(this))[MainViewModel::class.java]
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
@@ -20,6 +26,11 @@ class SplashScreenActivity : AppCompatActivity() {
         val pref = UserSession.getInstance(dataStore)
         val loginViewModel =
             ViewModelProvider(this, UserSessionViewModelFactory(pref))[UserSessionViewModel::class.java]
+
+        mainViewModel.userProfile.observe(this) {
+            loginViewModel.saveName(it.data.name)
+            loginViewModel.saveEmail(it.data.email)
+        }
 
         loginViewModel.getLoginSession().observe(this) { isLoggedIn ->
 

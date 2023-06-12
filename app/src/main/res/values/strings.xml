@@ -22,9 +22,9 @@
     <string name="loginButtonDescription">This is a login</string>
     <string name="backgrounLoginDescription">Just an background</string>
     <string name="signupText">Don\'t have an account?</string>
-    <string name="emailRequired">Email harus diisi</string>
+    <string name="emailRequired">Email is required</string>
     <string name="emailInvalid">Email tidak valid</string>
-    <string name="passwordRequired">Password harus diisi</string>
+    <string name="passwordRequired">Password is required</string>
     <string name="passwordInvalid">Password minimal 6 karakter</string>
 
     <!--  Register  -->
@@ -34,8 +34,8 @@
     <string name="nameRequired">Nama harus diisi</string>
     <string name="phoneRequired">Nomor telepon harus diisi</string>
     <string name="phoneInvalid">Nomor telepon tidak valid</string>
-    <string name="confirmPasswordRequired">Konfirmasi Password harus diisi</string>
-    <string name="confirmPasswordInvalid">Konfirmasi password tidak sama</string>
+    <string name="confirmPasswordRequired">Confirm password is required</string>
+    <string name="confirmPasswordInvalid">Confirm Password must be same with New Password</string>
     <string name="emailAlreadyExist">Email sudah terdaftar</string>
     <string name="registerSuccess">You have successfully registered, please login!</string>
 
@@ -54,6 +54,7 @@
 
     <!--  Profile  -->
     <string name="logoutAccountProfile">Logout</string>
+    <string name="logoutSuccess">Logout Successfully</string>
     <string name="profileBtnTitle">Profile</string>
     <string name="favoritesBtnTitle">My Favorites</string>
     <string name="changePasswordBtnTitle">Change Password</string>
@@ -65,7 +66,17 @@
     <string name="addressTitleChangeProfile">Address</string>
     <string name="phoneTitleChangeProfile">Phone</string>
     <string name="editProfileBtnChangeProfile">Edit Profile</string>
+    <string name="chooseOneOption">Choose one of them</string>
     <string name="saveBtn">Save</string>
+    <string name="cancelBtn">Cancel</string>
+    <string name="cameraOption">Camera</string>
+    <string name="fileManagerOption">File Manager</string>
+
+    <!--  Change Password  -->
+    <string name="currentPasswordTitleChangePassword">Password Successfully Changed</string>
+    <string name="oldPasswordRequired">Old Password is required</string>
+    <string name="newPasswordTitleChangePassword">New Password</string>
+
 
     <!--  Welcome Screen  -->
     <string name="welcomeTitleText">Discover your Perfect style here !</string>
@@ -90,6 +101,10 @@
     <string name="newPasswordHint">New Password</string>
     <string name="buyProductCharBtn">Purchase Now</string>
 
+    <!--  Detail Product  -->
+    <string name="backButtonDetailContentDescription">For back to previous activity</string>
+    <string name="moreDetailContentDescription">More Button in detail product</string>
 
-
+    <string name="package_name">com.fashionism.fashionismuserapp</string>
+    <string name="choose_picture">Choose Picture</string>
 </resources>

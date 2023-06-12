@@ -2,9 +2,12 @@ package com.fashionism.fashionismuserapp.data.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.fashionism.fashionismuserapp.data.api.APIConfig
 import com.fashionism.fashionismuserapp.data.api.APIService
 import com.fashionism.fashionismuserapp.data.api.DummyAPIConfig
 import com.fashionism.fashionismuserapp.data.db.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,6 +24,15 @@ class MainRepository(private val apiService: APIService) {
 
     private val _product = MutableLiveData<List<ProductDetail>>()
     val product: LiveData<List<ProductDetail>> = _product
+
+    private val _category = MutableLiveData<List<Category>>()
+    val category: LiveData<List<Category>> = _category
+
+    private val _productListByCategory = MutableLiveData<List<Product>>()
+    val productListByCategory: LiveData<List<Product>> = _productListByCategory
+
+    private val _productDetail = MutableLiveData<Product>()
+    val productDetail: LiveData<Product> = _productDetail
 
     private val _userProfile = MutableLiveData<ResponseGetProfile>()
     val userProfile: LiveData<ResponseGetProfile> = _userProfile
@@ -100,7 +112,6 @@ class MainRepository(private val apiService: APIService) {
                 _isLoading.value = false
 
                 if (response.isSuccessful) {
-                    _message.value = "Berhasil mendapatkan data"
                     _userProfile.value = response.body()
                 } else {
                     when (response.code()) {
@@ -121,9 +132,18 @@ class MainRepository(private val apiService: APIService) {
         })
     }
 
-    fun updateProfileUser(idUser: Int, requestUpdate: ProfileDetail, token: String) {
+    fun updateProfileUser(
+        idUser: Int,
+        name: RequestBody,
+        email: RequestBody,
+        phone: RequestBody?,
+        address: RequestBody?,
+        avatar: MultipartBody.Part,
+        token: String
+    ) {
         _isLoading.value = true
-        val api = apiService.updateUser(idUser, requestUpdate, "Bearer $token")
+        val api =
+            apiService.updateUser(idUser, name, email, phone, address, avatar, "  Bearer $token")
         api.enqueue(object : Callback<ResponseUpdateProfile> {
             override fun onResponse(
                 call: Call<ResponseUpdateProfile>,
@@ -132,7 +152,7 @@ class MainRepository(private val apiService: APIService) {
                 _isLoading.value = false
 
                 if (response.isSuccessful) {
-                    _message.value = "Berhasil mengubah data"
+                    _message.value = "Profile berhasil diubah"
                 } else {
                     when (response.code()) {
                         401 -> _message.value =
@@ -195,7 +215,6 @@ class MainRepository(private val apiService: APIService) {
                 _isLoading.value = false
 
                 if (response.isSuccessful) {
-                    _message.value = "Berhasil mendapatkan data"
                     _product.value = response.body()
                 } else {
                     when (response.code()) {
@@ -216,4 +235,96 @@ class MainRepository(private val apiService: APIService) {
         })
     }
 
+    fun getAllCategory(token: String) {
+        _isLoading.value = true
+        val api = APIConfig.getApiServiceV2().getAllCategory(token)
+        api.enqueue(object : Callback<ResponseGetAllCategory> {
+            override fun onResponse(
+                call: Call<ResponseGetAllCategory>,
+                response: Response<ResponseGetAllCategory>
+            ) {
+                _isLoading.value = false
+
+                if (response.isSuccessful) {
+                    _category.value = response.body()?.data
+                } else {
+                    when (response.code()) {
+                        401 -> _message.value =
+                            response.message()
+                        408 -> _message.value =
+                            "Koneksi internet anda lambat, silahkan coba lagi"
+                        else -> _message.value = "Pesan error: " + response.message()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGetAllCategory>, t: Throwable) {
+                _isLoading.value = false
+                _message.value = "Pesan error: " + t.message.toString()
+            }
+
+        })
+    }
+
+    fun getProductByCategory(idCategory: Int, token: String) {
+        _isLoading.value = true
+        val api = APIConfig.getApiServiceV2().getProductByCategory(idCategory, token)
+        api.enqueue(object : Callback<ResponseProductByCategory> {
+            override fun onResponse(
+                call: Call<ResponseProductByCategory>,
+                response: Response<ResponseProductByCategory>
+            ) {
+                _isLoading.value = false
+
+                if (response.isSuccessful) {
+                    _productListByCategory.value = response.body()?.data
+                } else {
+                    when (response.code()) {
+                        401 -> _message.value =
+                            response.message()
+                        408 -> _message.value =
+                            "Koneksi internet anda lambat, silahkan coba lagi"
+                        else -> _message.value = "Pesan error: " + response.message()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseProductByCategory>, t: Throwable) {
+                _isLoading.value = false
+                _message.value = "Pesan error: " + t.message.toString()
+            }
+
+        })
+    }
+
+    fun getSpecificProduct(idCategory: Int, token: String) {
+        _isLoading.value = true
+        val api = APIConfig.getApiServiceV2().getProductDetail(idCategory, token)
+        api.enqueue(object : Callback<ResponseGetSpecificProduct> {
+            override fun onResponse(
+                call: Call<ResponseGetSpecificProduct>,
+                response: Response<ResponseGetSpecificProduct>
+            ) {
+                _isLoading.value = false
+
+                if (response.isSuccessful) {
+                    _productDetail.value = response.body()?.data
+                } else {
+                    when (response.code()) {
+                        401 -> _message.value =
+                            response.message()
+                        408 -> _message.value =
+                            "Koneksi internet anda lambat, silahkan coba lagi"
+                        else -> _message.value = "Pesan error: " + response.message()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGetSpecificProduct>, t: Throwable) {
+                _isLoading.value = false
+                _message.value = "Pesan error: " + t.message.toString()
+            }
+
+        })
+    }
 }

@@ -1,6 +1,7 @@
 package com.fashionism.fashionismuserapp.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -9,7 +10,7 @@ import com.fashionism.fashionismuserapp.data.db.ProductDetail
 import com.fashionism.fashionismuserapp.data.dummy.DummyData
 import com.fashionism.fashionismuserapp.databinding.ItemFashionBinding
 
-class FashionItemAdapter(private val list: List<ProductDetail>) :
+class FashionItemAdapter(private val list: List<ProductDetail>, private val favoritesMark: Boolean) :
     RecyclerView.Adapter<FashionItemAdapter.ViewHolder>() {
 
     private lateinit var onItemClickCallback: OnItemClickCallback
@@ -22,7 +23,7 @@ class FashionItemAdapter(private val list: List<ProductDetail>) :
         fun onItemClicked(data: ProductDetail)
     }
 
-    class ViewHolder(private val binding: ItemFashionBinding) :
+    class ViewHolder(private val binding: ItemFashionBinding, private val favoritesMark: Boolean) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: ProductDetail) {
             Glide.with(itemView.context)
@@ -34,7 +35,16 @@ class FashionItemAdapter(private val list: List<ProductDetail>) :
             binding.tvFashionName.text = data.product
             binding.tvPrice.text = data.price
             binding.tvStoreName.text = data.storeName
+
+            if (favoritesMark) {
+                binding.ivFavoriteItem.visibility = View.GONE
+                binding.ivFavoriteItemFill.visibility = View.VISIBLE
+            } else {
+                binding.ivFavoriteItem.visibility = View.VISIBLE
+                binding.ivFavoriteItemFill.visibility = View.GONE
+            }
         }
+
     }
 
     override fun onCreateViewHolder(
@@ -42,7 +52,7 @@ class FashionItemAdapter(private val list: List<ProductDetail>) :
         viewType: Int
     ): ViewHolder {
         val binding = ItemFashionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(binding, favoritesMark)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

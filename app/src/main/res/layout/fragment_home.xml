@@ -41,7 +41,7 @@
                 app:layout_constraintTop_toTopOf="@+id/greetingUserTitle" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/materialButton"
+                android:id="@+id/searchFashionItem"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
@@ -95,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semibold"
-                android:text="@string/userNameHome"
+                tools:text="@string/userNameHome"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/greetingUserTitle"

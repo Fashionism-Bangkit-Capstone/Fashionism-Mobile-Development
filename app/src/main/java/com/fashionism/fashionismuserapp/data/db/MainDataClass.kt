@@ -136,3 +136,34 @@ data class ProductDetail(
     var description: String,
     var id: String,
 ) : Parcelable
+
+data class ResponseGetAllCategory(
+    var error: Boolean,
+    var data: List<Category >
+)
+
+data class Category (
+    var id: Int,
+    var name: String,
+    var createdAt: String,
+    var updatedAt: String,
+)
+
+data class ResponseProductByCategory(
+    var error: Boolean,
+    var data: List<Product>
+)
+
+data class ResponseGetSpecificProduct(
+    var error: Boolean,
+    var data: Product
+)
+
+data class Product(
+    var id: Int,
+    var name: String,
+    var description: String,
+    var stock: Int,
+    var price: Int,
+    var product_image: String,
+)

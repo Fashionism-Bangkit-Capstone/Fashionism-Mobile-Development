@@ -1,23 +1,38 @@
 package com.fashionism.fashionismuserapp.ui
 
+import android.app.Activity
+import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.fashionism.fashionismuserapp.R
-import com.fashionism.fashionismuserapp.data.db.ProfileDetail
 import com.fashionism.fashionismuserapp.data.session.UserSession
 import com.fashionism.fashionismuserapp.data.session.UserSessionViewModel
 import com.fashionism.fashionismuserapp.data.session.UserSessionViewModelFactory
 import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModel
 import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModelFactory
 import com.fashionism.fashionismuserapp.databinding.ActivityChangeProfileBinding
+import com.fashionism.fashionismuserapp.tools.CameraUtils
+import com.fashionism.fashionismuserapp.tools.CameraUtils.startTakePhoto
+import com.fashionism.fashionismuserapp.tools.FileManagerUtils
+import com.fashionism.fashionismuserapp.tools.FileManagerUtils.REQUEST_PICK_IMAGE
+import com.fashionism.fashionismuserapp.tools.Helper.reduceFileImage
+import com.fashionism.fashionismuserapp.tools.Helper.showLoading
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.imageview.ShapeableImageView
-import com.google.android.material.textview.MaterialTextView
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 
 
 class ChangeProfileActivity : AppCompatActivity() {
@@ -29,19 +44,22 @@ class ChangeProfileActivity : AppCompatActivity() {
         ViewModelProvider(this, MainViewModelFactory(this))[MainViewModel::class.java]
     }
 
+    private val userSessionViewModel by lazy {
+        ViewModelProvider(
+            this,
+            UserSessionViewModelFactory(UserSession.getInstance(dataStore))
+        )[UserSessionViewModel::class.java]
+    }
+
     private var idUser = 0
+    private var getFile: File? = null
     private lateinit var token: String
+    private var isEditEnable = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        val userSession = UserSession.getInstance(dataStore)
-        val userSessionViewModel =
-            ViewModelProvider(
-                this,
-                UserSessionViewModelFactory(userSession)
-            )[UserSessionViewModel::class.java]
 
         userSessionViewModel.getAllUserData().observe(this) { dataUser ->
             idUser = dataUser.idUser
@@ -66,14 +84,18 @@ class ChangeProfileActivity : AppCompatActivity() {
         }
 
         mainViewModel.isLoading.observe(this) { isLoading ->
-            showLoading(isLoading)
+            showLoading(isLoading, binding.progressBarChangeProfile)
         }
 
         binding.editProfileBtn.setOnClickListener {
+            isEditEnable = true
             binding.titleSeeProfile.text = resources.getString(R.string.editProfileBtnChangeProfile)
             binding.editProfileBtn.text = resources.getString(R.string.saveBtn)
             hiddenTextView()
             showEditText()
+            binding.profileImage.strokeColor = ColorStateList.valueOf(Color.RED)
+            binding.profileImage.strokeWidth = 3F
+            binding.editImageIcon.visibility = View.VISIBLE
             mainViewModel.userProfile.observe(this) { userProfile ->
                 binding.inputNameProfileField.setText(userProfile.data.name)
                 binding.inputEmailProfileField.setText(userProfile.data.email)
@@ -82,8 +104,21 @@ class ChangeProfileActivity : AppCompatActivity() {
             }
         }
 
+        binding.editImageIcon.setOnClickListener {
+            if (isEditEnable) {
+                showPopup()
+            }
+        }
+
+        binding.profileImage.setOnClickListener {
+            if (isEditEnable) {
+                showPopup()
+            }
+        }
+
         binding.btnBackRegister.setOnClickListener {
             finish()
+            overridePendingTransition(R.anim.slidefrombottom_in, R.anim.slidefrombottom_out)
         }
 
         binding.saveProfileBtn.setOnClickListener {
@@ -94,21 +129,75 @@ class ChangeProfileActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("DEPRECATION")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CameraUtils.REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            getFile = CameraUtils.handleActivityResult(requestCode, resultCode)
+            // Lakukan sesuatu dengan file foto yang diambil
+            if (getFile != null) {
+                // Contoh: Tampilkan gambar di ImageView
+                val bitmap = BitmapFactory.decodeFile(getFile!!.absolutePath)
+                binding.profileImage.setImageBitmap(bitmap)
+            }
+        }
+
+        if (requestCode == REQUEST_PICK_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
+            val selectedImg: Uri? = data.data
+            if (selectedImg != null) {
+                val myFile = FileManagerUtils.handleActivityResult(
+                    requestCode = REQUEST_PICK_IMAGE,
+                    resultCode = Activity.RESULT_OK,
+                    data = data,
+                    this
+                )
+                getFile = myFile
+                binding.profileImage.setImageURI(selectedImg)
+            }
+        }
+    }
+
+    private fun showPopup() {
+        val options = arrayOf(
+            resources.getString(R.string.cameraOption),
+            resources.getString(R.string.fileManagerOption),
+            resources.getString(R.string.cancelBtn)
+        )
+        AlertDialog.Builder(this)
+            .setTitle(resources.getString(R.string.chooseOneOption))
+            .setItems(options) { dialog, which ->
+                when (which) {
+                    0 -> {
+                        // Camera option selected
+                        startTakePhoto(this)
+                        dialog.dismiss()
+                    }
+                    1 -> {
+                        // File Manager option selected
+                        FileManagerUtils.startGallery(this)
+                        dialog.dismiss()
+                    }
+                    2 -> {
+                        // Cancel option selected
+                        dialog.dismiss()
+                    }
+                }
+            }
+            .create()
+            .show()
+    }
+
     private fun isInputValid(): Boolean {
         var isValid = true
         if (binding.inputNameProfileField.text.toString().isEmpty()) {
-            binding.inputNameProfileField.error = "Name is required"
+            binding.inputNameProfileField.error = resources.getString(R.string.nameRequired)
             isValid = false
         }
         if (binding.inputEmailProfileField.text.toString().isEmpty()) {
-            binding.inputEmailProfileField.error = "Email is required"
+            binding.inputEmailProfileField.error = resources.getString(R.string.emailRequired)
             isValid = false
         }
         return isValid
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBarChangeProfile.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun hiddenTextView() {
@@ -122,20 +211,6 @@ class ChangeProfileActivity : AppCompatActivity() {
         binding.phoneSeeProfile.visibility = View.GONE
         binding.addressSeeProfile.visibility = View.GONE
         binding.editProfileBtn.visibility = View.GONE
-    }
-
-    private fun showTextView() {
-        binding.nameSeeProfileValue.visibility = View.VISIBLE
-        binding.emailSeeProfileValue.visibility = View.VISIBLE
-        binding.phoneSeeProfileValue.visibility = View.VISIBLE
-        binding.addressSeeProfileValue.visibility = View.VISIBLE
-    }
-
-    private fun hiddenEditText() {
-        binding.inputNameProfile.visibility = View.GONE
-        binding.inputEmailProfile.visibility = View.GONE
-        binding.inputPhoneProfile.visibility = View.GONE
-        binding.inputAddressProfile.visibility = View.GONE
     }
 
     private fun showEditText() {
@@ -152,32 +227,52 @@ class ChangeProfileActivity : AppCompatActivity() {
     }
 
     private fun changeDataProfile() {
-        val dataUser = ProfileDetail(
+        val imageMultiPart = if (getFile == null) {
+            MultipartBody.Part.createFormData(
+                "avatar",
+                ""
+            )
+        } else {
+            val file = reduceFileImage(getFile as File)
+            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            MultipartBody.Part.createFormData(
+                "avatar",
+                file.name,
+                requestImageFile
+            )
+        }
+
+        val name = binding.inputNameProfileField.text.toString().trim()
+        val email = binding.inputEmailProfileField.text.toString().trim()
+        val phone = binding.inputPhoneProfileField.text.toString().trim()
+        val address = binding.inputAddressProfileField.text.toString().trim()
+
+        val namePart = name.toRequestBody("text/plain".toMediaTypeOrNull())
+        val emailPart = email.toRequestBody("text/plain".toMediaTypeOrNull())
+        val phonePart = phone.toRequestBody("text/plain".toMediaTypeOrNull())
+        val addressPart = address.toRequestBody("text/plain".toMediaTypeOrNull())
+
+        mainViewModel.updateProfile(
             idUser,
-            binding.inputNameProfileField.text.toString(),
-            binding.inputEmailProfileField.text.toString(),
-            binding.inputPhoneProfileField.text.toString(),
-            binding.inputAddressProfileField.text.toString()
+            namePart,
+            emailPart,
+            phonePart,
+            addressPart,
+            imageMultiPart,
+            token
         )
-        mainViewModel.updateProfile(idUser, dataUser, token)
     }
 
     private fun showBottomSheetDialog() {
 
         val bottomSheetDialog = BottomSheetDialog(this)
         bottomSheetDialog.setContentView(R.layout.popup_savedata)
-        val warnIcon = bottomSheetDialog.findViewById<ShapeableImageView>(R.id.warnIconSave)
-        val changeTitle =
-            bottomSheetDialog.findViewById<MaterialTextView>(R.id.changeConfirmationNotify)
-        val changeDesc =
-            bottomSheetDialog.findViewById<MaterialTextView>(R.id.changeConfirmationNotifyDesc)
         val save = bottomSheetDialog.findViewById<MaterialButton>(R.id.saveDataBtn)
         val close = bottomSheetDialog.findViewById<MaterialButton>(R.id.cancelDataChanges)
 
         bottomSheetDialog.show()
 
         save?.setOnClickListener {
-            Toast.makeText(applicationContext, "Data berhasil disimpan", Toast.LENGTH_LONG).show()
             changeDataProfile()
             bottomSheetDialog.dismiss()
         }
@@ -186,4 +281,5 @@ class ChangeProfileActivity : AppCompatActivity() {
             bottomSheetDialog.dismiss()
         }
     }
+
 }
