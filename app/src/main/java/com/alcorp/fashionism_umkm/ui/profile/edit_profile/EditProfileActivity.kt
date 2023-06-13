@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
@@ -17,24 +16,19 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import com.alcorp.fashionism_umkm.MainActivity
 import com.alcorp.fashionism_umkm.R
 import com.alcorp.fashionism_umkm.ViewModelFactory
-import com.alcorp.fashionism_umkm.data.remote.response.DetailOutfitData
 import com.alcorp.fashionism_umkm.data.remote.response.ProfileData
-import com.alcorp.fashionism_umkm.databinding.ActivityAddEditOutfitBinding
 import com.alcorp.fashionism_umkm.databinding.ActivityEditProfileBinding
-import com.alcorp.fashionism_umkm.ui.home.add_or_edit_outfit.AddEditOutfitActivity
-import com.alcorp.fashionism_umkm.ui.home.add_or_edit_outfit.camera.CameraActivity
-import com.alcorp.fashionism_umkm.ui.home.detail_outfit.DetailOutfitActivity
-import com.alcorp.fashionism_umkm.ui.profile.ProfileViewModel
-import com.alcorp.fashionism_umkm.utils.*
+import com.alcorp.fashionism_umkm.ui.product.add_or_edit_product.camera.CameraActivity
+import com.alcorp.fashionism_umkm.ui.profile.ProfileFragment.Companion.EDIT_PROFILE_RESULT
 import com.alcorp.fashionism_umkm.utils.Helper.checkEmailFormat
 import com.alcorp.fashionism_umkm.utils.Helper.showToast
+import com.alcorp.fashionism_umkm.utils.LoadingDialog
+import com.alcorp.fashionism_umkm.utils.PrefData
+import com.alcorp.fashionism_umkm.utils.Status
+import com.alcorp.fashionism_umkm.utils.UploadImage
 import com.bumptech.glide.Glide
-import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -63,8 +57,6 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
             } as? File
 
             getFile = myFile
-
-//            val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
 
             myFile?.let { file ->
                 Glide.with(this@EditProfileActivity)
@@ -124,8 +116,10 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setupToolbar() {
-        supportActionBar?.title = getString(R.string.title_update_profile)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.toolbar.tvToolbar.text = getString(R.string.title_update_profile)
+        binding.toolbar.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun setupView() {
@@ -206,40 +200,37 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
                         )
                     }
 
-                    lifecycleScope.launch {
-                        editProfileViewModel.updateProfile(
-                            PrefData.token,
-                            PrefData.idUser,
-                            shopName,
-                            email,
-                            phone,
-                            address,
-                            imageMultiPart
-                        )
-                        editProfileViewModel.editProfileState.collect {
-                            when (it.status) {
-                                Status.LOADING -> loadingDialog.showLoading(true)
+                    editProfileViewModel.updateProfile(
+                        PrefData.token,
+                        PrefData.idUser,
+                        shopName,
+                        email,
+                        phone,
+                        address,
+                        imageMultiPart
+                    )
+                    editProfileViewModel.editProfileState.observe(this) {
+                        when (it.status) {
+                            Status.LOADING -> loadingDialog.showLoading(true)
 
-                                Status.SUCCESS -> {
-                                    loadingDialog.showLoading(false)
-                                    it.data?.let { data ->
-                                        showToast(
-                                            this@EditProfileActivity,
-                                            data.message.toString()
-                                        )
-                                        val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
-                                        startActivity(intent)
-                                        finish()
-                                    }
-                                }
-
-                                else -> {
-                                    loadingDialog.showLoading(false)
+                            Status.SUCCESS -> {
+                                loadingDialog.showLoading(false)
+                                it.data?.let { data ->
                                     showToast(
                                         this@EditProfileActivity,
-                                        it.data?.message.toString()
+                                        data.message.toString()
                                     )
+                                    setResult(EDIT_PROFILE_RESULT)
+                                    finish()
                                 }
+                            }
+
+                            else -> {
+                                loadingDialog.showLoading(false)
+                                showToast(
+                                    this@EditProfileActivity,
+                                    it.message.toString()
+                                )
                             }
                         }
                     }
@@ -259,15 +250,6 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
             binding.btnUpload -> uploadDialog()
             binding.btnSubmit -> submitData()
         }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     companion object {

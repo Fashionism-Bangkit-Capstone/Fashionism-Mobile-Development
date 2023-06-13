@@ -1,27 +1,18 @@
 package com.alcorp.fashionism_umkm.ui.profile.change_password
 
-import android.content.Intent
-import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
-import com.alcorp.fashionism_umkm.MainActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.alcorp.fashionism_umkm.R
 import com.alcorp.fashionism_umkm.ViewModelFactory
 import com.alcorp.fashionism_umkm.databinding.ActivityChangePasswordBinding
-import com.alcorp.fashionism_umkm.databinding.ActivityLoginBinding
-import com.alcorp.fashionism_umkm.ui.auth.login.LoginViewModel
-import com.alcorp.fashionism_umkm.utils.Helper
 import com.alcorp.fashionism_umkm.utils.Helper.showToast
 import com.alcorp.fashionism_umkm.utils.LoadingDialog
 import com.alcorp.fashionism_umkm.utils.PrefData
 import com.alcorp.fashionism_umkm.utils.Status
-import kotlinx.coroutines.launch
 
 class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -46,8 +37,10 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setupToolbar() {
-        supportActionBar?.title = getString(R.string.title_change_password)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.toolbar.tvToolbar.text = getString(R.string.title_change_password)
+        binding.toolbar.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun setupView() {
@@ -62,22 +55,43 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener {
 
         if (passwordOld.length >= 6 || passwordNew.length >= 6 || passwordConf.length >= 6) {
             if (passwordNew == passwordConf) {
-                lifecycleScope.launch {
-                    changePasswordViewModel.changePassword(PrefData.token, PrefData.idUser, passwordOld, passwordNew, passwordConf)
-                    changePasswordViewModel.changePasswordState.collect {
-                        when (it.status) {
-                            Status.LOADING -> loadingDialog.showLoading(true)
+//                lifecycleScope.launch {
+//                    changePasswordViewModel.changePassword(PrefData.token, PrefData.idUser, passwordOld, passwordNew, passwordConf)
+//                    changePasswordViewModel.changePasswordState.collect {
+//                        when (it.status) {
+//                            Status.LOADING -> loadingDialog.showLoading(true)
+//
+//                            Status.SUCCESS -> {
+//                                loadingDialog.showLoading(false)
+//                                it.data.let { data ->
+//                                    showToast(this@ChangePasswordActivity, data?.message.toString())
+//                                    finish()
+//                                }
+//                            }
+//
+//                            else -> {
+//                                loadingDialog.showLoading(false)
+//                                showToast(this@ChangePasswordActivity, it.data?.error.toString())
+//                            }
+//                        }
+//                    }
+//                }
+                changePasswordViewModel.changePassword(PrefData.token, PrefData.idUser, passwordOld, passwordNew, passwordConf)
+                changePasswordViewModel.changePasswordState.observe(this) {
+                    when (it.status) {
+                        Status.LOADING -> loadingDialog.showLoading(true)
 
-                            Status.SUCCESS -> {
-                                loadingDialog.showLoading(false)
-                                showToast(this@ChangePasswordActivity, it.data?.message.toString())
+                        Status.SUCCESS -> {
+                            loadingDialog.showLoading(false)
+                            it.data.let { data ->
+                                showToast(this@ChangePasswordActivity, data?.message.toString())
                                 finish()
                             }
+                        }
 
-                            else -> {
-                                loadingDialog.showLoading(false)
-                                showToast(this@ChangePasswordActivity, it.data?.message.toString())
-                            }
+                        else -> {
+                            loadingDialog.showLoading(false)
+                            showToast(this@ChangePasswordActivity, it.message.toString())
                         }
                     }
                 }
@@ -93,12 +107,5 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener {
         when (view) {
             binding.btnSubmit -> submitData()
         }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-        }
-        return super.onOptionsItemSelected(item)
     }
 }

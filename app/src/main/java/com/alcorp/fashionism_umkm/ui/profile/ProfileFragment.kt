@@ -1,20 +1,22 @@
 package com.alcorp.fashionism_umkm.ui.profile
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.alcorp.fashionism_umkm.R
 import com.alcorp.fashionism_umkm.ViewModelFactory
 import com.alcorp.fashionism_umkm.data.remote.response.ProfileData
 import com.alcorp.fashionism_umkm.databinding.FragmentProfileBinding
 import com.alcorp.fashionism_umkm.ui.auth.login.LoginActivity
-import com.alcorp.fashionism_umkm.ui.home.add_or_edit_outfit.AddEditOutfitActivity
 import com.alcorp.fashionism_umkm.ui.profile.change_password.ChangePasswordActivity
 import com.alcorp.fashionism_umkm.ui.profile.edit_profile.EditProfileActivity
 import com.alcorp.fashionism_umkm.ui.profile.edit_profile.EditProfileActivity.Companion.EXTRA_EDIT_PROFILE
@@ -23,10 +25,8 @@ import com.alcorp.fashionism_umkm.utils.LoadingDialog
 import com.alcorp.fashionism_umkm.utils.PrefData
 import com.alcorp.fashionism_umkm.utils.Status
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import kotlinx.coroutines.launch
 
-class ProfileFragment : Fragment(), View.OnClickListener {
+class ProfileFragment : Fragment(), View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -39,39 +39,18 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         ViewModelFactory.getInstance(requireActivity())
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         init()
-
-        return root
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_profile, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menu_update_profile -> {
-                val intent = Intent(requireContext(), EditProfileActivity::class.java)
-                intent.putExtra(EXTRA_EDIT_PROFILE, profileData)
-                startActivity(intent)
-                requireActivity().finish()
-            }
-            R.id.menu_change_password -> {
-                val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
-                startActivity(intent)
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun init() {
@@ -81,39 +60,44 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
     private fun setupView() {
         pref = requireActivity().getSharedPreferences("fashionism_umkm", AppCompatActivity.MODE_PRIVATE)
+        PrefData.token = "Bearer ${pref.getString("access_token", "").toString()}"
+        PrefData.idUser = pref.getString("id", "").toString()
+
         loadingDialog = LoadingDialog(requireContext())
 
-        binding.btnUpdate.setOnClickListener(this)
+        binding.btnUpdateProfile.setOnClickListener(this)
+        binding.btnChangePassword.setOnClickListener(this)
+        binding.btnHelpCenter.setOnClickListener(this)
+        binding.btnLogout.setOnClickListener(this)
+        binding.refreshProfile.setOnRefreshListener(this)
     }
 
     private fun loadData() {
-        lifecycleScope.launch {
-            profileViewModel.getProfile(PrefData.token, PrefData.idUser)
-            profileViewModel.profileState.collect {
-                when (it.status) {
-                    Status.LOADING -> loadingDialog.showLoading(true)
+        profileViewModel.getProfile(PrefData.token, PrefData.idUser)
+        profileViewModel.profileState.observe(requireActivity()) {
+            when (it.status) {
+                Status.LOADING -> loadingDialog.showLoading(true)
 
-                    Status.SUCCESS -> {
-                        loadingDialog.showLoading(false)
-                        it.data?.let { profile ->
+                Status.SUCCESS -> {
+                    loadingDialog.showLoading(false)
+                    it.data?.let { profile ->
+                        checkIfFragmentAttached {
                             profileData = ProfileData(profile.data?.id, profile.data?.name, profile.data?.email, profile.data?.phone, profile.data?.address, profile.data?.avatar)
-                            Glide.with(requireActivity())
+                            Glide.with(requireContext())
                                 .load(profile.data?.avatar)
-                                .error(ContextCompat.getDrawable(requireActivity(), R.drawable.default_image))
-                                .placeholder(ContextCompat.getDrawable(requireActivity(), R.drawable.default_image))
+                                .error(ContextCompat.getDrawable(requireContext(), R.drawable.default_image))
+                                .placeholder(ContextCompat.getDrawable(requireContext(), R.drawable.default_image))
                                 .into(binding.ivProfile)
 
                             binding.tvShopName.text = profile.data?.name
                             binding.tvEmail.text = profile.data?.email
-                            binding.tvPhone.text = profile.data?.phone
-                            binding.tvAddress.text = profile.data?.address
                         }
                     }
+                }
 
-                    else -> {
-                        loadingDialog.showLoading(false)
-                        showToast(requireContext(), it.message.toString())
-                    }
+                else -> {
+                    loadingDialog.showLoading(false)
+                    showToast(requireContext(), it.message.toString())
                 }
             }
         }
@@ -121,17 +105,51 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(view: View) {
         when (view) {
-            binding.btnUpdate -> {
+            binding.btnUpdateProfile -> {
+                val intent = Intent(requireContext(), EditProfileActivity::class.java)
+                intent.putExtra(EXTRA_EDIT_PROFILE, profileData)
+                startActivityForResult(intent, EDIT_PROFILE_RESULT)
+            }
+            binding.btnChangePassword -> {
+                val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
+                startActivity(intent)
+            }
+            binding.btnHelpCenter -> {
+                showToast(requireContext(), resources.getString(R.string.toast_unreleased_feature))
+            }
+            binding.btnLogout -> {
                 prefEdit = pref.edit()
                 prefEdit.clear().apply()
-                startActivity(Intent(requireActivity(), LoginActivity::class.java))
+                startActivity(Intent(requireContext(), LoginActivity::class.java))
                 requireActivity().finish()
             }
         }
     }
 
+    private fun checkIfFragmentAttached(operation: Context.() -> Unit) {
+        if (isAdded && context != null) {
+            operation(requireContext())
+        }
+    }
+
+    override fun onRefresh() {
+        loadData()
+        binding.refreshProfile.isRefreshing = false
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == EDIT_PROFILE_RESULT) {
+            loadData()
+        }
+    }
+
+    companion object {
+        const val EDIT_PROFILE_RESULT = 3
     }
 }

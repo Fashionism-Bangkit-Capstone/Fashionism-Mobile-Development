@@ -10,18 +10,15 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.alcorp.fashionism_umkm.MainActivity
 import com.alcorp.fashionism_umkm.R
 import com.alcorp.fashionism_umkm.ViewModelFactory
 import com.alcorp.fashionism_umkm.databinding.ActivityLoginBinding
-import com.alcorp.fashionism_umkm.ui.auth.signup.SignUpActivity
+import com.alcorp.fashionism_umkm.ui.auth.register.RegisterActivity
 import com.alcorp.fashionism_umkm.utils.Helper.checkEmailFormat
 import com.alcorp.fashionism_umkm.utils.Helper.showToast
 import com.alcorp.fashionism_umkm.utils.LoadingDialog
-import com.alcorp.fashionism_umkm.utils.PrefData
 import com.alcorp.fashionism_umkm.utils.Status
-import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -84,32 +81,30 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         if (checkEmailFormat(email)) {
             if (password.length >= 6) {
-                lifecycleScope.launch {
-                    loginViewModel.loginUser(email, password)
-                    loginViewModel.loginState.collect {
-                        when (it.status) {
-                            Status.LOADING -> loadingDialog.showLoading(true)
+                loginViewModel.loginUser(email, password)
+                loginViewModel.loginState.observe(this) {
+                    when (it.status) {
+                        Status.LOADING -> loadingDialog.showLoading(true)
 
-                            Status.SUCCESS -> {
-                                loadingDialog.showLoading(false)
-                                it.data?.let { login ->
-                                    prefEdit = pref.edit()
-                                    prefEdit.putString("id", login.data?.id!!)
-                                    prefEdit.putString("access_token", login.data.access_token)
-                                    prefEdit.apply()
+                        Status.SUCCESS -> {
+                            loadingDialog.showLoading(false)
+                            it.data?.let { login ->
+                                prefEdit = pref.edit()
+                                prefEdit.putString("id", login.data?.id!!)
+                                prefEdit.putString("access_token", login.data.access_token)
+                                prefEdit.apply()
 
-                                    showToast(this@LoginActivity, login.message.toString())
+                                showToast(this@LoginActivity, login.message.toString())
 
-                                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                                    startActivity(intent)
-                                    finish()
-                                }
+                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                startActivity(intent)
+                                finish()
                             }
+                        }
 
-                            else -> {
-                                loadingDialog.showLoading(false)
-                                showToast(this@LoginActivity, it.data?.message.toString())
-                            }
+                        else -> {
+                            loadingDialog.showLoading(false)
+                            showToast(this@LoginActivity, it.message.toString())
                         }
                     }
                 }
@@ -124,7 +119,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View) {
         when(view) {
             binding.tvSignUp -> {
-                val intent = Intent(this, SignUpActivity::class.java)
+                val intent = Intent(this, RegisterActivity::class.java)
                 startActivity(intent)
             }
             binding.btnLogin -> loginUser()

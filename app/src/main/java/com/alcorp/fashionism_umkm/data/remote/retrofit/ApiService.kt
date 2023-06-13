@@ -9,73 +9,103 @@ import retrofit2.http.*
 interface ApiService {
     @FormUrlEncoded
     @POST("auth/msme/signup")
-    suspend fun signUpUser (
+    fun registerUser (
         @Field("name") name: String,
         @Field("email") email: String,
         @Field("password") password: String
-    ): ApiResponse
+    ): Call<ApiResponse>
 
     @FormUrlEncoded
     @POST("auth/msme/signin")
-    suspend fun loginUser (
+    fun loginUser (
         @Field("email") email: String,
         @Field("password") password: String
-    ): LoginResponse
+    ): Call<LoginResponse>
+
+    @GET("product/total/{idUser}")
+    fun getTotalProduct(
+        @Header("Authorization") token: String,
+        @Path("idUser") idUser: String,
+    ): Call<TotalProductResponse>
+
+    @GET("product/recent/{idUser}")
+    fun getRecentProduct(
+        @Header("Authorization") token: String,
+        @Path("idUser") idUser: String,
+    ): Call<RecentProductResponse>
 
     @GET("product/{idUser}")
-    suspend fun getOutfitList(
+    fun getProductList(
         @Header("Authorization") token: String,
         @Path("idUser") idUser: String,
-    ): OutfitResponse
+    ): Call<ProductResponse>
 
-    @GET("product/{idUser}/{idOutfit}")
-    suspend fun getOutfitDetail(
+    @GET("product/{idUser}/type/{idType}")
+    fun filterProductByType(
         @Header("Authorization") token: String,
         @Path("idUser") idUser: String,
-        @Path("idOutfit") id: String
-    ): DetailOutfitResponse
+        @Path("idType") idType: String
+    ): Call<ProductResponse>
+
+    @GET("product/{idUser}/category/{idCategory}")
+    fun filterProductByCategory(
+        @Header("Authorization") token: String,
+        @Path("idUser") idUser: String,
+        @Path("idCategory") idCategory: String
+    ): Call<ProductResponse>
+
+    @GET("product/{idUser}/{idProduct}")
+    fun getProductDetail(
+        @Header("Authorization") token: String,
+        @Path("idUser") idUser: String,
+        @Path("idProduct") id: String
+    ): Call<DetailProductResponse>
 
     @Multipart
     @POST("product/{idUser}")
-    fun insertOutfit(
+    fun insertProduct(
         @Header("Authorization") token: String,
         @Path("idUser") idUser: String,
         @Part("name") name: RequestBody,
         @Part("description") description: RequestBody,
         @Part("stock") stock: RequestBody,
         @Part("price") price: RequestBody,
+        @Part("type_id") type_id: RequestBody,
+        @Part("category_id") category_id: RequestBody,
         @Part file: MultipartBody.Part,
     ): Call<ApiResponse>
 
-    @DELETE("product/{idUser}/{idOutfit}")
-    suspend fun deleteOutfit(
+    @DELETE("product/{idUser}/{idProduct}")
+    fun deleteProduct(
         @Header("Authorization") token: String,
         @Path("idUser") idUser: String,
-        @Path("idOutfit") id: String
-    ): ApiResponse
+        @Path("idProduct") id: String
+    ): Call<ApiResponse>
 
     @Multipart
-    @PUT("product/{idUser}/{idOutfit}")
-    suspend fun updateOutfit(
+    @PUT("product/{idUser}/{idProduct}")
+    fun updateProduct(
         @Header("Authorization") token: String,
         @Path("idUser") idUser: String,
-        @Path("idOutfit") idOutfit: String,
-        @Part("name") name: RequestBody?,
-        @Part("description") description: RequestBody?,
-        @Part("stock") stock: RequestBody?,
-        @Part("price") price: RequestBody?,
+        @Path("idProduct") idProduct: String,
+        @Part("name") name: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("stock") stock: RequestBody,
+        @Part("price") price: RequestBody,
+        @Part("type_id") type_id: RequestBody,
+        @Part("category_id") category_id: RequestBody,
         @Part file: MultipartBody.Part,
-    ): ApiResponse
+    ): Call<ApiResponse>
 
     @GET("profile/msme/{idUser}")
-    suspend fun getProfile(
+    fun getProfile(
         @Header("Authorization") token: String,
         @Path("idUser") idUser: String,
-    ): ProfileResponse
+    ): Call<ProfileResponse>
 
     @Multipart
     @PUT("profile/msme/{idUser}")
-    suspend fun updateProfile(
+    fun updateProfile(
         @Header("Authorization") token: String,
         @Path("idUser") idUser: String,
         @Part("name") name: RequestBody?,
@@ -83,26 +113,25 @@ interface ApiService {
         @Part("phone") phone: RequestBody?,
         @Part("address") address: RequestBody?,
         @Part file: MultipartBody.Part,
-    ): ApiResponse
+    ): Call<ApiResponse>
 
     @FormUrlEncoded
     @PUT("profile/msme/{idUser}/change-password")
-    suspend fun changePassword(
+    fun changePassword(
         @Header("Authorization") token: String,
         @Path("idUser") idUser: String,
         @Field("old_password") old_password: String,
         @Field("new_password") new_password: String,
         @Field("confirm_password") confirm_password: String
-    ): ApiResponse
+    ): Call<ApiResponse>
 
-    @GET("carts")
-    suspend fun getTransactionList(
-//        @Header("Authorization") token: String,
-    ): TransactionResponse
+    @GET("type")
+    fun getTypeList(
+        @Header("Authorization") token: String
+    ): Call<CategoryResponse>
 
-    @GET("carts/{id}")
-    suspend fun getTransactionDetail(
-//        @Header("Authorization") token: String,
-        @Path("id") id: String
-    ): CartsList
+    @GET("category")
+    fun getCategoryList(
+        @Header("Authorization") token: String
+    ): Call<CategoryResponse>
 }
