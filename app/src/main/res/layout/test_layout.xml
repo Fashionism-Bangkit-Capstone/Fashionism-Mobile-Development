@@ -13,6 +13,154 @@
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!--            <LinearLayout-->
+    <!--                android:id="@+id/linearLayout"-->
+    <!--                android:layout_width="0dp"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:orientation="horizontal"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="@+id/rvFavorite"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/rvFavorite">-->
+
+    <!--                <com.google.android.material.button.MaterialButton-->
+    <!--                    android:id="@+id/allProductCategory"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:fontFamily="@font/poppins_semibold"-->
+    <!--                    android:paddingStart="8dp"-->
+    <!--                    android:paddingTop="8dp"-->
+    <!--                    android:paddingEnd="8dp"-->
+    <!--                    android:paddingBottom="8dp"-->
+    <!--                    android:text="All Products"-->
+    <!--                    android:textAllCaps="false"-->
+    <!--                    android:textSize="12sp" />-->
+
+    <!--                <com.google.android.material.button.MaterialButton-->
+    <!--                    android:id="@+id/CasualCategory"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:backgroundTint="#F6F6F6"-->
+    <!--                    android:fontFamily="@font/poppins_semibold"-->
+    <!--                    android:paddingStart="8dp"-->
+    <!--                    android:paddingTop="8dp"-->
+    <!--                    android:paddingEnd="8dp"-->
+    <!--                    android:paddingBottom="8dp"-->
+    <!--                    android:text="Casual"-->
+    <!--                    android:textAllCaps="false"-->
+    <!--                    android:textColor="@color/black"-->
+    <!--                    android:textSize="12sp" />-->
+
+    <!--                <com.google.android.material.button.MaterialButton-->
+    <!--                    android:id="@+id/FormalCategory"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:backgroundTint="#F6F6F6"-->
+    <!--                    android:fontFamily="@font/poppins_semibold"-->
+    <!--                    android:paddingStart="8dp"-->
+    <!--                    android:paddingTop="8dp"-->
+    <!--                    android:paddingEnd="8dp"-->
+    <!--                    android:paddingBottom="8dp"-->
+    <!--                    android:text="Formal"-->
+    <!--                    android:textAllCaps="false"-->
+    <!--                    android:textColor="@color/black"-->
+    <!--                    android:textSize="12sp" />-->
+
+    <!--                <com.google.android.material.button.MaterialButton-->
+    <!--                    android:id="@+id/SummerCategory"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:backgroundTint="#F6F6F6"-->
+    <!--                    android:fontFamily="@font/poppins_semibold"-->
+    <!--                    android:paddingStart="8dp"-->
+    <!--                    android:paddingTop="8dp"-->
+    <!--                    android:paddingEnd="8dp"-->
+    <!--                    android:paddingBottom="8dp"-->
+    <!--                    android:text="Summer"-->
+    <!--                    android:textAllCaps="false"-->
+    <!--                    android:textColor="@color/black"-->
+    <!--                    android:textSize="12sp" />-->
+
+    <!--            </LinearLayout>-->
+
+
+<!--<com.google.android.material.button.MaterialButtonToggleGroup-->
+<!--android:id="@+id/buttonToggleGroup"-->
+<!--android:layout_width="0dp"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginTop="16dp"-->
+<!--android:layout_marginEnd="32dp"-->
+<!--android:orientation="horizontal"-->
+<!--app:layout_constraintEnd_toEndOf="parent"-->
+<!--app:layout_constraintStart_toStartOf="@+id/rvFavorite"-->
+<!--app:layout_constraintTop_toBottomOf="@+id/rvFavorite"-->
+<!--app:singleSelection="true">-->
+
+<!--<com.google.android.material.button.MaterialButton-->
+<!--    android:id="@+id/allProductCategory"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:backgroundTint="@color/button_colorbackground"-->
+<!--    android:fontFamily="@font/poppins_semibold"-->
+<!--    android:letterSpacing="-0.01"-->
+<!--    android:paddingStart="8dp"-->
+<!--    android:paddingTop="8dp"-->
+<!--    android:paddingEnd="8dp"-->
+<!--    android:paddingBottom="8dp"-->
+<!--    android:text="All Products"-->
+<!--    android:textAllCaps="false"-->
+<!--    android:textSize="12sp" />-->
+
+<!--<com.google.android.material.button.MaterialButton-->
+<!--    android:id="@+id/CasualCategory"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:backgroundTint="#F6F6F6"-->
+<!--    android:fontFamily="@font/poppins_semibold"-->
+<!--    android:letterSpacing="-0.01"-->
+<!--    android:text="Casual"-->
+<!--    android:textAllCaps="false"-->
+<!--    android:textColor="#636363"-->
+<!--    android:textSize="12sp"-->
+<!--    app:insetBottom="0dp"-->
+<!--    app:insetLeft="0dp"-->
+<!--    app:insetRight="0dp"-->
+<!--    app:insetTop="0dp" />-->
+
+<!--<com.google.android.material.button.MaterialButton-->
+<!--    android:id="@+id/FormalCategory"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:backgroundTint="#F6F6F6"-->
+<!--    android:fontFamily="@font/poppins_semibold"-->
+<!--    android:letterSpacing="-0.01"-->
+<!--    android:paddingStart="8dp"-->
+<!--    android:paddingTop="8dp"-->
+<!--    android:paddingEnd="8dp"-->
+<!--    android:paddingBottom="8dp"-->
+<!--    android:text="Formal"-->
+<!--    android:textAllCaps="false"-->
+<!--    android:textColor="#636363"-->
+<!--    android:textSize="12sp" />-->
+
+<!--<com.google.android.material.button.MaterialButton-->
+<!--    android:id="@+id/SummerCategory"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:backgroundTint="#F6F6F6"-->
+<!--    android:fontFamily="@font/poppins_semibold"-->
+<!--    android:letterSpacing="-0.01"-->
+<!--    android:paddingStart="8dp"-->
+<!--    android:paddingTop="8dp"-->
+<!--    android:paddingEnd="8dp"-->
+<!--    android:paddingBottom="8dp"-->
+<!--    android:text="Summer"-->
+<!--    android:textAllCaps="false"-->
+<!--    android:textColor="#636363"-->
+<!--    android:textSize="12sp" />-->
+
+<!--</com.google.android.material.button.MaterialButtonToggleGroup>-->
+
+
     <!--<?xml version="1.0" encoding="utf-8"?>-->
     <!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
     <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->

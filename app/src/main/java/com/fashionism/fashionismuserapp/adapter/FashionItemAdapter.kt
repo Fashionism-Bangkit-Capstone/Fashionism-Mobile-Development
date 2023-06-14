@@ -37,13 +37,6 @@ class FashionItemAdapter(private val list: List<Product>, private val favoritesM
             binding.tvPrice.text = data.price
             binding.tvStoreName.text = "Bla bla bla"
 
-            if (favoritesMark) {
-                binding.ivFavoriteItem.visibility = View.GONE
-                binding.ivFavoriteItemFill.visibility = View.VISIBLE
-            } else {
-                binding.ivFavoriteItem.visibility = View.VISIBLE
-                binding.ivFavoriteItemFill.visibility = View.GONE
-            }
         }
 
     }

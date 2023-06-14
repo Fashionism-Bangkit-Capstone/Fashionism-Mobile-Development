@@ -1,0 +1,9 @@
+<com.google.android.material.textview.MaterialTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tvItemDropdown"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:ellipsize="end"
+    android:fontFamily="@font/poppins_medium"
+    android:maxLines="1"
+    android:padding="16dp"
+    android:textColor="#636363" />

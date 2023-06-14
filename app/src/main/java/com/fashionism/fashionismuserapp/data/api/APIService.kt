@@ -82,6 +82,9 @@ interface APIService {
     @GET("category")
     fun getAllCategory(@Header("Authorization") token: String): Call<ResponseGetAllCategory>
 
+    @GET("product/all")
+    fun getAllProductCategory(@Header("Authorization") token: String): Call<ResponseGetAllProductCategory>
+
     // v2
     @GET("product/category/{id}")
     fun getProductByCategory(

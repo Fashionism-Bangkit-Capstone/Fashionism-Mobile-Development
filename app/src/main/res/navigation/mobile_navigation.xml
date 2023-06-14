@@ -10,11 +10,11 @@
         android:label="@string/title_home_bottomNav"
         tools:layout="@layout/fragment_home" />
 
-    <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.fashionism.fashionismuserapp.ui.SearchFragment"
-        android:label="@string/title_search_bottomNav"
-        tools:layout="@layout/fragment_search" />
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_dashboard"-->
+<!--        android:name="com.fashionism.fashionismuserapp.ui.SearchFragment"-->
+<!--        android:label="@string/title_search_bottomNav"-->
+<!--        tools:layout="@layout/fragment_search" />-->
 
     <fragment
         android:id="@+id/navigation_notifications"

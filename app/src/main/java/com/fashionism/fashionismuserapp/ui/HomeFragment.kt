@@ -1,23 +1,25 @@
 package com.fashionism.fashionismuserapp.ui
 
-import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.app.Dialog
-import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
+import android.content.Intent.ACTION_GET_CONTENT
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -34,15 +36,17 @@ import com.fashionism.fashionismuserapp.data.session.UserSessionViewModelFactory
 import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModel
 import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModelFactory
 import com.fashionism.fashionismuserapp.databinding.FragmentHomeBinding
-import com.fashionism.fashionismuserapp.tools.*
-import com.fashionism.fashionismuserapp.tools.CameraUtils.startTakePhoto2
+import com.fashionism.fashionismuserapp.tools.GridSpacingItemDecoration
 import com.fashionism.fashionismuserapp.tools.Helper.reduceFileImage
 import com.fashionism.fashionismuserapp.tools.Helper.showLoading
+import com.fashionism.fashionismuserapp.tools.shortenText
 import com.fashionism.fashionismuserapp.ui.DetailFashionActivity.Companion.EXTRA_FASHION_ITEM
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -106,7 +110,7 @@ class HomeFragment : Fragment() {
 
         userSessionViewModel.getToken().observe(viewLifecycleOwner) {
             token = it
-            mainViewModel.getProductByCategory(1, token)
+            mainViewModel.getAllProduct(token)
         }
 
         mainViewModel.productListByCategory.observe(viewLifecycleOwner) { products ->
@@ -155,8 +159,59 @@ class HomeFragment : Fragment() {
             showPopup()
         }
 
+        val categoryOption = listOf("All Products", "Casual", "Street", "Office", "Formal")
+
+        // Adapter untuk menghubungkan pilihan dengan Spinner
+        val adapter = ArrayAdapter(requireContext(), R.layout.item_dropdown, categoryOption)
+        binding.appCompatSpinner.adapter = adapter
         mainViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             showLoading(isLoading, binding.progressBarHome)
+        }
+
+        // Pendengar untuk menangani pemilihan pilihan dalam Spinner
+        binding.appCompatSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    userSessionViewModel.getToken().observe(viewLifecycleOwner) {
+                        token = it
+                        if (position == 0) {
+                            mainViewModel.getAllProduct(token)
+                        } else {
+                            mainViewModel.getProductByCategory(position, token)
+                        }
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // Tidak ada yang dipilih
+                }
+            }
+
+        mainViewModel.fashionRecommendation.observe(viewLifecycleOwner) { fashionRecommendation ->
+            if (fashionRecommendation != null) {
+                val intent = Intent(requireContext(), ResultSearchActivity::class.java)
+                intent.putExtra("fashionOutput", fashionRecommendation)
+                startActivity(intent)
+                mainViewModel.emptyFashionRecommendation()
+            }
+        }
+
+        mainViewModel.message.observe(viewLifecycleOwner) { message ->
+            when (message) {
+                "Berhasil mendapat rekomendasi fashion" -> {}
+                "Anda belum memiliki produk" -> {
+                    binding.llNodataHome.visibility = View.VISIBLE
+                }
+                "Anda memiliki produk" -> {
+                    binding.llNodataHome.visibility = View.GONE
+                }
+                else -> Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            }
         }
 
         mainViewModel.isLoadingRecommendation.observe(viewLifecycleOwner) { isLoading ->
@@ -167,94 +222,11 @@ class HomeFragment : Fragment() {
             }
         }
 
-        mainViewModel.message.observe(viewLifecycleOwner) { message ->
-//            if (message == "Berhasil mendapat rekomendasi fashion") {
-//                navigateToResultSearchActivity()
-//            }
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-        }
-
         return root
     }
 
-//    @Suppress("DEPRECATION")
-////    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-////        super.onActivityResult(requestCode, resultCode, data)
-////        if (requestCode == CameraUtils.REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-////            getFile = CameraUtils.handleActivityResult(requestCode, resultCode)
-////            // Lakukan sesuatu dengan file foto yang diambil
-////            if (getFile != null) {
-////                // Contoh: Tampilkan gambar di ImageView
-////                val bitmap = BitmapFactory.decodeFile(getFile!!.absolutePath)
-////                binding.blabla2.setImageBitmap(bitmap)
-////            }
-////        }
-////
-////        if (requestCode == FileManagerUtils.REQUEST_PICK_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
-////            val selectedImg: Uri? = data.data
-////            if (selectedImg != null) {
-////                val myFile = FileManagerUtils.handleActivityResult(
-////                    requestCode = FileManagerUtils.REQUEST_PICK_IMAGE,
-////                    resultCode = Activity.RESULT_OK,
-////                    data = data,
-////                    requireContext()
-////                )
-////                getFile = myFile
-////                binding.blabla2.setImageURI(selectedImg)
-////            }
-////        }
-////    }
-
     private lateinit var currentPhotoPath: String
-
-    val REQUEST_PICK_IMAGE = 2
-
-    private val REQUEST_IMAGE_CAPTURE = 1
     private val FILENAME_FORMAT = "yyyyMMdd_HHmmss"
-
-    private fun startGallery() {
-        val intent = Intent()
-        intent.action = Intent.ACTION_GET_CONTENT
-        intent.type = "image/*"
-        getActivity()?.startActivityForResult(
-            Intent.createChooser(
-                intent,
-                activity?.getString(R.string.choose_picture)
-            ), REQUEST_PICK_IMAGE
-        )
-    }
-
-    private fun handleActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?,
-        context: Context
-    ): File? {
-        if (requestCode == REQUEST_PICK_IMAGE && resultCode == RESULT_OK && data != null) {
-            val selectedImg: Uri? = data.data
-            if (selectedImg != null) {
-                return uriToFile(selectedImg, context)
-            }
-        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            return File(currentPhotoPath)
-        }
-        return null
-    }
-
-    private fun uriToFile(selectedImg: Uri, context: Context): File {
-        val contentResolver: ContentResolver = context.contentResolver
-        val myFile = createCustomTempFile(context)
-
-        val inputStream = contentResolver.openInputStream(selectedImg) as InputStream
-        val outputStream: OutputStream = FileOutputStream(myFile)
-        val buf = ByteArray(1024)
-        var len: Int
-        while (inputStream.read(buf).also { len = it } > 0) outputStream.write(buf, 0, len)
-        outputStream.close()
-        inputStream.close()
-
-        return myFile
-    }
 
     private fun createCustomTempFile(context: Context): File {
         val timeStamp: String = SimpleDateFormat(
@@ -266,94 +238,79 @@ class HomeFragment : Fragment() {
         return File.createTempFile(timeStamp, ".jpg", storageDir)
     }
 
-
-    @Suppress("DEPRECATION")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            getFile = handleActivityResult(requestCode, resultCode, data, requireContext())
-            // Lakukan sesuatu dengan file foto yang diambil
+    private val launcherIntentCamera = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (it.resultCode == RESULT_OK) {
+            getFile = File(currentPhotoPath)
             if (getFile != null) {
-                // Contoh: Tampilkan gambar di ImageView
-                val bitmap = BitmapFactory.decodeFile(getFile!!.absolutePath)
-                binding.blabla2.setImageBitmap(bitmap)
-            }
-        }
-
-        if (requestCode == REQUEST_PICK_IMAGE && resultCode == RESULT_OK && data != null) {
-            val selectedImg: Uri? = data.data
-            if (selectedImg != null) {
-                val myFile = handleActivityResult(
-                    requestCode = REQUEST_PICK_IMAGE,
-                    resultCode = resultCode,
-                    data = data,
-                    requireContext()
-                )
-                getFile = myFile
-                binding.blabla2.setImageURI(selectedImg)
+                sendImageRecommendation()
             }
         }
     }
 
-//    private var mCurrentPhotoPath: File? = null
-//    private var REQUEST_IMAGE_CAPTURE = 1
-//    private var REQUEST_TAKE_PHOTO = 1
-//    private var imagesDir = File(Environment.getExternalStorageDirectory(), "MyImages")
-//    private fun dispatchTakePictureIntent() {
-//        val width = 960
-//        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//            if (cameraIntent.resolveActivity(requireActivity().packageManager) != null) {
-//                // Create the File where the photo should go
-//                var photoFile: File? = null
-//                try {
-//                    photoFile = createImageFile()
-//                } catch (ex: IOException) {
-//                    Log.e("error", "error creating file")
-//                }
-//                // Continue only if the File was successfully created
-//                if (photoFile != null) {
-//                    var photoURI: Uri? = null
-//                    try {
-//                        photoURI = FileProvider.getUriForFile(
-//                            requireActivity(), BuildConfig.APPLICATION_ID + ".provider",
-//                            createImageFile()!!
-//                        )
-//                    } catch (e: IOException) {
-//                        e.printStackTrace()
-//                    }
-//                    //                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-//                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-//                    startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE)
-//                }
-//            }
-//        } else if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
-//            var photoFile: File? = null
-//            try {
-//                photoFile = createImageFile()
-//            } catch (ignored: IOException) {
-//            }
-//            if (photoFile != null) {
-//                mCurrentPhotoPath = photoFile
-//                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mCurrentPhotoPath))
-//                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
-//            }
-//        }
-//    }
-//
-//    @Throws(IOException::class)
-//    private fun createImageFile(): File? {
-//        val timeStamp: String = SimpleDateFormat("yyyyMMddHHmmss").format(Date())
-//        val imageFileName = "smok$timeStamp"
-//        val image = File.createTempFile(
-//            imageFileName,  /* prefix */
-//            ".jpg",  /* suffix */
-//            imagesDir /* directory */
-//        )
-//        mCurrentPhotoPath = File(image.absolutePath)
-//        return image
-//    }
+    private fun startTakePhoto() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.resolveActivity(requireActivity().packageManager)
+        createCustomTempFile(requireActivity().application).also {
+            val photoURI: Uri = FileProvider.getUriForFile(
+                requireContext(),
+                "com.fashionism.fashionismuserapp",
+                it
+            )
+            currentPhotoPath = it.absolutePath
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+            launcherIntentCamera.launch(intent)
+        }
+    }
+
+    private val launcherIntentGallery = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val selectedImg = result.data?.data as Uri
+            selectedImg.let { uri ->
+                val myFile = uriToFile(uri, requireContext())
+                if (myFile != null) {
+                    getFile = myFile
+                    sendImageRecommendation()
+                }
+            }
+        }
+    }
+
+    private fun uriToFile(uri: Uri, context: Context): File? {
+        val filePath: String? = uri.path
+        if (filePath != null) {
+            try {
+                val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+                if (inputStream != null) {
+                    val outputFile = File(context.cacheDir, "temp_file")
+                    val outputStream = FileOutputStream(outputFile)
+                    val buffer = ByteArray(4 * 1024)
+                    var read: Int
+                    while (inputStream.read(buffer).also { read = it } != -1) {
+                        outputStream.write(buffer, 0, read)
+                    }
+                    outputStream.flush()
+                    outputStream.close()
+                    inputStream.close()
+                    return outputFile
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        return null
+    }
+
+    private fun startGallery() {
+        val intent = Intent()
+        intent.action = ACTION_GET_CONTENT
+        intent.type = "image/*"
+        val chooser = Intent.createChooser(intent, "Choose a Picture")
+        launcherIntentGallery.launch(chooser)
+    }
 
     private fun sendImageRecommendation() {
         val file = reduceFileImage(getFile as File)
@@ -366,6 +323,7 @@ class HomeFragment : Fragment() {
         mainViewModel.getFashionRecommendation(final)
     }
 
+    private var inputObject = 0
     private fun showPopup() {
         val options = arrayOf(
             resources.getString(R.string.cameraOption),
@@ -378,12 +336,14 @@ class HomeFragment : Fragment() {
                 when (which) {
                     0 -> {
                         // Camera option selected
-                        startTakePhoto2(requireContext())
+                        inputObject = 1
+                        startTakePhoto()
                         // Log.d("aa", "showPopup: $getFile")
                         dialog.dismiss()
                     }
                     1 -> {
                         // File Manager option selected
+                        // inputObject = 2
                         startGallery()
                         dialog.dismiss()
                     }
@@ -391,12 +351,6 @@ class HomeFragment : Fragment() {
                         // Cancel option selected
                         dialog.dismiss()
                     }
-                }
-            }
-            .setOnDismissListener {
-                if (getFile != null) {
-                    Log.d("aa", "showPopup: $getFile")
-                    sendImageRecommendation()
                 }
             }
             .create()
@@ -408,6 +362,7 @@ class HomeFragment : Fragment() {
         loadingDialog = Dialog(requireContext())
         loadingDialog?.setContentView(R.layout.await_data_search)
         loadingDialog?.setCancelable(false)
+
         // Mengatur ukuran dialog menjadi full screen
         val layoutParams = WindowManager.LayoutParams()
         layoutParams.copyFrom(loadingDialog?.window?.attributes)
@@ -421,15 +376,6 @@ class HomeFragment : Fragment() {
     private fun hideLoadingDialog() {
         loadingDialog?.dismiss()
     }
-
-//    private fun navigateDummy() {
-//        val intent = Intent(requireContext(), ResultSearchActivity::class.java)
-//        intent.putExtra(
-//            "imageUrl",
-//            "https://storage.googleapis.com/fashionism/products/os1phbydqz02l7j0gylrum.jpg"
-//        )
-//        startActivity(intent)
-//    }
 
     private fun navigateToResultSearchActivity() {
         val intent = Intent(requireContext(), ResultSearchActivity::class.java)
@@ -446,5 +392,9 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val CAMERA_X_RESULT = 200
     }
 }

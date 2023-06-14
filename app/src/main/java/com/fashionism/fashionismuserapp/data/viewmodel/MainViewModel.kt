@@ -17,6 +17,7 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
     val productListByCategory: LiveData<List<Product>> = mainRepository.productListByCategory
     val productDetail: LiveData<Product> = mainRepository.productDetail
     val productFavorite: LiveData<List<Product>> = mainRepository.productFavorite
+    val fashionRecommendation: LiveData<FashionRecommendation?> = mainRepository.fashionRecommendation
 
     fun login(loginDataAccount: LoginDataAccount) {
         mainRepository.login(loginDataAccount)
@@ -66,6 +67,10 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
         mainRepository.getAllCategory(token)
     }
 
+    fun getAllProduct(token: String) {
+        mainRepository.getAllProductAllCategory(token)
+    }
+
     fun getProductByCategory(id: Int, token: String) {
         mainRepository.getProductByCategory(id, token)
     }
@@ -76,5 +81,9 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
 
     fun getFashionRecommendation(imageRecommendation: MultipartBody.Part) {
         mainRepository.getFashionRecommendation(imageRecommendation)
+    }
+
+    fun emptyFashionRecommendation() {
+        mainRepository.emptyValueFashionRecommendation()
     }
 }

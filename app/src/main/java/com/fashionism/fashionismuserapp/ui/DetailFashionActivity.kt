@@ -13,9 +13,12 @@ import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.fashionism.fashionismuserapp.R
 import com.fashionism.fashionismuserapp.data.db.Product
+import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModel
+import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModelFactory
 import com.fashionism.fashionismuserapp.databinding.ActivityDetailFashionBinding
 import com.google.android.material.button.MaterialButton
 import kotlin.math.roundToInt
@@ -26,20 +29,36 @@ class DetailFashionActivity : AppCompatActivity() {
     private lateinit var gestureDetector: GestureDetectorCompat
     private var isFavorite = false
 
+    private val mainViewModel: MainViewModel by lazy {
+        ViewModelProvider(this, MainViewModelFactory(this))[MainViewModel::class.java]
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailFashionBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val data = intent.getParcelableExtra<Product>(EXTRA_FASHION_ITEM)
+        if (data != null) {
+            binding.tvDetailNameProduct.text = data.name
+            binding.tvDetailPriceProduct.text = data.price
+            binding.tvDescriptionProduct.text = data.description
+            Glide.with(this)
+                .load(data?.product_image)
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .error(R.drawable.ic_launcher_foreground)
+                .into(binding.ivProductImage)
+        }
 
-        binding.tvDetailNameProduct.text = data?.name
-        binding.tvDetailPriceProduct.text = data?.price
-        binding.tvDescriptionProduct.text = data?.description
-        Glide.with(this)
-            .load(data?.product_image)
-            .placeholder(R.drawable.ic_launcher_foreground)
-            .error(R.drawable.ic_launcher_foreground)
-            .into(binding.ivProductImage)
+        val imageRecommendation = intent.getStringExtra("imageRecommendation")
+        val priceRecommendation = intent.getStringExtra("priceRecommendation")
+        if (imageRecommendation != null && priceRecommendation != null) {
+            Glide.with(this)
+                .load(imageRecommendation)
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .error(R.drawable.ic_launcher_foreground)
+                .into(binding.ivProductImage)
+            binding.tvDetailPriceProduct.text = priceRecommendation
+        }
 
         gestureDetector = GestureDetectorCompat(this, GestureListener())
         setupClickAndTouch()

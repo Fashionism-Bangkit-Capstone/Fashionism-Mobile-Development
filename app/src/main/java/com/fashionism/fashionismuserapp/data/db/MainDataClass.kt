@@ -149,6 +149,11 @@ data class Category(
     var updatedAt: String,
 )
 
+data class ResponseGetAllProductCategory(
+    var error: Boolean,
+    var data: List<Product>
+)
+
 data class ResponseProductByCategory(
     var error: Boolean,
     var data: List<Product>
@@ -167,6 +172,7 @@ data class Product(
     var stock: Int,
     var price: String,
     var product_image: String,
+    var category_id: Int
 ) : Parcelable
 
 data class ResponseFashionRecommendation(
@@ -174,7 +180,9 @@ data class ResponseFashionRecommendation(
     var error: Boolean,
 )
 
+@Parcelize
 data class FashionRecommendation(
     var price_output: List<String>,
     var target_link: List<String>,
-)
+) : Parcelable
+

@@ -17,7 +17,20 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="32dp">
+
+            <Spinner
+                android:id="@+id/appCompatSpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/spinner_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/rvFavorite"
+                app:layout_constraintTop_toBottomOf="@+id/rvFavorite" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/bgHome"
@@ -28,17 +41,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/blabla2"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="32dp"
-                android:elevation="3dp"
-                android:src="@drawable/dummy_baju"
-                app:layout_constraintStart_toStartOf="@id/searchFashionItem"
-                app:layout_constraintEnd_toEndOf="@id/searchFashionItem"
-                app:layout_constraintTop_toBottomOf="@id/searchFashionItem"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profileAccountNavigate"
@@ -106,36 +108,65 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semibold"
-                tools:text="@string/userNameHome"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/greetingUserTitle"
-                app:layout_constraintTop_toBottomOf="@+id/greetingUserTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/greetingUserTitle"
+                tools:text="@string/userNameHome" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/suggestUserTitle"
+            <LinearLayout
+                android:id="@+id/ll_nodata_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:elevation="3dp"
-                android:fontFamily="@font/poppins_medium"
-                android:text="@string/suggestFashionHome"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="@+id/greetingUserName"
-                app:layout_constraintTop_toBottomOf="@id/rvFavorite" />
+                android:layout_marginTop="32dp"
+                android:visibility="gone"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appCompatSpinner">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/gifNoDataHome"
+                    android:layout_width="69dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:adjustViewBounds="true"
+                    app:layout_constraintEnd_toEndOf="@+id/awaitSearchIV"
+                    app:layout_constraintStart_toStartOf="@+id/awaitSearchIV"
+                    app:layout_constraintTop_toBottomOf="@+id/awaitSearchIV"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/nodata" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvNoDataHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:elevation="1dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="@string/emptyFavoriteProduct"
+                    android:textColor="#4E4E4E"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvFashionItem"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
                 android:nestedScrollingEnabled="false"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/suggestUserTitle"
-                app:layout_constraintTop_toBottomOf="@+id/suggestUserTitle"
+                app:layout_constraintStart_toStartOf="@+id/appCompatSpinner"
+                app:layout_constraintTop_toBottomOf="@+id/appCompatSpinner"
                 app:spanCount="2"
                 tools:listitem="@layout/item_fashion" />
 
@@ -147,8 +178,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/productUserLike"
-                app:layout_constraintTop_toBottomOf="@+id/productUserLike"
-                tools:listitem="@layout/item_favorite" />
+                app:layout_constraintTop_toBottomOf="@+id/productUserLike" />
 
             <ProgressBar
                 android:id="@+id/progressBarHome"

@@ -108,4 +108,11 @@
 
     <string name="package_name">com.fashionism.fashionismuserapp</string>
     <string name="choose_picture">Choose Picture</string>
+
+    <!--  Dummy Item  -->
+    <string name="dummy_item_name">Black White Style for Working</string>
+    <string name="dummy_item_price">Rp 200.000</string>
+    <string name="dummy_shop_name">olshop abc</string>
+    <string name="dummy_item_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, quis aliquam nisl nisl eu nisl. Donec euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, quis aliquam nisl nisl eu nisl.</string>
+    <string name="placeholder_search">Similar Result</string>
 </resources>

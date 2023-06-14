@@ -28,6 +28,9 @@ class MainRepository(private val apiService: APIService) {
     private val _product = MutableLiveData<List<ProductDetail>>()
     val product: LiveData<List<ProductDetail>> = _product
 
+    private val _fashionRecommendation = MutableLiveData<FashionRecommendation?>()
+    val fashionRecommendation: LiveData<FashionRecommendation?> = _fashionRecommendation
+
     private val _productFavorite = MutableLiveData<List<Product>>()
     val productFavorite: LiveData<List<Product>> = _productFavorite
 
@@ -60,7 +63,9 @@ class MainRepository(private val apiService: APIService) {
                 } else {
                     when (response.code()) {
                         401 -> _message.value =
-                            response.message()
+                            "The password you entered is incorrect, please try again."
+                        404 -> _message.value =
+                            "The email you entered is incorrect, please try again."
                         408 -> _message.value =
                             "Koneksi internet anda lambat, silahkan coba lagi"
                         else -> _message.value = "Pesan error: " + response.message()
@@ -371,6 +376,43 @@ class MainRepository(private val apiService: APIService) {
         })
     }
 
+    fun getAllProductAllCategory(token: String) {
+        _isLoading.value = true
+        val api = APIConfig.getApiServiceV2().getAllProductCategory("Bearer $token")
+        api.enqueue(object : Callback<ResponseGetAllProductCategory> {
+            override fun onResponse(
+                call: Call<ResponseGetAllProductCategory>,
+                response: Response<ResponseGetAllProductCategory>
+            ) {
+                _isLoading.value = false
+
+                if (response.isSuccessful) {
+                    if (response.body()?.data?.size == 0) {
+                        _message.value = "Anda belum memiliki produk"
+                        _productListByCategory.value = response.body()?.data
+                    } else {
+                        _message.value = "Anda memiliki produk"
+                        _productListByCategory.value = response.body()?.data
+                    }
+                } else {
+                    when (response.code()) {
+                        401 -> _message.value =
+                            response.message()
+                        408 -> _message.value =
+                            "Koneksi internet anda lambat, silahkan coba lagi"
+                        else -> _message.value = "Pesan error: " + response.message()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGetAllProductCategory>, t: Throwable) {
+                _isLoading.value = false
+                _message.value = "Pesan error: " + t.message.toString()
+            }
+
+        })
+    }
+
     fun getProductByCategory(idCategory: Int, token: String) {
         _isLoading.value = true
         val api = APIConfig.getApiServiceV2().getProductByCategory(idCategory, "Bearer $token")
@@ -382,7 +424,13 @@ class MainRepository(private val apiService: APIService) {
                 _isLoading.value = false
 
                 if (response.isSuccessful) {
-                    _productListByCategory.value = response.body()?.data
+                    if (response.body()?.data?.size == 0) {
+                        _message.value = "Anda belum memiliki produk"
+                        _productListByCategory.value = response.body()?.data
+                    } else {
+                        _message.value = "Anda memiliki produk"
+                        _productListByCategory.value = response.body()?.data
+                    }
                 } else {
                     when (response.code()) {
                         401 -> _message.value =
@@ -435,7 +483,7 @@ class MainRepository(private val apiService: APIService) {
 
     fun getFashionRecommendation(imageRecommendation: MultipartBody.Part) {
         _isLoadingRecommendation.value = true
-        val api = apiService.getFashionRecommendation(imageRecommendation)
+        val api = APIConfig.getApiMLService().getFashionRecommendation(imageRecommendation)
         api.enqueue(object : Callback<ResponseFashionRecommendation> {
             override fun onResponse(
                 call: Call<ResponseFashionRecommendation>,
@@ -445,6 +493,7 @@ class MainRepository(private val apiService: APIService) {
 
                 if (response.isSuccessful) {
                     _message.value = "Berhasil mendapat rekomendasi fashion"
+                    _fashionRecommendation.value = response.body()?.data
                 } else {
                     when (response.code()) {
                         401 -> _message.value =
@@ -462,5 +511,9 @@ class MainRepository(private val apiService: APIService) {
             }
 
         })
+    }
+
+    fun emptyValueFashionRecommendation() {
+        _fashionRecommendation.value = null
     }
 }

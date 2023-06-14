@@ -31,31 +31,7 @@ object CameraUtils {
         }
     }
 
-    fun startTakePhoto2(context: Context) {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        intent.resolveActivity(context.packageManager)
-        createCustomTempFile(context).also {
-            val photoURI: Uri = FileProvider.getUriForFile(
-                context,
-                context.getString(R.string.package_name),
-                it
-            )
-
-            currentPhotoPath = it.absolutePath
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-            // activity.startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
-            (context as Activity).startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
-        }
-    }
-
     fun handleActivityResult(requestCode: Int, resultCode: Int): File? {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            return File(currentPhotoPath)
-        }
-        return null
-    }
-
-    fun handleActivityResult2(requestCode: Int, resultCode: Int): File? {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             return File(currentPhotoPath)
         }
