@@ -51,10 +51,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cc_detail_fashion"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="-30dp"
         android:background="@drawable/bg_detail_product"
+        android:elevation="20dp"
         android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/ivProductImage"
         app:layout_constraintStart_toStartOf="@+id/ivProductImage"
         app:layout_constraintTop_toBottomOf="@id/ivProductImage">
@@ -111,18 +113,6 @@
             app:layout_constraintTop_toBottomOf="@+id/tvDetailPriceProduct"
             tools:text="this is a blue polo shirt made of silk fabric imported from Japan." />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvReadMoreDesc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
-            android:textColor="#0085FF"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="@+id/tvDetailPriceProduct"
-            app:layout_constraintStart_toStartOf="@+id/tvDetailPriceProduct"
-            app:layout_constraintTop_toBottomOf="@+id/tvDescriptionProduct"
-            tools:text="more details" />
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buyProductButton"
             android:layout_width="0dp"
@@ -162,7 +152,7 @@
             app:iconSize="24dp"
             app:iconTint="@color/button_colorbackground"
             app:layout_constraintStart_toStartOf="@+id/tvDescriptionProduct"
-            app:layout_constraintTop_toBottomOf="@+id/tvReadMoreDesc" />
+            app:layout_constraintTop_toBottomOf="@+id/tvDescriptionProduct" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

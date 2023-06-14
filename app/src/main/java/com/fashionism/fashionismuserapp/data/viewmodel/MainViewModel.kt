@@ -9,12 +9,14 @@ import okhttp3.RequestBody
 class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
     val message: LiveData<String> = mainRepository.message
     val isLoading: LiveData<Boolean> = mainRepository.isLoading
+    val isLoadingRecommendation: LiveData<Boolean> = mainRepository.isLoadingRecommendation
     val userLogin: LiveData<LoginResponse> = mainRepository.userLogin
     val userProfile: LiveData<ResponseGetProfile> = mainRepository.userProfile
     val product: LiveData<List<ProductDetail>> = mainRepository.product
     val category: LiveData<List<Category>> = mainRepository.category
     val productListByCategory: LiveData<List<Product>> = mainRepository.productListByCategory
     val productDetail: LiveData<Product> = mainRepository.productDetail
+    val productFavorite: LiveData<List<Product>> = mainRepository.productFavorite
 
     fun login(loginDataAccount: LoginDataAccount) {
         mainRepository.login(loginDataAccount)
@@ -48,6 +50,18 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
         mainRepository.getProductLiked()
     }
 
+    fun addFavorite(product: ItemFavorite, token: String) {
+        mainRepository.addProductUserFavorite(product, token)
+    }
+
+    fun deleteFavorite(product: ItemFavorite, token: String) {
+        mainRepository.deleteProductUserFavorite(product, token)
+    }
+
+    fun getFavorite(idUser: Int, token: String) {
+        mainRepository.getFavoriteProductUser(idUser, token)
+    }
+
     fun getCategories(token: String) {
         mainRepository.getAllCategory(token)
     }
@@ -58,5 +72,9 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
 
     fun getSpecificProduct(id: Int, token: String) {
         mainRepository.getSpecificProduct(id, token)
+    }
+
+    fun getFashionRecommendation(imageRecommendation: MultipartBody.Part) {
+        mainRepository.getFashionRecommendation(imageRecommendation)
     }
 }

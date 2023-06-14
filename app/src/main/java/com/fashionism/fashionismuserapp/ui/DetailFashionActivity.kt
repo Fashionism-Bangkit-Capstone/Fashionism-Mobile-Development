@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
 import com.bumptech.glide.Glide
 import com.fashionism.fashionismuserapp.R
-import com.fashionism.fashionismuserapp.data.db.ProductDetail
+import com.fashionism.fashionismuserapp.data.db.Product
 import com.fashionism.fashionismuserapp.databinding.ActivityDetailFashionBinding
 import com.google.android.material.button.MaterialButton
 import kotlin.math.roundToInt
@@ -26,18 +26,17 @@ class DetailFashionActivity : AppCompatActivity() {
     private lateinit var gestureDetector: GestureDetectorCompat
     private var isFavorite = false
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailFashionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val data = intent.getParcelableExtra<ProductDetail>(EXTRA_FASHION_ITEM)
+        val data = intent.getParcelableExtra<Product>(EXTRA_FASHION_ITEM)
 
-        binding.tvDetailNameProduct.text = data?.product
+        binding.tvDetailNameProduct.text = data?.name
         binding.tvDetailPriceProduct.text = data?.price
         binding.tvDescriptionProduct.text = data?.description
         Glide.with(this)
-            .load(data?.imageFashion)
+            .load(data?.product_image)
             .placeholder(R.drawable.ic_launcher_foreground)
             .error(R.drawable.ic_launcher_foreground)
             .into(binding.ivProductImage)
@@ -61,6 +60,11 @@ class DetailFashionActivity : AppCompatActivity() {
         binding.btnFavoriteProduct.setOnClickListener {
             isFavorite = !isFavorite
             animateFavoriteIcon(binding.btnFavoriteProduct)
+        }
+
+        binding.backButtonDetailProduct.setOnClickListener {
+            finish()
+            overridePendingTransition(R.anim.slidefromleft_in, R.anim.slidefromleft_out)
         }
 
     }
@@ -140,7 +144,7 @@ class DetailFashionActivity : AppCompatActivity() {
         view.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
         if (view.layoutParams is MarginLayoutParams) {
             val params = view.layoutParams as MarginLayoutParams
-            params.topMargin = -convertDpToPx(30)
+            params.topMargin = 0
             view.layoutParams = params
         }
         animateView(view)

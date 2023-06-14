@@ -113,7 +113,7 @@ data class ResponseFavorite(
 
 data class ResponseGetFavorites(
     var error: Boolean,
-    var data: List<FavoriteDetail>
+    var data: List<Product>? = null,
 )
 
 data class FavoriteDetail(
@@ -139,10 +139,10 @@ data class ProductDetail(
 
 data class ResponseGetAllCategory(
     var error: Boolean,
-    var data: List<Category >
+    var data: List<Category>
 )
 
-data class Category (
+data class Category(
     var id: Int,
     var name: String,
     var createdAt: String,
@@ -159,11 +159,22 @@ data class ResponseGetSpecificProduct(
     var data: Product
 )
 
+@Parcelize
 data class Product(
     var id: Int,
     var name: String,
     var description: String,
     var stock: Int,
-    var price: Int,
+    var price: String,
     var product_image: String,
+) : Parcelable
+
+data class ResponseFashionRecommendation(
+    var data: FashionRecommendation,
+    var error: Boolean,
+)
+
+data class FashionRecommendation(
+    var price_output: List<String>,
+    var target_link: List<String>,
 )

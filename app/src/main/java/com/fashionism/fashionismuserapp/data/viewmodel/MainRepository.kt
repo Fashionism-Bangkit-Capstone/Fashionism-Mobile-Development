@@ -16,6 +16,9 @@ class MainRepository(private val apiService: APIService) {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _isLoadingRecommendation = MutableLiveData<Boolean>()
+    val isLoadingRecommendation: LiveData<Boolean> = _isLoadingRecommendation
+
     private val _message = MutableLiveData<String>()
     val message: LiveData<String> = _message
 
@@ -24,6 +27,9 @@ class MainRepository(private val apiService: APIService) {
 
     private val _product = MutableLiveData<List<ProductDetail>>()
     val product: LiveData<List<ProductDetail>> = _product
+
+    private val _productFavorite = MutableLiveData<List<Product>>()
+    val productFavorite: LiveData<List<Product>> = _productFavorite
 
     private val _category = MutableLiveData<List<Category>>()
     val category: LiveData<List<Category>> = _category
@@ -235,9 +241,108 @@ class MainRepository(private val apiService: APIService) {
         })
     }
 
+    fun addProductUserFavorite(product: ItemFavorite, token: String) {
+        _isLoading.value = true
+        val api = apiService.addFavorite(product, "Bearer $token")
+        api.enqueue(object : Callback<ResponseFavorite> {
+            override fun onResponse(
+                call: Call<ResponseFavorite>,
+                response: Response<ResponseFavorite>
+            ) {
+                _isLoading.value = false
+                val responseBody = response.body()
+
+                if (response.isSuccessful) {
+                    _message.value = responseBody?.message
+                } else {
+                    when (response.code()) {
+                        401 -> _message.value =
+                            response.message()
+                        408 -> _message.value =
+                            "Koneksi internet anda lambat, silahkan coba lagi"
+                        else -> _message.value = "Pesan error: " + response.message()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseFavorite>, t: Throwable) {
+                _isLoading.value = false
+                _message.value = "Pesan error: " + t.message.toString()
+            }
+
+        })
+    }
+
+    fun deleteProductUserFavorite(product: ItemFavorite, token: String) {
+        _isLoading.value = true
+        val api = apiService.removeFavorite(product, "Bearer $token")
+        api.enqueue(object : Callback<ResponseFavorite> {
+            override fun onResponse(
+                call: Call<ResponseFavorite>,
+                response: Response<ResponseFavorite>
+            ) {
+                _isLoading.value = false
+                val responseBody = response.body()
+
+                if (response.isSuccessful) {
+                    _message.value = responseBody?.message
+                } else {
+                    when (response.code()) {
+                        401 -> _message.value =
+                            response.message()
+                        408 -> _message.value =
+                            "Koneksi internet anda lambat, silahkan coba lagi"
+                        else -> _message.value = "Pesan error: " + response.message()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseFavorite>, t: Throwable) {
+                _isLoading.value = false
+                _message.value = "Pesan error: " + t.message.toString()
+            }
+
+        })
+    }
+
+    fun getFavoriteProductUser(idUser: Int, token: String) {
+        _isLoading.value = true
+        val api = apiService.getFavoritesUser(idUser, "Bearer $token")
+        api.enqueue(object : Callback<ResponseGetFavorites> {
+            override fun onResponse(
+                call: Call<ResponseGetFavorites>,
+                response: Response<ResponseGetFavorites>
+            ) {
+                _isLoading.value = false
+
+                if (response.isSuccessful) {
+                    if (response.body()?.data?.size == 0) {
+                        _message.value = "Anda belum memiliki produk favorit"
+                    } else {
+                        _productFavorite.value = response.body()?.data!!
+                    }
+                } else {
+                    when (response.code()) {
+                        401 -> _message.value =
+                            response.message()
+                        408 -> _message.value =
+                            "Koneksi internet anda lambat, silahkan coba lagi"
+                        else -> _message.value = "Pesan error: " + response.message()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGetFavorites>, t: Throwable) {
+                _isLoading.value = false
+                _message.value = "Pesan error: " + t.message.toString()
+            }
+
+        })
+    }
+
     fun getAllCategory(token: String) {
         _isLoading.value = true
-        val api = APIConfig.getApiServiceV2().getAllCategory(token)
+        val api = APIConfig.getApiServiceV2().getAllCategory("Bearer $token")
         api.enqueue(object : Callback<ResponseGetAllCategory> {
             override fun onResponse(
                 call: Call<ResponseGetAllCategory>,
@@ -268,7 +373,7 @@ class MainRepository(private val apiService: APIService) {
 
     fun getProductByCategory(idCategory: Int, token: String) {
         _isLoading.value = true
-        val api = APIConfig.getApiServiceV2().getProductByCategory(idCategory, token)
+        val api = APIConfig.getApiServiceV2().getProductByCategory(idCategory, "Bearer $token")
         api.enqueue(object : Callback<ResponseProductByCategory> {
             override fun onResponse(
                 call: Call<ResponseProductByCategory>,
@@ -299,7 +404,7 @@ class MainRepository(private val apiService: APIService) {
 
     fun getSpecificProduct(idCategory: Int, token: String) {
         _isLoading.value = true
-        val api = APIConfig.getApiServiceV2().getProductDetail(idCategory, token)
+        val api = APIConfig.getApiServiceV2().getProductDetail(idCategory, "Bearer $token")
         api.enqueue(object : Callback<ResponseGetSpecificProduct> {
             override fun onResponse(
                 call: Call<ResponseGetSpecificProduct>,
@@ -321,6 +426,37 @@ class MainRepository(private val apiService: APIService) {
             }
 
             override fun onFailure(call: Call<ResponseGetSpecificProduct>, t: Throwable) {
+                _isLoading.value = false
+                _message.value = "Pesan error: " + t.message.toString()
+            }
+
+        })
+    }
+
+    fun getFashionRecommendation(imageRecommendation: MultipartBody.Part) {
+        _isLoadingRecommendation.value = true
+        val api = apiService.getFashionRecommendation(imageRecommendation)
+        api.enqueue(object : Callback<ResponseFashionRecommendation> {
+            override fun onResponse(
+                call: Call<ResponseFashionRecommendation>,
+                response: Response<ResponseFashionRecommendation>
+            ) {
+                _isLoadingRecommendation.value = false
+
+                if (response.isSuccessful) {
+                    _message.value = "Berhasil mendapat rekomendasi fashion"
+                } else {
+                    when (response.code()) {
+                        401 -> _message.value =
+                            response.message()
+                        408 -> _message.value =
+                            "Koneksi internet anda lambat, silahkan coba lagi"
+                        else -> _message.value = "Pesan error: " + response.message()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseFashionRecommendation>, t: Throwable) {
                 _isLoading.value = false
                 _message.value = "Pesan error: " + t.message.toString()
             }

@@ -73,7 +73,6 @@ class RegisterActivity : AppCompatActivity() {
         loginViewModel.isLoading.observe(this) {
             showLoading(it, binding.progressBarRegister)
         }
-
     }
 
     private fun setupClickListeners() {

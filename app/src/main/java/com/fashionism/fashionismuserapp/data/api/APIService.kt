@@ -99,4 +99,9 @@ interface APIService {
     @GET("data")
     fun getProductLiked(): Call<List<ProductDetail>>
 
+    @Multipart
+    @POST("recommendation")
+    fun getFashionRecommendation(
+        @Part file: MultipartBody.Part,
+    ): Call<ResponseFashionRecommendation>
 }

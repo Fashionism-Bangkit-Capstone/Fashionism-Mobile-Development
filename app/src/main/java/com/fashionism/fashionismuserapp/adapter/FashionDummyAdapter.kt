@@ -6,13 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fashionism.fashionismuserapp.R
-import com.fashionism.fashionismuserapp.data.db.Product
 import com.fashionism.fashionismuserapp.data.db.ProductDetail
-import com.fashionism.fashionismuserapp.data.dummy.DummyData
 import com.fashionism.fashionismuserapp.databinding.ItemFashionBinding
 
-class FashionItemAdapter(private val list: List<Product>, private val favoritesMark: Boolean) :
-    RecyclerView.Adapter<FashionItemAdapter.ViewHolder>() {
+class FashionDummyAdapter(
+    private val list: List<ProductDetail>,
+    private val favoritesMark: Boolean
+) :
+    RecyclerView.Adapter<FashionDummyAdapter.ViewHolder>() {
 
     private lateinit var onItemClickCallback: OnItemClickCallback
 
@@ -21,21 +22,21 @@ class FashionItemAdapter(private val list: List<Product>, private val favoritesM
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: Product)
+        fun onItemClicked(data: ProductDetail)
     }
 
     class ViewHolder(private val binding: ItemFashionBinding, private val favoritesMark: Boolean) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Product) {
+        fun bind(data: ProductDetail) {
             Glide.with(itemView.context)
-                .load(data.product_image)
+                .load(data.imageFashion)
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .error(R.drawable.ic_launcher_foreground)
                 .fallback(R.drawable.ic_launcher_foreground)
                 .into(binding.ivFashionImage)
-            binding.tvFashionName.text = data.name
+            binding.tvFashionName.text = data.product
             binding.tvPrice.text = data.price
-            binding.tvStoreName.text = "Bla bla bla"
+            binding.tvStoreName.text = data.storeName
 
             if (favoritesMark) {
                 binding.ivFavoriteItem.visibility = View.GONE

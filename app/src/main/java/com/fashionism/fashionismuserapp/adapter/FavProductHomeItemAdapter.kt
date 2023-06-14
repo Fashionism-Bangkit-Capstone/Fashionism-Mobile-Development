@@ -5,12 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fashionism.fashionismuserapp.R
-import com.fashionism.fashionismuserapp.data.db.ProductDetail
-import com.fashionism.fashionismuserapp.data.dummy.DummyData
-import com.fashionism.fashionismuserapp.data.dummy.DummyData2
+import com.fashionism.fashionismuserapp.data.db.Product
 import com.fashionism.fashionismuserapp.databinding.ItemFavoriteBinding
 
-class FavProductHomeItemAdapter(private val list: List<ProductDetail>) :
+class FavProductHomeItemAdapter(private val list: List<Product>) :
     RecyclerView.Adapter<FavProductHomeItemAdapter.ViewHolder>() {
 
     private lateinit var onItemClickCallback: OnItemClickCallback
@@ -20,22 +18,22 @@ class FavProductHomeItemAdapter(private val list: List<ProductDetail>) :
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: ProductDetail)
+        fun onItemClicked(data: Product)
     }
 
     class ViewHolder(private val binding: ItemFavoriteBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: ProductDetail) {
+        fun bind(data: Product) {
             Glide.with(itemView.context)
-                .load(data.imageFashion)
+                .load(data.product_image)
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .error(R.drawable.ic_launcher_foreground)
                 .fallback(R.drawable.ic_launcher_foreground)
                 .into(binding.ivProductFavImage)
 
-            binding.productFavTitle.text = data.product
+            binding.productFavTitle.text = data.name
             binding.productFavPrice.text = data.price
-            binding.productFavStoreName.text = data.storeName
+            binding.productFavStoreName.text = "Bla bla bla"
         }
     }
 

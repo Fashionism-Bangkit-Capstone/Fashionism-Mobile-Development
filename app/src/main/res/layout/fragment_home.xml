@@ -30,6 +30,17 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/blabla2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="32dp"
+                android:elevation="3dp"
+                android:src="@drawable/dummy_baju"
+                app:layout_constraintStart_toStartOf="@id/searchFashionItem"
+                app:layout_constraintEnd_toEndOf="@id/searchFashionItem"
+                app:layout_constraintTop_toBottomOf="@id/searchFashionItem"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profileAccountNavigate"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -118,7 +129,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="32dp"
                 android:nestedScrollingEnabled="false"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -132,7 +143,6 @@
                 android:id="@+id/rvFavorite"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="-8dp"
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

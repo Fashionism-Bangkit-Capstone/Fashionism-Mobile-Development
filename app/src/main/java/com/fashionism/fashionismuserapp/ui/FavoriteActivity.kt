@@ -2,6 +2,7 @@ package com.fashionism.fashionismuserapp.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -9,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fashionism.fashionismuserapp.R
 import com.fashionism.fashionismuserapp.adapter.FashionItemAdapter
-import com.fashionism.fashionismuserapp.data.db.ProductDetail
+import com.fashionism.fashionismuserapp.data.db.Product
 import com.fashionism.fashionismuserapp.data.session.UserSession
 import com.fashionism.fashionismuserapp.data.session.UserSessionViewModel
 import com.fashionism.fashionismuserapp.data.session.UserSessionViewModelFactory
@@ -37,6 +38,8 @@ class FavoriteActivity : AppCompatActivity() {
     }
 
     private var rvFavorite: RecyclerView? = null
+    private var idUser = 0
+    private lateinit var token: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,14 +63,19 @@ class FavoriteActivity : AppCompatActivity() {
             )
         )
 
-        mainViewModel.getProducts()
-        mainViewModel.product.observe(this) { products ->
+        userSessionViewModel.getAllUserData().observe(this) { dataUser ->
+            idUser = dataUser.idUser
+            token = dataUser.token
+            mainViewModel.getFavorite(idUser, token)
+        }
+
+        mainViewModel.productFavorite.observe(this) { products ->
             val favProductAdapter = FashionItemAdapter(products, true)
             rvFavorite?.adapter = favProductAdapter
 
             favProductAdapter.setOnItemClickCallback(object :
                 FashionItemAdapter.OnItemClickCallback {
-                override fun onItemClicked(data: ProductDetail) {
+                override fun onItemClicked(data: Product) {
                     showSelectedFavorite(data)
                 }
             })
@@ -78,11 +86,15 @@ class FavoriteActivity : AppCompatActivity() {
         }
 
         mainViewModel.message.observe(this) { message ->
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            if (message == "Anda belum memiliki produk favorit") {
+                binding.llNodataFavorite.visibility = View.VISIBLE
+            } else {
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
-    private fun showSelectedFavorite(fashionItem: ProductDetail) {
+    private fun showSelectedFavorite(fashionItem: Product) {
         val intent = Intent(this, DetailFashionActivity::class.java)
         intent.putExtra(EXTRA_FASHION_ITEM, fashionItem)
         startActivity(intent)
