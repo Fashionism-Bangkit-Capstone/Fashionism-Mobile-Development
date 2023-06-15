@@ -34,7 +34,7 @@ To get started with the Fashionism UMKM App, follow these steps:
 ---
 
 ## Screenshots
-<img src="https://raw.githubusercontent.com/Fashionism-Bangkit-Capstone/Fashionism-Mobile-Development/Fashionism-UMKM-App/assets/app_screenshot.png" align="center" />
+<img src="https://raw.githubusercontent.com/Fashionism-Bangkit-Capstone/Fashionism-Mobile-Development/Fashionism-UMKM-App/readmeImg/app_screenshot.png" align="center" />
 
 ---
 
