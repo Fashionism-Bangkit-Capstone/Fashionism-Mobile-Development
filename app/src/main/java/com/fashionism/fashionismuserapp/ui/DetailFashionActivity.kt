@@ -16,7 +16,11 @@ import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.fashionism.fashionismuserapp.R
+import com.fashionism.fashionismuserapp.data.db.ItemFavorite
 import com.fashionism.fashionismuserapp.data.db.Product
+import com.fashionism.fashionismuserapp.data.session.UserSession
+import com.fashionism.fashionismuserapp.data.session.UserSessionViewModel
+import com.fashionism.fashionismuserapp.data.session.UserSessionViewModelFactory
 import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModel
 import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModelFactory
 import com.fashionism.fashionismuserapp.databinding.ActivityDetailFashionBinding
@@ -28,9 +32,17 @@ class DetailFashionActivity : AppCompatActivity() {
     private var isExpanded = false
     private lateinit var gestureDetector: GestureDetectorCompat
     private var isFavorite = false
+    private var productId = 0
 
     private val mainViewModel: MainViewModel by lazy {
         ViewModelProvider(this, MainViewModelFactory(this))[MainViewModel::class.java]
+    }
+
+    private val userSessionViewModel: UserSessionViewModel by lazy {
+        ViewModelProvider(
+            this,
+            UserSessionViewModelFactory(UserSession.getInstance(dataStore))
+        )[UserSessionViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,26 +50,51 @@ class DetailFashionActivity : AppCompatActivity() {
         binding = ActivityDetailFashionBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val data = intent.getParcelableExtra<Product>(EXTRA_FASHION_ITEM)
+
         if (data != null) {
+            productId = data.id
             binding.tvDetailNameProduct.text = data.name
             binding.tvDetailPriceProduct.text = data.price
+            binding.tvDetailStoreName.text = data.msme_name
             binding.tvDescriptionProduct.text = data.description
             Glide.with(this)
-                .load(data?.product_image)
+                .load(data.product_image)
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .error(R.drawable.ic_launcher_foreground)
                 .into(binding.ivProductImage)
         }
 
+        if (productId != 0) {
+            userSessionViewModel.getAllUserData().observe(this) { data ->
+                mainViewModel.isProductFavoriteByUser(data.idUser, productId, data.token)
+            }
+        }
+
+        mainViewModel.isProductFavorite.observe(this) { isFavorite ->
+            this.isFavorite = isFavorite
+
+            if (isFavorite) {
+                binding.btnFavoriteProduct.icon = resources.getDrawable(R.drawable.baseline_favorite_24)
+            } else {
+                binding.btnFavoriteProduct.icon = resources.getDrawable(R.drawable.baseline_favorite_border_24)
+            }
+        }
+
         val imageRecommendation = intent.getStringExtra("imageRecommendation")
         val priceRecommendation = intent.getStringExtra("priceRecommendation")
-        if (imageRecommendation != null && priceRecommendation != null) {
+        val nameRecommendation = intent.getStringExtra("nameRecommendation")
+        val storeNameRecommendation = intent.getStringExtra("storeNameRecommendation")
+        val descriptionRecommendation = intent.getStringExtra("descriptionRecommendation")
+        if (imageRecommendation != null && priceRecommendation != null && nameRecommendation != null && storeNameRecommendation != null && descriptionRecommendation != null) {
             Glide.with(this)
                 .load(imageRecommendation)
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .error(R.drawable.ic_launcher_foreground)
                 .into(binding.ivProductImage)
             binding.tvDetailPriceProduct.text = priceRecommendation
+            binding.tvDetailNameProduct.text = nameRecommendation
+            binding.tvDetailStoreName.text = storeNameRecommendation
+            binding.tvDescriptionProduct.text = descriptionRecommendation
         }
 
         gestureDetector = GestureDetectorCompat(this, GestureListener())
@@ -77,8 +114,33 @@ class DetailFashionActivity : AppCompatActivity() {
         }
 
         binding.btnFavoriteProduct.setOnClickListener {
-            isFavorite = !isFavorite
-            animateFavoriteIcon(binding.btnFavoriteProduct)
+            if (isFavorite) {
+                isFavorite = false
+                animateFavoriteIcon(binding.btnFavoriteProduct)
+                userSessionViewModel.getAllUserData().observe(this) { data ->
+                    if (productId != 0 && data.idUser != 0) {
+                        val itemFavorite = ItemFavorite(
+                            user_account_id = data.idUser,
+                            product_id = productId
+                        )
+                        mainViewModel.deleteFavorite(itemFavorite, data.token)
+                    }
+                }
+                binding.btnFavoriteProduct.icon = resources.getDrawable(R.drawable.baseline_favorite_border_24)
+            } else {
+                isFavorite = true
+                animateFavoriteIcon(binding.btnFavoriteProduct)
+                userSessionViewModel.getAllUserData().observe(this) { data ->
+                    if (productId != 0 && data.idUser != 0) {
+                        val itemFavorite = ItemFavorite(
+                            user_account_id = data.idUser,
+                            product_id = productId
+                        )
+                        mainViewModel.addFavorite(itemFavorite, data.token)
+                    }
+                }
+                binding.btnFavoriteProduct.icon = resources.getDrawable(R.drawable.baseline_favorite_24)
+            }
         }
 
         binding.backButtonDetailProduct.setOnClickListener {
@@ -100,7 +162,7 @@ class DetailFashionActivity : AppCompatActivity() {
         }
 
         TransitionManager.beginDelayedTransition(button.parent as ViewGroup, transition)
-        button.setIconResource(iconResId)
+        button.icon = resources.getDrawable(iconResId)
     }
 
     inner class GestureListener : GestureDetector.SimpleOnGestureListener() {
@@ -115,13 +177,13 @@ class DetailFashionActivity : AppCompatActivity() {
             if (isExpanded) {
                 // Mengubah tinggi cc_detail_fashion menjadi wrap_content
                 collapseView(binding.ccDetailFashion)
-                binding.btnMoreDetailProduct.visibility = View.GONE
+                binding.btnShareProduct.visibility = View.GONE
                 binding.backButtonDetailProduct.visibility = View.GONE
                 isExpanded = false
             } else {
                 // Mengubah tinggi cc_detail_fashion menjadi match_parent
                 expandView(binding.ccDetailFashion)
-                binding.btnMoreDetailProduct.visibility = View.VISIBLE
+                binding.btnShareProduct.visibility = View.VISIBLE
                 binding.backButtonDetailProduct.visibility = View.VISIBLE
                 isExpanded = true
             }
@@ -141,7 +203,7 @@ class DetailFashionActivity : AppCompatActivity() {
                 if (isExpanded) {
                     // Perform actions for collapsed state
                     expandView(binding.ccDetailFashion)
-                    binding.btnMoreDetailProduct.visibility = View.VISIBLE
+                    binding.btnShareProduct.visibility = View.VISIBLE
                     binding.backButtonDetailProduct.visibility = View.VISIBLE
                     isExpanded = false
                 }
@@ -150,7 +212,7 @@ class DetailFashionActivity : AppCompatActivity() {
                 if (!isExpanded) {
                     // Perform actions for expanded state
                     collapseView(binding.ccDetailFashion)
-                    binding.btnMoreDetailProduct.visibility = View.GONE
+                    binding.btnShareProduct.visibility = View.GONE
                     binding.backButtonDetailProduct.visibility = View.GONE
                     isExpanded = true
                 }

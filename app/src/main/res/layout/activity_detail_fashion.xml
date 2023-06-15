@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="@+id/ivProductImage" />
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btnMoreDetailProduct"
+        android:id="@+id/btnShareProduct"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         android:contentDescription="@string/moreDetailContentDescription"
         android:elevation="3dp"
         android:scaleType="fitXY"
-        android:src="@drawable/baseline_more_vert_24"
+        android:src="@drawable/baseline_share_24"
         app:layout_constraintEnd_toEndOf="@id/ivProductImage"
         app:layout_constraintTop_toTopOf="@+id/ivProductImage" />
 
@@ -88,10 +88,24 @@
             app:layout_constraintTop_toBottomOf="@+id/minimizeAndFullInformationOutfit" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvDetailStoreName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:fontFamily="@font/poppins"
+            android:text="@string/dummy_shop_name"
+            android:textColor="#6C6C6C"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetailNameProduct" />
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvDetailPriceProduct"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="@string/dummy_item_price"
             android:textColor="#0085FF"
@@ -99,7 +113,7 @@
             app:layout_constraintEnd_toEndOf="@+id/tvDetailNameProduct"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/tvDetailNameProduct"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetailNameProduct" />
+            app:layout_constraintTop_toBottomOf="@+id/tvDetailStoreName" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvDescriptionProduct"
@@ -119,7 +133,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:backgroundTint="@color/button_colorbackground"
+            android:backgroundTint="#DADADA"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center_vertical|center_horizontal"
             android:letterSpacing="-0.01"

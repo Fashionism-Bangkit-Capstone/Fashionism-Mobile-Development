@@ -99,7 +99,7 @@
     <string name="favoritePageTitle">Favorite</string>
     <string name="currentPasswordHint">Current Password</string>
     <string name="newPasswordHint">New Password</string>
-    <string name="buyProductCharBtn">Purchase Now</string>
+    <string name="buyProductCharBtn">Purchase Now (Coming Soon)</string>
     <string name="emptyFavoriteProduct">Oh, there is no product :(</string>
 
     <!--  Detail Product  -->

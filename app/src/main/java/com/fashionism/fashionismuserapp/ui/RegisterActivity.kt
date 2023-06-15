@@ -3,11 +3,9 @@ package com.fashionism.fashionismuserapp.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.fashionism.fashionismuserapp.MainActivity
 import com.fashionism.fashionismuserapp.R
 import com.fashionism.fashionismuserapp.data.db.LoginDataAccount
 import com.fashionism.fashionismuserapp.data.db.RegisterDataAccount

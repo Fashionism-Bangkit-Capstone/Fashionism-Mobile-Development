@@ -13,7 +13,9 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
     val userLogin: LiveData<LoginResponse> = mainRepository.userLogin
     val userProfile: LiveData<ResponseGetProfile> = mainRepository.userProfile
     val product: LiveData<List<ProductDetail>> = mainRepository.product
+    val isProductFavorite: LiveData<Boolean> = mainRepository.isProductFavorite
     val category: LiveData<List<Category>> = mainRepository.category
+    val productMostLiked: LiveData<List<Product>> = mainRepository.productMostLiked
     val productListByCategory: LiveData<List<Product>> = mainRepository.productListByCategory
     val productDetail: LiveData<Product> = mainRepository.productDetail
     val productFavorite: LiveData<List<Product>> = mainRepository.productFavorite
@@ -61,6 +63,14 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
 
     fun getFavorite(idUser: Int, token: String) {
         mainRepository.getFavoriteProductUser(idUser, token)
+    }
+
+    fun isProductFavoriteByUser(idUser: Int, idProduct: Int, token: String) {
+        mainRepository.isProductFavoriteByUser(idUser, idProduct, token)
+    }
+
+    fun getProductMostYouLike(token: String) {
+        mainRepository.getProductMostYouLike(token)
     }
 
     fun getCategories(token: String) {

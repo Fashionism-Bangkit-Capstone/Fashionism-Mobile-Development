@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.ViewModelProvider
-import com.fashionism.fashionismuserapp.MainActivity
 import com.fashionism.fashionismuserapp.R
 import com.fashionism.fashionismuserapp.data.session.UserSession
 import com.fashionism.fashionismuserapp.data.session.UserSessionViewModel

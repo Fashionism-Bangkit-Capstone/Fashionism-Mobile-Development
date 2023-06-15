@@ -78,6 +78,16 @@ interface APIService {
         @Header("Authorization") token: String
     ): Call<ResponseGetFavorites>
 
+    @GET("favorites/{id}/{productId}")
+    fun isProductFavoriteByUser(
+        @Path("id") userId: Int,
+        @Path("productId") productId: Int,
+        @Header("Authorization") token: String
+    ): Call<ResponseIsProductFavorite>
+
+    @GET("product/most-product-you-like")
+    fun getProductMostYouLike(@Header("Authorization") token: String): Call<ResponseGetProductMostLike>
+
     // v2
     @GET("category")
     fun getAllCategory(@Header("Authorization") token: String): Call<ResponseGetAllCategory>

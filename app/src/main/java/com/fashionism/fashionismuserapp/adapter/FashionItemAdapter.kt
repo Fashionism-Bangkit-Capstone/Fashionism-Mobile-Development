@@ -33,10 +33,10 @@ class FashionItemAdapter(private val list: List<Product>, private val favoritesM
                 .error(R.drawable.ic_launcher_foreground)
                 .fallback(R.drawable.ic_launcher_foreground)
                 .into(binding.ivFashionImage)
+
             binding.tvFashionName.text = data.name
             binding.tvPrice.text = data.price
-            binding.tvStoreName.text = "Bla bla bla"
-
+            binding.tvStoreName.text = data.msme_name
         }
 
     }

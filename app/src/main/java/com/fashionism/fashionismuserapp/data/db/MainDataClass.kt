@@ -111,6 +111,11 @@ data class ResponseFavorite(
     var message: String,
 )
 
+data class ResponseIsProductFavorite(
+    var error: Boolean,
+    var data: Boolean,
+)
+
 data class ResponseGetFavorites(
     var error: Boolean,
     var data: List<Product>? = null,
@@ -149,6 +154,11 @@ data class Category(
     var updatedAt: String,
 )
 
+data class ResponseGetProductMostLike(
+    var error: Boolean,
+    var data: List<Product>
+)
+
 data class ResponseGetAllProductCategory(
     var error: Boolean,
     var data: List<Product>
@@ -172,7 +182,8 @@ data class Product(
     var stock: Int,
     var price: String,
     var product_image: String,
-    var category_id: Int
+    var category_id: Int,
+    var msme_name: String,
 ) : Parcelable
 
 data class ResponseFashionRecommendation(
@@ -186,3 +197,9 @@ data class FashionRecommendation(
     var target_link: List<String>,
 ) : Parcelable
 
+@Parcelize
+data class FashionDataML(
+    var name: String,
+    var description: String,
+    var storeName: String,
+) : Parcelable

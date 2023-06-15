@@ -5,14 +5,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
-import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
-import com.fashionism.fashionismuserapp.MainActivity
 import com.fashionism.fashionismuserapp.R
 import com.fashionism.fashionismuserapp.data.db.LoginDataAccount
 import com.fashionism.fashionismuserapp.data.session.UserSession

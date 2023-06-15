@@ -33,7 +33,7 @@ class FavProductHomeItemAdapter(private val list: List<Product>) :
 
             binding.productFavTitle.text = data.name
             binding.productFavPrice.text = data.price
-            binding.productFavStoreName.text = "Bla bla bla"
+            binding.productFavStoreName.text = data.msme_name
         }
     }
 

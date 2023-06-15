@@ -1,9 +1,10 @@
-package com.fashionism.fashionismuserapp
+package com.fashionism.fashionismuserapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.PopupMenu
 import androidx.navigation.findNavController
+import com.fashionism.fashionismuserapp.R
 import com.fashionism.fashionismuserapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
