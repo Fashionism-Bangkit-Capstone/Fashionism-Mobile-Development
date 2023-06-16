@@ -4,6 +4,7 @@
 Product based capstone project Bangkit 2023
 
 This application is designed for users who want a fashion recommendation application from local products based on their style.
+Application Link: [Fashionism User App](https://drive.google.com/file/d/1xYwQzvmzFEb1S5y_8sLwMI_5fbYZJARK/view?usp=sharing)
 
 ---
 
