@@ -1,0 +1,113 @@
+<resources>
+    <string name="app_name">Fashionism</string>
+
+    <string name="boldSplashScreen">Style with Ease</string>
+    <string name="lightSplashScreen">Confidence with Fashionism</string>
+
+    <!--  For Hint  -->
+    <string name="emailHint">Email ID</string>
+    <string name="passwordHint">Password</string>
+    <string name="confirmPasswordHint">Retype Password</string>
+    <string name="nameHint">Full Name</string>
+    <string name="phoneHint">Phone</string>
+
+
+    <!--  Register  -->
+
+
+    <!--  Login  -->
+    <string name="signInTitle">Sign In</string>
+    <string name="signInDescription">Welcome back. You’ve been missed !</string>
+    <string name="loginButtonDescription">This is a login</string>
+    <string name="backgrounLoginDescription">Just an background</string>
+    <string name="signupText">Don\'t have an account?</string>
+    <string name="emailRequired">Email is required</string>
+    <string name="emailInvalid">Email tidak valid</string>
+    <string name="passwordRequired">Password is required</string>
+    <string name="passwordInvalid">Password minimal 6 karakter</string>
+
+    <!--  Register  -->
+    <string name="registerTitle">Sign Up</string>
+    <string name="backButtonRegisterDescription">For back to Welcome Activity</string>
+    <string name="loginText">Have an account?</string>
+    <string name="nameRequired">Nama harus diisi</string>
+    <string name="phoneRequired">Nomor telepon harus diisi</string>
+    <string name="phoneInvalid">Nomor telepon tidak valid</string>
+    <string name="confirmPasswordRequired">Confirm password is required</string>
+    <string name="confirmPasswordInvalid">Confirm Password must be same with New Password</string>
+    <string name="emailAlreadyExist">Email sudah terdaftar</string>
+    <string name="registerSuccess">You have successfully registered, please login!</string>
+
+    <!--  Home  -->
+    <string name="title_home_bottomNav">Home</string>
+    <string name="title_settings_bottomNav">Settings</string>
+    <string name="bottomNavDesc">For navigate from one to another fragment</string>
+    <string name="searchPlaceholder">search by image</string>
+    <string name="welcomeHome">Welcome back,</string>
+    <string name="productYouLikeHome">Most product you like</string>
+    <string name="userNameHome">Kevin Malik Fajar</string>
+
+    <!--  Profile  -->
+    <string name="logoutAccountProfile">Logout</string>
+    <string name="logoutSuccess">Logout Successfully</string>
+    <string name="profileBtnTitle">Profile</string>
+    <string name="favoritesBtnTitle">My Favorites</string>
+    <string name="changePasswordBtnTitle">Change Password</string>
+
+    <!--  Change Profile  -->
+    <string name="nameTitleChangeProfile">Name</string>
+    <string name="emailTitleChangeProfile">Email</string>
+    <string name="addressTitleChangeProfile">Address</string>
+    <string name="phoneTitleChangeProfile">Phone</string>
+    <string name="editProfileBtnChangeProfile">Edit Profile</string>
+    <string name="chooseOneOption">Choose one of them</string>
+    <string name="saveBtn">Save</string>
+    <string name="cancelBtn">Cancel</string>
+    <string name="cameraOption">Camera</string>
+    <string name="fileManagerOption">Gallery</string>
+
+    <!--  Change Password  -->
+    <string name="oldPasswordRequired">Old Password is required</string>
+
+
+    <!--  Welcome Screen  -->
+    <string name="welcomeTitleText">Discover your Perfect style here !</string>
+    <string name="welcomeDescText">Explore all style of outfit recommendations easily based on your preferences and get the products you want in one touch</string>
+
+    <!--  Save Pop Up  -->
+    <string name="changeConfirm">Change Confirmation</string>
+    <string name="changeConfirmDesc">Are you sure you want to change the data?</string>
+    <string name="changeConfirmYes">Yes</string>
+    <string name="changeConfirmNo">Cancel</string>
+
+    <!--  Loading Pop Up Search Data  -->
+    <string name="titleAwaitData">Identification</string>
+    <string name="descAwaitData">Understanding and Analysis</string>
+
+    <!--  Fashion Cardview  -->
+    <string name="favoriteIconContentDescription">For favorite item in case you like</string>
+
+    <!--  Favorite Item  -->
+    <string name="favoritePageTitle">Favorite</string>
+    <string name="currentPasswordHint">Current Password</string>
+    <string name="newPasswordHint">New Password</string>
+    <string name="buyProductCharBtn">Purchase Now (Coming Soon)</string>
+    <string name="emptyFavoriteProduct">Oh, there is no product :(</string>
+
+    <!--  Detail Product  -->
+    <string name="backButtonDetailContentDescription">For back to previous activity</string>
+    <string name="moreDetailContentDescription">More Button in detail product</string>
+
+    <string name="package_name">com.fashionism.fashionismuserapp</string>
+
+    <!--  Dummy Item  -->
+    <string name="dummy_item_name">Black White Style for Working</string>
+    <string name="dummy_item_price">Rp 200.000</string>
+    <string name="dummy_shop_name">olshop abc</string>
+    <string name="dummy_item_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, quis aliquam nisl nisl eu nisl. Donec euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, quis aliquam nisl nisl eu nisl.</string>
+    <string name="placeholder_search">Similar Result</string>
+
+    <!--  Change Language  -->
+    <string name="language_changing_contentDescription">for language changing</string>
+    <string name="category_changing_contentDescription">for category fashion changing</string>
+</resources>

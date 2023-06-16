@@ -87,7 +87,7 @@ class FavoriteActivity : AppCompatActivity() {
 
         mainViewModel.message.observe(this) { message ->
             if (message == "Anda belum memiliki produk favorit") {
-                binding.llNodataFavorite.visibility = View.VISIBLE
+                binding.llNoDataFavorite.visibility = View.VISIBLE
             } else {
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }

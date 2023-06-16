@@ -49,10 +49,6 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
         mainRepository.changePasswordUser(id, dataPassword, token)
     }
 
-    fun getProducts() {
-        mainRepository.getProductLiked()
-    }
-
     fun addFavorite(product: ItemFavorite, token: String) {
         mainRepository.addProductUserFavorite(product, token)
     }

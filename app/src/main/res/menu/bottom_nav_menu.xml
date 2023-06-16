@@ -6,11 +6,6 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_home_bottomNav" />
 
-<!--    <item-->
-<!--        android:id="@+id/navigation_dashboard"-->
-<!--        android:icon="@drawable/baseline_manage_search_24"-->
-<!--        android:title="@string/title_search_bottomNav" />-->
-
     <item
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/baseline_settings_24"

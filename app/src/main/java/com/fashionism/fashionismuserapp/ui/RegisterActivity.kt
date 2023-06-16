@@ -91,7 +91,7 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
 
-            loginNavigate.setOnClickListener {
+            llLoginNavigate.setOnClickListener {
                 val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                 startActivity(intent)
                 overridePendingTransition(R.anim.slide_up_enter, R.anim.slide_up_exit)

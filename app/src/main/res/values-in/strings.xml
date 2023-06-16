@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Fashionism</string>
+
+    <string name="boldSplashScreen">Tampil Stylish dengan Mudah</string>
+    <string name="lightSplashScreen">Percaya Diri dengan Fashionism</string>
+
+    <!--  For Hint  -->
+    <string name="emailHint">Surel</string>
+    <string name="passwordHint">Kata Sandi</string>
+    <string name="confirmPasswordHint">Ketik Ulang Kata Sandi</string>
+    <string name="nameHint">Nama Lengkap</string>
+    <string name="phoneHint">Telepon</string>
+
+    <!--  Register  -->
+
+
+    <!--  Login  -->
+    <string name="signInTitle">Masuk</string>
+    <string name="signInDescription">Selamat datang kembali. Anda telah dirindukan!</string>
+    <string name="loginButtonDescription">Ini adalah halaman masuk</string>
+    <string name="backgrounLoginDescription">Hanya latar belakang</string>
+    <string name="signupText">Belum punya akun?</string>
+    <string name="emailRequired">Surel diperlukan</string>
+    <string name="emailInvalid">Surel tidak valid</string>
+    <string name="passwordRequired">Kata Sandi diperlukan</string>
+    <string name="passwordInvalid">Kata Sandi minimal 6 karakter</string>
+
+    <!--  Register  -->
+    <string name="registerTitle">Daftar</string>
+    <string name="backButtonRegisterDescription">Untuk kembali ke Halaman Selamat Datang</string>
+    <string name="loginText">Sudah punya akun?</string>
+    <string name="nameRequired">Nama harus diisi</string>
+    <string name="phoneRequired">Nomor telepon harus diisi</string>
+    <string name="phoneInvalid">Nomor telepon tidak valid</string>
+    <string name="confirmPasswordRequired">Konfirmasi kata sandi diperlukan</string>
+    <string name="confirmPasswordInvalid">Konfirmasi Kata Sandi harus sama dengan Kata Sandi Baru</string>
+    <string name="emailAlreadyExist">Surel sudah terdaftar</string>
+    <string name="registerSuccess">Anda telah berhasil mendaftar, silakan masuk!</string>
+
+    <!--  Home  -->
+    <string name="title_home_bottomNav">Beranda</string>
+    <string name="title_settings_bottomNav">Pengaturan</string>
+    <string name="bottomNavDesc">Untuk navigasi dari satu fragmen ke fragmen lainnya</string>
+    <string name="searchPlaceholder">cari berdasarkan gambar</string>
+    <string name="welcomeHome">Selamat kembali,</string>
+    <string name="productYouLikeHome">Produk yang Anda sukai</string>
+    <string name="userNameHome">Kevin Malik Fajar</string>
+
+    <!--  Profile  -->
+    <string name="logoutAccountProfile">Keluar</string>
+    <string name="logoutSuccess">Berhasil Keluar</string>
+    <string name="profileBtnTitle">Profil</string>
+    <string name="favoritesBtnTitle">Favorit Saya</string>
+    <string name="changePasswordBtnTitle">Ubah Kata Sandi</string>
+
+    <!--  Change Profile  -->
+    <string name="nameTitleChangeProfile">Nama</string>
+    <string name="emailTitleChangeProfile">Surel</string>
+    <string name="addressTitleChangeProfile">Alamat</string>
+    <string name="phoneTitleChangeProfile">Telepon</string>
+    <string name="editProfileBtnChangeProfile">Edit Profil</string>
+    <string name="chooseOneOption">Pilih salah satu</string>
+    <string name="saveBtn">Simpan</string>
+    <string name="cancelBtn">Batal</string>
+    <string name="cameraOption">Kamera</string>
+    <string name="fileManagerOption">Pengelola File</string>
+
+    <!--  Change Password  -->
+    <string name="oldPasswordRequired">Kata Sandi Lama diperlukan</string>
+
+
+    <!--  Welcome Screen  -->
+    <string name="welcomeTitleText">Temukan Gaya yang Sempurna di sini!</string>
+    <string name="welcomeDescText">Jelajahi semua gaya rekomendasi pakaian dengan mudah berdasarkan preferensi Anda dan dapatkan produk yang Anda inginkan hanya dengan satu sentuhan</string>
+
+    <!--  Save Pop Up  -->
+    <string name="changeConfirm">Konfirmasi Perubahan</string>
+    <string name="changeConfirmDesc">Apakah Anda yakin ingin mengubah data ini?</string>
+    <string name="changeConfirmYes">Ya</string>
+    <string name="changeConfirmNo">Batal</string>
+
+    <!--  Loading Pop Up Search Data  -->
+    <string name="titleAwaitData">Identifikasi</string>
+    <string name="descAwaitData">Pemahaman dan Analisis</string>
+
+    <!--  Fashion Cardview  -->
+    <string name="favoriteIconContentDescription">Untuk item favorit jika Anda menyukainya</string>
+
+    <!--  Favorite Item  -->
+    <string name="favoritePageTitle">Favorit</string>
+    <string name="currentPasswordHint">Kata Sandi Saat Ini</string>
+    <string name="newPasswordHint">Kata Sandi Baru</string>
+    <string name="buyProductCharBtn">Beli Sekarang (Segera Hadir)</string>
+    <string name="emptyFavoriteProduct">Oh, tidak ada produk :(</string>
+
+    <!--  Detail Product  -->
+    <string name="backButtonDetailContentDescription">Untuk kembali ke aktivitas sebelumnya</string>
+    <string name="moreDetailContentDescription">Tombol Lebih Lanjut pada detail produk</string>
+
+    <string name="package_name">com.fashionism.fashionismuserapp</string>
+
+    <!--  Dummy Item  -->
+    <string name="dummy_item_name">Gaya Hitam Putih untuk Bekerja</string>
+    <string name="dummy_item_price">Rp 200.000</string>
+    <string name="dummy_shop_name">olshop abc</string>
+    <string name="dummy_item_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, quis aliquam nisl nisl eu nisl. Donec euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, quis aliquam nisl nisl eu nisl.</string>
+    <string name="placeholder_search">Hasil Serupa</string>
+
+    <!--  Change Language  -->
+    <string name="language_changing_contentDescription">untuk pergantian bahasa</string>
+    <string name="category_changing_contentDescription">untuk merubah kategori fashion</string>
+
+</resources>

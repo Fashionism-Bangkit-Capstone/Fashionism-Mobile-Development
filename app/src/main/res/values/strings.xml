@@ -3,7 +3,6 @@
 
     <string name="boldSplashScreen">Style with Ease</string>
     <string name="lightSplashScreen">Confidence with Fashionism</string>
-    <string name="loremIpsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus tortor ligula. Suspendisse eget purus at turpis consectetur venenatis. Duis eget commodo eros. Mauris auctor sapien eget sem semper lacinia. Integer urna tellus, gravida eget fringilla vel, dictum ac odio. Praesent finibus orci a ultrices imperdiet. Donec dictum vel mauris eget aliquam. Sed magna dui, pharetra quis erat vitae, consectetur dictum turpis. Aenean accumsan tincidunt justo, a bibendum lorem bibendum vel. Phasellus non velit gravida, efficitur felis quis, tincidunt odio. Fusce enim augue, congue nec hendrerit id, mollis nec dui. Phasellus finibus pharetra hendrerit. Phasellus blandit nibh eget tristique euismod. Nunc finibus sollicitudin mauris, at finibus risus ullamcorper eget. Curabitur ac nunc ac ante ultricies laoreet vitae in arcu. Integer luctus justo sit amet leo mollis, at efficitur justo accumsan. Fusce et nibh id erat gravida egestas ut at velit. Cras porta urna eros, eu ultrices leo pellentesque semper. Aliquam erat leo, efficitur accumsan tristique non, faucibus non elit. Nunc commodo consectetur sem sed porttitor. Aenean ante nulla, iaculis vel erat a, consequat rhoncus diam. Proin tempus imperdiet metus, sit amet tristique lectus pretium non. Cras gravida arcu et ipsum elementum, non sagittis enim luctus. In fermentum dictum pharetra. Integer eget placerat mauris. Phasellus eu pellentesque nulla, vel rutrum odio. Suspendisse nulla nibh, vestibulum eget semper quis, maximus eu justo. Integer maximus, sem sit amet maximus molestie, nulla ipsum sagittis tellus, ac pretium massa est feugiat tortor. Pellentesque blandit odio tellus, ac cursus neque condimentum id. Integer vitae porttitor nisl, in tincidunt nulla. Donec vulputate feugiat velit, non interdum lectus feugiat et. In interdum molestie nisl id blandit. Aenean vel condimentum leo, non sollicitudin nisi. Morbi massa libero, ornare in magna eget, suscipit blandit leo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</string>
 
     <!--  For Hint  -->
     <string name="emailHint">Email ID</string>
@@ -41,16 +40,12 @@
 
     <!--  Home  -->
     <string name="title_home_bottomNav">Home</string>
-    <string name="title_search_bottomNav">Search</string>
     <string name="title_settings_bottomNav">Settings</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
     <string name="bottomNavDesc">For navigate from one to another fragment</string>
     <string name="searchPlaceholder">search by image</string>
     <string name="welcomeHome">Welcome back,</string>
     <string name="productYouLikeHome">Most product you like</string>
     <string name="userNameHome">Kevin Malik Fajar</string>
-    <string name="suggestFashionHome">Suggested for you</string>
 
     <!--  Profile  -->
     <string name="logoutAccountProfile">Logout</string>
@@ -58,7 +53,6 @@
     <string name="profileBtnTitle">Profile</string>
     <string name="favoritesBtnTitle">My Favorites</string>
     <string name="changePasswordBtnTitle">Change Password</string>
-    <string name="helpCenterBtnTitle">Help Center</string>
 
     <!--  Change Profile  -->
     <string name="nameTitleChangeProfile">Name</string>
@@ -70,12 +64,10 @@
     <string name="saveBtn">Save</string>
     <string name="cancelBtn">Cancel</string>
     <string name="cameraOption">Camera</string>
-    <string name="fileManagerOption">File Manager</string>
+    <string name="fileManagerOption">Gallery</string>
 
     <!--  Change Password  -->
-    <string name="currentPasswordTitleChangePassword">Password Successfully Changed</string>
     <string name="oldPasswordRequired">Old Password is required</string>
-    <string name="newPasswordTitleChangePassword">New Password</string>
 
 
     <!--  Welcome Screen  -->
@@ -107,7 +99,6 @@
     <string name="moreDetailContentDescription">More Button in detail product</string>
 
     <string name="package_name">com.fashionism.fashionismuserapp</string>
-    <string name="choose_picture">Choose Picture</string>
 
     <!--  Dummy Item  -->
     <string name="dummy_item_name">Black White Style for Working</string>
@@ -115,4 +106,8 @@
     <string name="dummy_shop_name">olshop abc</string>
     <string name="dummy_item_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, quis aliquam nisl nisl eu nisl. Donec euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, quis aliquam nisl nisl eu nisl.</string>
     <string name="placeholder_search">Similar Result</string>
+
+    <!--  Spinner  -->
+    <string name="language_changing_contentDescription">for language changing</string>
+    <string name="category_changing_contentDescription">for category fashion changing</string>
 </resources>

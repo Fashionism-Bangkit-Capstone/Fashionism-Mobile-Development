@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fashionism.fashionismuserapp.data.api.APIConfig
 import com.fashionism.fashionismuserapp.data.api.APIService
-import com.fashionism.fashionismuserapp.data.api.DummyAPIConfig
 import com.fashionism.fashionismuserapp.data.db.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -245,37 +244,6 @@ class MainRepository(private val apiService: APIService) {
             }
 
             override fun onFailure(call: Call<ResponseIsProductFavorite>, t: Throwable) {
-                _isLoading.value = false
-                _message.value = "Pesan error: " + t.message.toString()
-            }
-
-        })
-    }
-
-    fun getProductLiked() {
-        _isLoading.value = true
-        val apiDummy = DummyAPIConfig.getApiService().getProductLiked()
-        apiDummy.enqueue(object : Callback<List<ProductDetail>> {
-            override fun onResponse(
-                call: Call<List<ProductDetail>>,
-                response: Response<List<ProductDetail>>
-            ) {
-                _isLoading.value = false
-
-                if (response.isSuccessful) {
-                    _product.value = response.body()
-                } else {
-                    when (response.code()) {
-                        401 -> _message.value =
-                            response.message()
-                        408 -> _message.value =
-                            "Koneksi internet anda lambat, silahkan coba lagi"
-                        else -> _message.value = "Pesan error: " + response.message()
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<List<ProductDetail>>, t: Throwable) {
                 _isLoading.value = false
                 _message.value = "Pesan error: " + t.message.toString()
             }

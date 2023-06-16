@@ -1,14 +1,17 @@
 package com.fashionism.fashionismuserapp.ui
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -22,8 +25,6 @@ import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModelFactory
 import com.fashionism.fashionismuserapp.databinding.ActivityChangeProfileBinding
 import com.fashionism.fashionismuserapp.tools.CameraUtils
 import com.fashionism.fashionismuserapp.tools.CameraUtils.startTakePhoto
-import com.fashionism.fashionismuserapp.tools.FileManagerUtils
-import com.fashionism.fashionismuserapp.tools.FileManagerUtils.REQUEST_PICK_IMAGE
 import com.fashionism.fashionismuserapp.tools.Helper.reduceFileImage
 import com.fashionism.fashionismuserapp.tools.Helper.showLoading
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -33,6 +34,8 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 
 class ChangeProfileActivity : AppCompatActivity() {
@@ -141,20 +144,61 @@ class ChangeProfileActivity : AppCompatActivity() {
                 binding.profileImage.setImageBitmap(bitmap)
             }
         }
+    }
 
-        if (requestCode == REQUEST_PICK_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
-            val selectedImg: Uri? = data.data
-            if (selectedImg != null) {
-                val myFile = FileManagerUtils.handleActivityResult(
-                    requestCode = REQUEST_PICK_IMAGE,
-                    resultCode = Activity.RESULT_OK,
-                    data = data,
-                    this
-                )
-                getFile = myFile
-                binding.profileImage.setImageURI(selectedImg)
+    private fun uriToFile(uri: Uri, context: Context): File? {
+        val filePath = uri.path
+        if (filePath != null) {
+            try {
+                val inputStream: InputStream? = uri.let {
+                    context.contentResolver.openInputStream(
+                        it
+                    )
+                }
+                if (inputStream != null) {
+                    val outputFile = File(context.cacheDir, "temp_file")
+                    val outputStream = FileOutputStream(outputFile)
+                    val buffer = ByteArray(4 * 1024)
+                    var read: Int
+                    while (inputStream.read(buffer).also { read = it } != -1) {
+                        outputStream.write(buffer, 0, read)
+                    }
+                    outputStream.flush()
+                    outputStream.close()
+                    inputStream.close()
+                    return outputFile
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
+        return null
+    }
+
+    private val launcherIntentGallery = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val data = result.data
+            binding.profileImage.setImageURI(data?.data)
+            getFile = uriToFile(data?.data!!, this)!!
+            if (getFile != null) {
+                sendImageRecommendation()
+            }
+        }
+    }
+
+
+    private fun startGallery() {
+        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+        launcherIntentGallery.launch(gallery)
+    }
+
+    private fun sendImageRecommendation() {
+        val file = reduceFileImage(getFile!!)
+        val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+        val final = MultipartBody.Part.createFormData("file", file.name, requestImageFile)
+        mainViewModel.getFashionRecommendation(final)
     }
 
     private fun showPopup() {
@@ -174,7 +218,7 @@ class ChangeProfileActivity : AppCompatActivity() {
                     }
                     1 -> {
                         // File Manager option selected
-                        FileManagerUtils.startGallery(this)
+                        startGallery()
                         dialog.dismiss()
                     }
                     2 -> {

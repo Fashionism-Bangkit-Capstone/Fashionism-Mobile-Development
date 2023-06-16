@@ -1,6 +1,8 @@
 package com.fashionism.fashionismuserapp.ui
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.transition.AutoTransition
 import android.transition.Transition
@@ -12,6 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -25,6 +29,8 @@ import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModel
 import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModelFactory
 import com.fashionism.fashionismuserapp.databinding.ActivityDetailFashionBinding
 import com.google.android.material.button.MaterialButton
+import java.io.File
+import java.io.FileOutputStream
 import kotlin.math.roundToInt
 
 class DetailFashionActivity : AppCompatActivity() {
@@ -65,8 +71,8 @@ class DetailFashionActivity : AppCompatActivity() {
         }
 
         if (productId != 0) {
-            userSessionViewModel.getAllUserData().observe(this) { data ->
-                mainViewModel.isProductFavoriteByUser(data.idUser, productId, data.token)
+            userSessionViewModel.getAllUserData().observe(this) { userData ->
+                mainViewModel.isProductFavoriteByUser(userData.idUser, productId, userData.token)
             }
         }
 
@@ -74,9 +80,11 @@ class DetailFashionActivity : AppCompatActivity() {
             this.isFavorite = isFavorite
 
             if (isFavorite) {
-                binding.btnFavoriteProduct.icon = resources.getDrawable(R.drawable.baseline_favorite_24)
+                binding.btnFavoriteProduct.icon =
+                    ContextCompat.getDrawable(this, R.drawable.baseline_favorite_24)
             } else {
-                binding.btnFavoriteProduct.icon = resources.getDrawable(R.drawable.baseline_favorite_border_24)
+                binding.btnFavoriteProduct.icon =
+                    ContextCompat.getDrawable(this, R.drawable.baseline_favorite_border_24)
             }
         }
 
@@ -99,6 +107,7 @@ class DetailFashionActivity : AppCompatActivity() {
 
         gestureDetector = GestureDetectorCompat(this, GestureListener())
         setupClickAndTouch()
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -106,6 +115,33 @@ class DetailFashionActivity : AppCompatActivity() {
         binding.ccDetailFashion.setOnTouchListener { _, event ->
             gestureDetector.onTouchEvent(event)
             true
+        }
+
+        binding.btnShareProduct.setOnClickListener {
+            // Ambil gambar dari ImageView
+            binding.ivProductImage.isDrawingCacheEnabled = true
+            val bitmap = Bitmap.createBitmap(binding.ivProductImage.drawingCache)
+            binding.ivProductImage.isDrawingCacheEnabled = false
+
+            // Simpan gambar ke file cache
+            val cachePath = File(externalCacheDir, "images")
+            cachePath.mkdirs()
+            val file = File(cachePath, "product_image.png")
+            val fileOutputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream)
+            fileOutputStream.close()
+
+            // Bagikan gambar menggunakan Intent
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "image/png"
+            val photoUri =
+                FileProvider.getUriForFile(this, "com.fashionism.fashionismuserapp", file)
+            shareIntent.putExtra(Intent.EXTRA_STREAM, photoUri)
+            shareIntent.putExtra(
+                Intent.EXTRA_TEXT,
+                "Hey, check this out! ${binding.tvDetailNameProduct.text} from ${binding.tvDetailStoreName.text} only for ${binding.tvDetailPriceProduct.text}!"
+            )
+            startActivity(Intent.createChooser(shareIntent, "Share Product"))
         }
 
         binding.minimizeAndFullInformationOutfit.setOnTouchListener { _, event ->
@@ -126,7 +162,8 @@ class DetailFashionActivity : AppCompatActivity() {
                         mainViewModel.deleteFavorite(itemFavorite, data.token)
                     }
                 }
-                binding.btnFavoriteProduct.icon = resources.getDrawable(R.drawable.baseline_favorite_border_24)
+                binding.btnFavoriteProduct.icon =
+                    ContextCompat.getDrawable(this, R.drawable.baseline_favorite_border_24)
             } else {
                 isFavorite = true
                 animateFavoriteIcon(binding.btnFavoriteProduct)
@@ -139,7 +176,8 @@ class DetailFashionActivity : AppCompatActivity() {
                         mainViewModel.addFavorite(itemFavorite, data.token)
                     }
                 }
-                binding.btnFavoriteProduct.icon = resources.getDrawable(R.drawable.baseline_favorite_24)
+                binding.btnFavoriteProduct.icon =
+                    ContextCompat.getDrawable(this, R.drawable.baseline_favorite_24)
             }
         }
 
@@ -149,7 +187,6 @@ class DetailFashionActivity : AppCompatActivity() {
         }
 
     }
-
 
     private fun animateFavoriteIcon(button: MaterialButton) {
         val transition: Transition = TransitionInflater.from(this)
@@ -162,7 +199,7 @@ class DetailFashionActivity : AppCompatActivity() {
         }
 
         TransitionManager.beginDelayedTransition(button.parent as ViewGroup, transition)
-        button.icon = resources.getDrawable(iconResId)
+        button.icon = ContextCompat.getDrawable(this, iconResId)
     }
 
     inner class GestureListener : GestureDetector.SimpleOnGestureListener() {

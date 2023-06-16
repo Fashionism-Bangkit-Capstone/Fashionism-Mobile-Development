@@ -70,7 +70,6 @@
             tools:text="IDR 99.000" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/favoriteBtnItem"
             android:layout_width="22dp"
             android:visibility="gone"
             android:layout_height="22dp"

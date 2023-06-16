@@ -1,14 +1,11 @@
 package com.fashionism.fashionismuserapp.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fashionism.fashionismuserapp.R
 import com.fashionism.fashionismuserapp.data.db.Product
-import com.fashionism.fashionismuserapp.data.db.ProductDetail
-import com.fashionism.fashionismuserapp.data.dummy.DummyData
 import com.fashionism.fashionismuserapp.databinding.ItemFashionBinding
 
 class FashionItemAdapter(private val list: List<Product>, private val favoritesMark: Boolean) :

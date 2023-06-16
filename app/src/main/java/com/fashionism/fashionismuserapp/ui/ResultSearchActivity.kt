@@ -2,23 +2,17 @@ package com.fashionism.fashionismuserapp.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.fashionism.fashionismuserapp.R
 import com.fashionism.fashionismuserapp.data.db.FashionRecommendation
-import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModel
-import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModelFactory
 import com.fashionism.fashionismuserapp.databinding.ActivityResultSearchBinding
 import com.fashionism.fashionismuserapp.tools.FashionData
+import com.fashionism.fashionismuserapp.tools.Helper.shortenText
 
 class ResultSearchActivity : AppCompatActivity() {
     private lateinit var binding: ActivityResultSearchBinding
-
-    private val mainViewModel: MainViewModel by lazy {
-        ViewModelProvider(this, MainViewModelFactory(this))[MainViewModel::class.java]
-    }
 
     private lateinit var resultFashion: FashionRecommendation
     private var data1 = 0
@@ -46,7 +40,7 @@ class ResultSearchActivity : AppCompatActivity() {
         // item 2
         data2 = getRandomIndex()
         usedIndexes.add(data2)
-        binding.tvFashionName.text = FashionData.fashionValue[data2].name
+        binding.tvFashionName.text = shortenText(FashionData.fashionValue[data2].name, 14)
         binding.tvStoreName.text = FashionData.fashionValue[data2].storeName
         binding.tvPrice.text = resultFashion.price_output[1]
         Glide.with(this)
@@ -92,7 +86,8 @@ class ResultSearchActivity : AppCompatActivity() {
     }
 
     private fun getRandomIndex(): Int {
-        val availableIndexes = (0 until FashionData.fashionValue.size).filterNot { usedIndexes.contains(it) }
+        val availableIndexes =
+            (0 until FashionData.fashionValue.size).filterNot { usedIndexes.contains(it) }
         return availableIndexes.random()
     }
 
@@ -108,7 +103,10 @@ class ResultSearchActivity : AppCompatActivity() {
             intent.putExtra("priceRecommendation", resultFashion.price_output[0])
             intent.putExtra("nameRecommendation", FashionData.fashionValue[data1].name)
             intent.putExtra("storeNameRecommendation", FashionData.fashionValue[data1].storeName)
-            intent.putExtra("descriptionRecommendation", FashionData.fashionValue[data1].description)
+            intent.putExtra(
+                "descriptionRecommendation",
+                FashionData.fashionValue[data1].description
+            )
             startActivity(intent)
             overridePendingTransition(R.anim.slidefromright_in, R.anim.slidefromright_out)
         }
@@ -119,7 +117,10 @@ class ResultSearchActivity : AppCompatActivity() {
             intent.putExtra("priceRecommendation", resultFashion.price_output[1])
             intent.putExtra("nameRecommendation", FashionData.fashionValue[data2].name)
             intent.putExtra("storeNameRecommendation", FashionData.fashionValue[data2].storeName)
-            intent.putExtra("descriptionRecommendation", FashionData.fashionValue[data2].description)
+            intent.putExtra(
+                "descriptionRecommendation",
+                FashionData.fashionValue[data2].description
+            )
             startActivity(intent)
             overridePendingTransition(R.anim.slidefromright_in, R.anim.slidefromright_out)
         }
@@ -130,7 +131,10 @@ class ResultSearchActivity : AppCompatActivity() {
             intent.putExtra("priceRecommendation", resultFashion.price_output[2])
             intent.putExtra("nameRecommendation", FashionData.fashionValue[data3].name)
             intent.putExtra("storeNameRecommendation", FashionData.fashionValue[data3].storeName)
-            intent.putExtra("descriptionRecommendation", FashionData.fashionValue[data3].description)
+            intent.putExtra(
+                "descriptionRecommendation",
+                FashionData.fashionValue[data3].description
+            )
             startActivity(intent)
             overridePendingTransition(R.anim.slidefromright_in, R.anim.slidefromright_out)
         }
@@ -141,7 +145,10 @@ class ResultSearchActivity : AppCompatActivity() {
             intent.putExtra("priceRecommendation", resultFashion.price_output[3])
             intent.putExtra("nameRecommendation", FashionData.fashionValue[data4].name)
             intent.putExtra("storeNameRecommendation", FashionData.fashionValue[data4].storeName)
-            intent.putExtra("descriptionRecommendation", FashionData.fashionValue[data4].description)
+            intent.putExtra(
+                "descriptionRecommendation",
+                FashionData.fashionValue[data4].description
+            )
             startActivity(intent)
             overridePendingTransition(R.anim.slidefromright_in, R.anim.slidefromright_out)
         }
@@ -152,7 +159,10 @@ class ResultSearchActivity : AppCompatActivity() {
             intent.putExtra("priceRecommendation", resultFashion.price_output[4])
             intent.putExtra("nameRecommendation", FashionData.fashionValue[data5].name)
             intent.putExtra("storeNameRecommendation", FashionData.fashionValue[data5].storeName)
-            intent.putExtra("descriptionRecommendation", FashionData.fashionValue[data5].description)
+            intent.putExtra(
+                "descriptionRecommendation",
+                FashionData.fashionValue[data5].description
+            )
             startActivity(intent)
             overridePendingTransition(R.anim.slidefromright_in, R.anim.slidefromright_out)
         }

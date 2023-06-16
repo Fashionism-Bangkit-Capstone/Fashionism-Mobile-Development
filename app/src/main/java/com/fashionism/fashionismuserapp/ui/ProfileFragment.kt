@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -18,6 +20,9 @@ import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModel
 import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModelFactory
 import com.fashionism.fashionismuserapp.databinding.FragmentProfileBinding
 import com.fashionism.fashionismuserapp.tools.Helper.showLoading
+import com.fashionism.fashionismuserapp.tools.LanguageUtil.applyLanguage
+import com.fashionism.fashionismuserapp.tools.LanguageUtil.getLanguage
+import com.fashionism.fashionismuserapp.tools.LanguageUtil.setLanguage
 
 class ProfileFragment : Fragment() {
 
@@ -33,8 +38,13 @@ class ProfileFragment : Fragment() {
         )[UserSessionViewModel::class.java]
     }
 
+    private val categoryOption = listOf("English", "Indonesia")
+    private val adapter: ArrayAdapter<String> by lazy {
+        ArrayAdapter(requireContext(), R.layout.item_language, categoryOption)
+    }
+
     private var _binding: FragmentProfileBinding? = null
-    private lateinit var token : String
+    private lateinit var token: String
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -42,7 +52,7 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
+        getLanguage(requireContext())
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -67,6 +77,43 @@ class ProfileFragment : Fragment() {
 
         mainViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             showLoading(isLoading, binding.progressBarProfile)
+        }
+
+        binding.languageChangeSpinner.adapter = adapter
+        val currentLanguage = if (getLanguage(requireContext()) == "en") {
+            "English"
+        } else {
+            "Indonesia"
+        }
+        binding.languageChangeSpinner.setSelection(adapter.getPosition(currentLanguage))
+
+        // Atur listener pada spinner
+        binding.languageChangeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                // Mendapatkan nilai action dari item yang dipilih
+                val selectedAction = parent?.getItemAtPosition(position).toString()
+
+                // Lakukan sesuatu dengan nilai action yang didapatkan
+                if (selectedAction == "English") {
+                    setLanguage(requireContext(), "en")
+                    applyLanguage(requireContext())
+                    // Lakukan tindakan untuk Action 1
+                } else if (selectedAction == "Indonesia") {
+                    setLanguage(requireContext(), "in")
+                    applyLanguage(requireContext())
+                    // Lakukan tindakan untuk Action 2
+                }
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Implementasi jika tidak ada item yang dipilih
+            }
         }
 
         binding.informationAccountBtn.setOnClickListener {
@@ -101,7 +148,11 @@ class ProfileFragment : Fragment() {
 
     private fun logout() {
         userSessionViewModel.clearDataLogin()
-        Toast.makeText(requireContext(), resources.getString(R.string.logoutSuccess), Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            requireContext(),
+            resources.getString(R.string.logoutSuccess),
+            Toast.LENGTH_SHORT
+        ).show()
 
         val intent = Intent(requireContext(), LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)

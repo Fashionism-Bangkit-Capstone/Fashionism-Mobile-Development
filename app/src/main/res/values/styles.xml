@@ -54,9 +54,5 @@
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="SpinnerStyle">
-        <item name="android:background">@drawable/round_radiobutton</item>
-    </style>
-
 
 </resources>

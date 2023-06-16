@@ -1,10 +1,10 @@
 package com.fashionism.fashionismuserapp.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.fashionism.fashionismuserapp.R
 import com.fashionism.fashionismuserapp.data.session.UserSession
@@ -12,6 +12,7 @@ import com.fashionism.fashionismuserapp.data.session.UserSessionViewModel
 import com.fashionism.fashionismuserapp.data.session.UserSessionViewModelFactory
 import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModel
 import com.fashionism.fashionismuserapp.data.viewmodel.MainViewModelFactory
+import com.fashionism.fashionismuserapp.tools.LanguageUtil.applyLanguage
 
 class SplashScreenActivity : AppCompatActivity() {
     private val mainViewModel: MainViewModel by lazy {
@@ -20,11 +21,15 @@ class SplashScreenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        applyLanguage(this)
         setContentView(R.layout.activity_splash_screen)
 
         val pref = UserSession.getInstance(dataStore)
         val loginViewModel =
-            ViewModelProvider(this, UserSessionViewModelFactory(pref))[UserSessionViewModel::class.java]
+            ViewModelProvider(
+                this,
+                UserSessionViewModelFactory(pref)
+            )[UserSessionViewModel::class.java]
 
         mainViewModel.userProfile.observe(this) {
             loginViewModel.saveName(it.data.name)
