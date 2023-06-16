@@ -376,7 +376,6 @@ class AddEditProductActivity : AppCompatActivity(), View.OnClickListener,
                         category_id,
                         imageMultiPart
                     )
-                    showToast(this, "$idType $idCategory")
                     addEditProductViewModel.addEditState.observe(this) {
                         when (it.status) {
                             Status.LOADING -> loadingDialog.showLoading(true)
