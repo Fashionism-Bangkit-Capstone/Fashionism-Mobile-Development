@@ -98,7 +98,6 @@
     <string name="backButtonDetailContentDescription">For back to previous activity</string>
     <string name="moreDetailContentDescription">More Button in detail product</string>
 
-    <string name="package_name">com.fashionism.fashionismuserapp</string>
 
     <!--  Dummy Item  -->
     <string name="dummy_item_name">Black White Style for Working</string>

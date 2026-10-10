@@ -21,7 +21,7 @@ object CameraUtils {
         createCustomTempFile(activity.application).also {
             val photoURI: Uri = FileProvider.getUriForFile(
                 activity,
-                activity.getString(R.string.package_name),
+                activity.packageName,
                 it
             )
 

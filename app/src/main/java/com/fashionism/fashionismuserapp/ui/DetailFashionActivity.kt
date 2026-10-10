@@ -135,7 +135,7 @@ class DetailFashionActivity : AppCompatActivity() {
             val shareIntent = Intent(Intent.ACTION_SEND)
             shareIntent.type = "image/png"
             val photoUri =
-                FileProvider.getUriForFile(this, "com.fashionism.fashionismuserapp", file)
+                FileProvider.getUriForFile(this, packageName, file)
             shareIntent.putExtra(Intent.EXTRA_STREAM, photoUri)
             shareIntent.putExtra(
                 Intent.EXTRA_TEXT,

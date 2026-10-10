@@ -293,7 +293,7 @@ class HomeFragment : Fragment() {
         createCustomTempFile(requireActivity().application).also {
             val photoURI: Uri = FileProvider.getUriForFile(
                 requireContext(),
-                "com.fashionism.fashionismuserapp",
+                requireContext().packageName,
                 it
             )
             currentPhotoPath = it.absolutePath

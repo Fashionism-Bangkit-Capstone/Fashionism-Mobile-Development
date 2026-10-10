@@ -98,7 +98,6 @@
     <string name="backButtonDetailContentDescription">Untuk kembali ke aktivitas sebelumnya</string>
     <string name="moreDetailContentDescription">Tombol Lebih Lanjut pada detail produk</string>
 
-    <string name="package_name">com.fashionism.fashionismuserapp</string>
 
     <!--  Dummy Item  -->
     <string name="dummy_item_name">Gaya Hitam Putih untuk Bekerja</string>

@@ -17,6 +17,25 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    flavorDimensions += "environment"
+    productFlavors {
+        create("staging") {
+            dimension = "environment"
+            applicationIdSuffix = ".staging"
+            versionNameSuffix = "-staging"
+            // TODO: replace with staging server URLs, currently pointing at production
+            buildConfigField("String", "API_URL_V1", "\"http://34.101.95.192/api/v1/\"")
+            buildConfigField("String", "API_URL_V2", "\"http://34.101.42.179/api/v2/\"")
+            buildConfigField("String", "API_URL_ML", "\"http://34.101.232.165:8000/\"")
+        }
+        create("production") {
+            dimension = "environment"
+            buildConfigField("String", "API_URL_V1", "\"http://34.101.95.192/api/v1/\"")
+            buildConfigField("String", "API_URL_V2", "\"http://34.101.42.179/api/v2/\"")
+            buildConfigField("String", "API_URL_ML", "\"http://34.101.232.165:8000/\"")
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -24,7 +43,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "API_URL", "\"http://34.101.95.192/api/v1/\"")
         }
     }
 
