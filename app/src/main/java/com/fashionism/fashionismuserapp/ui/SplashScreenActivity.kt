@@ -1,5 +1,7 @@
 package com.fashionism.fashionismuserapp.ui
 
+import com.fashionism.fashionismuserapp.BuildConfig
+import android.widget.TextView
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -23,6 +25,8 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         applyLanguage(this)
         setContentView(R.layout.activity_splash_screen)
+        findViewById<TextView>(R.id.splashVersion).text =
+            getString(R.string.app_version, BuildConfig.VERSION_NAME)
 
         val pref = UserSession.getInstance(dataStore)
         val loginViewModel =

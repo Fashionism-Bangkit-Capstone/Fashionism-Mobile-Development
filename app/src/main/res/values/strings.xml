@@ -109,4 +109,5 @@
     <!--  Spinner  -->
     <string name="language_changing_contentDescription">for language changing</string>
     <string name="category_changing_contentDescription">for category fashion changing</string>
+    <string name="app_version">Version %1$s</string>
 </resources>

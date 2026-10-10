@@ -110,4 +110,5 @@
     <string name="language_changing_contentDescription">untuk pergantian bahasa</string>
     <string name="category_changing_contentDescription">untuk merubah kategori fashion</string>
 
+    <string name="app_version">Versi %1$s</string>
 </resources>

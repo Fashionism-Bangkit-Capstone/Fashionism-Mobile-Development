@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.SplashScreenActivity">
+    android:fitsSystemWindows="true"
+    tools:context=".ui.splash.SplashScreenActivity">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/splashLogo"
@@ -43,5 +44,18 @@
         app:layout_constraintEnd_toEndOf="@+id/splashTextOne"
         app:layout_constraintStart_toStartOf="@+id/splashTextOne"
         app:layout_constraintTop_toBottomOf="@+id/splashTextOne" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/splashVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/roboto_light"
+        android:textColor="#4C4C6D"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Version 1.0.0-staging" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
