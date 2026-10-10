@@ -1,7 +1,7 @@
 package com.fashionism.fashionismuserapp
 
-import com.fashionism.fashionismuserapp.data.db.LoginResponse
-import com.fashionism.fashionismuserapp.data.db.ResponseGetProfile
+import com.fashionism.fashionismuserapp.data.model.LoginResponse
+import com.fashionism.fashionismuserapp.data.model.ResponseGetProfile
 import com.google.gson.Gson
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull

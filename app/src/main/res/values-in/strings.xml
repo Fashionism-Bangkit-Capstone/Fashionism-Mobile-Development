@@ -112,4 +112,10 @@
 
     <string name="app_version">Versi %1$s</string>
     <string name="camera_unavailable">Tidak ada aplikasi kamera di perangkat ini</string>
+    <string name="loginWrongPassword">Password yang Anda masukkan salah, silakan coba lagi.</string>
+    <string name="loginWrongEmail">Email yang Anda masukkan salah, silakan coba lagi.</string>
+    <string name="error_no_connection">Tidak ada koneksi internet, silakan coba lagi</string>
+    <string name="error_generic">Terjadi kesalahan, silakan coba lagi</string>
+    <string name="profileUpdated">Profil berhasil diubah</string>
+    <string name="passwordChanged">Password berhasil diubah</string>
 </resources>

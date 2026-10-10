@@ -1,6 +1,6 @@
 package com.fashionism.fashionismuserapp.tools
 
-import com.fashionism.fashionismuserapp.data.db.FashionDataML
+import com.fashionism.fashionismuserapp.data.model.FashionDataML
 
 object FashionData {
     val fashionValue = listOf(

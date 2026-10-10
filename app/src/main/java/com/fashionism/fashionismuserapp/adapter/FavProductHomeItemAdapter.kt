@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fashionism.fashionismuserapp.R
-import com.fashionism.fashionismuserapp.data.db.Product
+import com.fashionism.fashionismuserapp.data.model.Product
 import com.fashionism.fashionismuserapp.databinding.ItemFavoriteBinding
 
 class FavProductHomeItemAdapter(private val list: List<Product>) :

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_register"
         android:paddingBottom="25dp"
-        tools:context=".ui.RegisterActivity">
+        tools:context=".ui.auth.RegisterActivity">
 
         <ImageView
             android:id="@+id/btnBackRegister"

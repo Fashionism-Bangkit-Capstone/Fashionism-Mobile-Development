@@ -19,6 +19,7 @@
     </queries>
 
     <application
+        android:name=".FashionismApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -29,31 +30,31 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="37">
         <activity
-            android:name=".ui.ResultSearchActivity"
+            android:name=".ui.home.ResultSearchActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.FavoriteActivity"
+            android:name=".ui.product.FavoriteActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.ChangeProfileActivity"
+            android:name=".ui.profile.ChangeProfileActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.ChangePasswordActivity"
+            android:name=".ui.profile.ChangePasswordActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.WelcomeActivity"
+            android:name=".ui.auth.WelcomeActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.DetailFashionActivity"
+            android:name=".ui.product.DetailFashionActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.SplashScreenActivity"
+            android:name=".ui.splash.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -63,15 +64,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.RegisterActivity"
+            android:name=".ui.auth.RegisterActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.LoginActivity"
+            android:name=".ui.auth.LoginActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 

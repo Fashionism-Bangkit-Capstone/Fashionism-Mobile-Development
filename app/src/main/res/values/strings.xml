@@ -111,4 +111,10 @@
     <string name="category_changing_contentDescription">for category fashion changing</string>
     <string name="app_version">Version %1$s</string>
     <string name="camera_unavailable">No camera app available on this device</string>
+    <string name="loginWrongPassword">The password you entered is incorrect, please try again.</string>
+    <string name="loginWrongEmail">The email you entered is incorrect, please try again.</string>
+    <string name="error_no_connection">No internet connection, please try again</string>
+    <string name="error_generic">Something went wrong, please try again</string>
+    <string name="profileUpdated">Profile updated</string>
+    <string name="passwordChanged">Password changed</string>
 </resources>

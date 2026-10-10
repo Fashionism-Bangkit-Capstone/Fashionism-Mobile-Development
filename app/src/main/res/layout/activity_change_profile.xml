@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="24dp"
-        tools:context=".ui.ChangeProfileActivity">
+        tools:context=".ui.profile.ChangeProfileActivity">
 
         <ImageView
             android:id="@+id/btnBackRegister"

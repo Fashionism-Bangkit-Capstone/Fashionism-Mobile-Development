@@ -4,6 +4,6 @@
 
 # Gson (via Retrofit) maps JSON by field name through reflection, and these models
 # have no @SerializedName, so their fields must not be renamed or removed.
--keep class com.fashionism.fashionismuserapp.data.db.** { *; }
+-keep class com.fashionism.fashionismuserapp.data.model.** { *; }
 
 # Retrofit, OkHttp, Gson, Glide and Lottie ship their own consumer rules.
