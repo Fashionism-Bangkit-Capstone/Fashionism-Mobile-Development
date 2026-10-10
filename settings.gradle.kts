@@ -3,7 +3,6 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
-        maven { url 'https://www.jitpack.io' }
     }
 }
 dependencyResolutionManagement {
@@ -11,8 +10,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://www.jitpack.io' }
+        maven("https://www.jitpack.io")
     }
 }
 rootProject.name = "Fashionism User App"
-include ':app'
+include(":app")
