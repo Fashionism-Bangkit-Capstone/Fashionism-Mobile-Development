@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.view.View
 import androidx.annotation.AnimRes
-import androidx.annotation.ColorInt
 import androidx.core.app.ActivityOptionsCompat
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -55,13 +54,5 @@ fun Activity.finishWithAnim(@AnimRes enter: Int, @AnimRes exit: Int) {
         finish()
         @Suppress("DEPRECATION")
         overridePendingTransition(enter, exit)
-    }
-}
-
-// ponytail: no-op on API 35+ where edge-to-edge is enforced; coloring the status bar there needs insets + a background behind it
-fun Activity.setStatusBarColorCompat(@ColorInt color: Int) {
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-        @Suppress("DEPRECATION")
-        window.statusBarColor = color
     }
 }

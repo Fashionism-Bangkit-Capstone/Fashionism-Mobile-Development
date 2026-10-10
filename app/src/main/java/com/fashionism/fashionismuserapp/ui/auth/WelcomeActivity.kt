@@ -1,7 +1,7 @@
 package com.fashionism.fashionismuserapp.ui.auth
 
 import android.content.Intent
-import com.fashionism.fashionismuserapp.tools.setStatusBarColorCompat
+import com.fashionism.fashionismuserapp.tools.setStatusBarBackground
 import com.fashionism.fashionismuserapp.tools.startActivityWithAnim
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +16,7 @@ class WelcomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setStatusBarColorCompat(ContextCompat.getColor(this, R.color.button_colorbackground))
+        setStatusBarBackground(ContextCompat.getColor(this, R.color.button_colorbackground))
 
         binding.switchOnOff.setOnCheckedChangeListener { _, checked ->
             val gradientBackground = if (checked) {
@@ -32,7 +32,7 @@ class WelcomeActivity : AppCompatActivity() {
                 R.color.welcome_statusbarcolor
             }
 
-            setStatusBarColorCompat(ContextCompat.getColor(this, windowColor))
+            setStatusBarBackground(ContextCompat.getColor(this, windowColor))
 
             // Ubah juga warna teks berdasarkan status switch
             binding.tvSwitchYes.setTextColor(

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- View tags used by tools/SystemBars.kt -->
+    <item name="system_bars_applied" type="id" />
+    <item name="status_bar_color" type="id" />
+</resources>

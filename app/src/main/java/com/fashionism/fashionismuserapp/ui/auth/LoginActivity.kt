@@ -9,7 +9,7 @@ import com.fashionism.fashionismuserapp.R
 import com.fashionism.fashionismuserapp.databinding.ActivityLoginBinding
 import com.fashionism.fashionismuserapp.tools.Helper.showLoading
 import com.fashionism.fashionismuserapp.tools.finishWithAnim
-import com.fashionism.fashionismuserapp.tools.setStatusBarColorCompat
+import com.fashionism.fashionismuserapp.tools.setStatusBarBackground
 import com.fashionism.fashionismuserapp.tools.startActivityWithAnim
 import com.fashionism.fashionismuserapp.ui.common.collectWhenStarted
 import com.fashionism.fashionismuserapp.ui.common.errorText
@@ -27,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        setStatusBarColorCompat(ContextCompat.getColor(this, R.color.login_statusBar))
+        setStatusBarBackground(ContextCompat.getColor(this, R.color.login_statusBar))
 
         setupClickListeners()
 
