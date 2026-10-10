@@ -3,8 +3,8 @@ package com.fashionism.fashionismuserapp.data.repository
 import com.fashionism.fashionismuserapp.data.Result
 import com.fashionism.fashionismuserapp.data.local.UserSession
 import com.fashionism.fashionismuserapp.data.model.FashionRecommendation
-import com.fashionism.fashionismuserapp.data.model.ItemFavorite
-import com.fashionism.fashionismuserapp.data.model.MessageResponse
+import com.fashionism.fashionismuserapp.data.remote.request.ItemFavorite
+import com.fashionism.fashionismuserapp.data.remote.response.MessageResponse
 import com.fashionism.fashionismuserapp.data.model.Product
 import com.fashionism.fashionismuserapp.data.remote.ProductApi
 import com.fashionism.fashionismuserapp.data.remote.RecommendationApi
