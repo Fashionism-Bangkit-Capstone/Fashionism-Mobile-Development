@@ -13,3 +13,8 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Build outputs (release APK/AAB from Android Studio)
+/app/release
+/app/staging
+/app/production
