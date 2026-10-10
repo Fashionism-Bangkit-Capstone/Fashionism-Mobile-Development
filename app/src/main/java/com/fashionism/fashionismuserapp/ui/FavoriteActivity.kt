@@ -1,6 +1,7 @@
 package com.fashionism.fashionismuserapp.ui
 
 import android.content.Intent
+import com.fashionism.fashionismuserapp.tools.finishWithAnim
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -46,8 +47,7 @@ class FavoriteActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnBackFavorite.setOnClickListener {
-            finish()
-            overridePendingTransition(R.anim.slidefromleft_in, R.anim.slidefromleft_out)
+            finishWithAnim(R.anim.slidefromleft_in, R.anim.slidefromleft_out)
         }
 
         rvFavorite = binding.rvFavoriteItem

@@ -1,6 +1,9 @@
 package com.fashionism.fashionismuserapp.ui
 
 import android.annotation.SuppressLint
+import androidx.core.view.drawToBitmap
+import androidx.core.content.IntentCompat
+import com.fashionism.fashionismuserapp.tools.finishWithAnim
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -16,7 +19,6 @@ import android.view.ViewGroup.MarginLayoutParams
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.fashionism.fashionismuserapp.R
@@ -36,7 +38,7 @@ import kotlin.math.roundToInt
 class DetailFashionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailFashionBinding
     private var isExpanded = false
-    private lateinit var gestureDetector: GestureDetectorCompat
+    private lateinit var gestureDetector: GestureDetector
     private var isFavorite = false
     private var productId = 0
 
@@ -55,7 +57,7 @@ class DetailFashionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailFashionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val data = intent.getParcelableExtra<Product>(EXTRA_FASHION_ITEM)
+        val data = IntentCompat.getParcelableExtra(intent, EXTRA_FASHION_ITEM, Product::class.java)
 
         if (data != null) {
             productId = data.id
@@ -105,7 +107,7 @@ class DetailFashionActivity : AppCompatActivity() {
             binding.tvDescriptionProduct.text = descriptionRecommendation
         }
 
-        gestureDetector = GestureDetectorCompat(this, GestureListener())
+        gestureDetector = GestureDetector(this, GestureListener())
         setupClickAndTouch()
 
     }
@@ -119,9 +121,7 @@ class DetailFashionActivity : AppCompatActivity() {
 
         binding.btnShareProduct.setOnClickListener {
             // Ambil gambar dari ImageView
-            binding.ivProductImage.isDrawingCacheEnabled = true
-            val bitmap = Bitmap.createBitmap(binding.ivProductImage.drawingCache)
-            binding.ivProductImage.isDrawingCacheEnabled = false
+            val bitmap = binding.ivProductImage.drawToBitmap()
 
             // Simpan gambar ke file cache
             val cachePath = File(externalCacheDir, "images")
@@ -182,8 +182,7 @@ class DetailFashionActivity : AppCompatActivity() {
         }
 
         binding.backButtonDetailProduct.setOnClickListener {
-            finish()
-            overridePendingTransition(R.anim.slidefromleft_in, R.anim.slidefromleft_out)
+            finishWithAnim(R.anim.slidefromleft_in, R.anim.slidefromleft_out)
         }
 
     }

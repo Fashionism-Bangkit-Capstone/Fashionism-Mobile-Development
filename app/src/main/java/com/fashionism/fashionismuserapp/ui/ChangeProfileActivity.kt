@@ -1,6 +1,7 @@
 package com.fashionism.fashionismuserapp.ui
 
 import android.app.Activity
+import com.fashionism.fashionismuserapp.tools.finishWithAnim
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -120,8 +121,7 @@ class ChangeProfileActivity : AppCompatActivity() {
         }
 
         binding.btnBackRegister.setOnClickListener {
-            finish()
-            overridePendingTransition(R.anim.slidefrombottom_in, R.anim.slidefrombottom_out)
+            finishWithAnim(R.anim.slidefrombottom_in, R.anim.slidefrombottom_out)
         }
 
         binding.saveProfileBtn.setOnClickListener {

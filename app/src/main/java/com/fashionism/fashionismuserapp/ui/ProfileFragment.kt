@@ -1,6 +1,8 @@
 package com.fashionism.fashionismuserapp.ui
 
 import android.content.Intent
+import com.fashionism.fashionismuserapp.tools.setStatusBarColorCompat
+import com.fashionism.fashionismuserapp.tools.startActivityWithAnim
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -56,7 +58,7 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
+        activity?.setStatusBarColorCompat(ContextCompat.getColor(requireContext(), R.color.white))
 
         userSessionViewModel.getToken().observe(viewLifecycleOwner) {
             token = it
@@ -118,20 +120,17 @@ class ProfileFragment : Fragment() {
 
         binding.informationAccountBtn.setOnClickListener {
             val intent = Intent(requireContext(), ChangeProfileActivity::class.java)
-            startActivity(intent)
-            activity?.overridePendingTransition(R.anim.slidefromright_in, R.anim.slidefromright_out)
+            requireContext().startActivityWithAnim(intent, R.anim.slidefromright_in, R.anim.slidefromright_out)
         }
 
         binding.favoriteProfileBtn.setOnClickListener {
             val intent = Intent(requireContext(), FavoriteActivity::class.java)
-            startActivity(intent)
-            activity?.overridePendingTransition(R.anim.slidefromright_in, R.anim.slidefromright_out)
+            requireContext().startActivityWithAnim(intent, R.anim.slidefromright_in, R.anim.slidefromright_out)
         }
 
         binding.changePasswordAccountBtn.setOnClickListener {
             val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
-            startActivity(intent)
-            activity?.overridePendingTransition(R.anim.slidefromright_in, R.anim.slidefromright_out)
+            requireContext().startActivityWithAnim(intent, R.anim.slidefromright_in, R.anim.slidefromright_out)
         }
 
         binding.logoutProfileBtn.setOnClickListener {
@@ -156,7 +155,6 @@ class ProfileFragment : Fragment() {
 
         val intent = Intent(requireContext(), LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
-        activity?.overridePendingTransition(R.anim.slidefromright_in, R.anim.slidefromright_out)
+        requireContext().startActivityWithAnim(intent, R.anim.slidefromright_in, R.anim.slidefromright_out)
     }
 }

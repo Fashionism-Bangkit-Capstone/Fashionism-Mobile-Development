@@ -1,6 +1,9 @@
 package com.fashionism.fashionismuserapp.ui
 
 import android.content.Context
+import com.fashionism.fashionismuserapp.tools.setStatusBarColorCompat
+import com.fashionism.fashionismuserapp.tools.finishWithAnim
+import com.fashionism.fashionismuserapp.tools.startActivityWithAnim
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -37,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupClickListeners()
-        window.statusBarColor = ContextCompat.getColor(this, R.color.login_statusBar)
+        setStatusBarColorCompat(ContextCompat.getColor(this, R.color.login_statusBar))
 
         val userSession = UserSession.getInstance(dataStore)
         val userSessionViewModel =
@@ -50,8 +53,7 @@ class LoginActivity : AppCompatActivity() {
             if (sessionTrue) {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-                overridePendingTransition(R.anim.slidefromright_in, R.anim.slidefromright_out)
+                startActivityWithAnim(intent, R.anim.slidefromright_in, R.anim.slidefromright_out)
             }
         }
 
@@ -102,13 +104,11 @@ class LoginActivity : AppCompatActivity() {
 
             signUpNavigate.setOnClickListener {
                 val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
-                startActivity(intent)
-                overridePendingTransition(R.anim.slide_up_enter, R.anim.slide_up_exit)
+                startActivityWithAnim(intent, R.anim.slide_up_enter, R.anim.slide_up_exit)
             }
 
             backButtonLogin.setOnClickListener {
-                finish()
-                overridePendingTransition(R.anim.slidefromleft_in, R.anim.slidefromleft_out)
+                finishWithAnim(R.anim.slidefromleft_in, R.anim.slidefromleft_out)
             }
         }
     }

@@ -1,6 +1,9 @@
 package com.fashionism.fashionismuserapp.ui
 
 import android.os.Bundle
+import androidx.core.content.IntentCompat
+import com.fashionism.fashionismuserapp.tools.finishWithAnim
+import com.fashionism.fashionismuserapp.tools.startActivityWithAnim
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -27,7 +30,7 @@ class ResultSearchActivity : AppCompatActivity() {
         binding = ActivityResultSearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        resultFashion = intent.getParcelableExtra<FashionRecommendation>("fashionOutput")!!
+        resultFashion = IntentCompat.getParcelableExtra(intent, "fashionOutput", FashionRecommendation::class.java)!!
 
         // item 1
         data1 = getRandomIndex()
@@ -93,8 +96,7 @@ class ResultSearchActivity : AppCompatActivity() {
 
     private fun onActionClick() {
         binding.btnCloseResult.setOnClickListener {
-            finish()
-            overridePendingTransition(R.anim.slidefromleft_in, R.anim.slidefromleft_out)
+            finishWithAnim(R.anim.slidefromleft_in, R.anim.slidefromleft_out)
         }
 
         binding.ivResultSearch.setOnClickListener {
@@ -107,8 +109,7 @@ class ResultSearchActivity : AppCompatActivity() {
                 "descriptionRecommendation",
                 FashionData.fashionValue[data1].description
             )
-            startActivity(intent)
-            overridePendingTransition(R.anim.slidefromright_in, R.anim.slidefromright_out)
+            startActivityWithAnim(intent, R.anim.slidefromright_in, R.anim.slidefromright_out)
         }
 
         binding.CV1.setOnClickListener {
@@ -121,8 +122,7 @@ class ResultSearchActivity : AppCompatActivity() {
                 "descriptionRecommendation",
                 FashionData.fashionValue[data2].description
             )
-            startActivity(intent)
-            overridePendingTransition(R.anim.slidefromright_in, R.anim.slidefromright_out)
+            startActivityWithAnim(intent, R.anim.slidefromright_in, R.anim.slidefromright_out)
         }
 
         binding.CV2.setOnClickListener {
@@ -135,8 +135,7 @@ class ResultSearchActivity : AppCompatActivity() {
                 "descriptionRecommendation",
                 FashionData.fashionValue[data3].description
             )
-            startActivity(intent)
-            overridePendingTransition(R.anim.slidefromright_in, R.anim.slidefromright_out)
+            startActivityWithAnim(intent, R.anim.slidefromright_in, R.anim.slidefromright_out)
         }
 
         binding.CV3.setOnClickListener {
@@ -149,8 +148,7 @@ class ResultSearchActivity : AppCompatActivity() {
                 "descriptionRecommendation",
                 FashionData.fashionValue[data4].description
             )
-            startActivity(intent)
-            overridePendingTransition(R.anim.slidefromright_in, R.anim.slidefromright_out)
+            startActivityWithAnim(intent, R.anim.slidefromright_in, R.anim.slidefromright_out)
         }
 
         binding.CV4.setOnClickListener {
@@ -163,8 +161,7 @@ class ResultSearchActivity : AppCompatActivity() {
                 "descriptionRecommendation",
                 FashionData.fashionValue[data5].description
             )
-            startActivity(intent)
-            overridePendingTransition(R.anim.slidefromright_in, R.anim.slidefromright_out)
+            startActivityWithAnim(intent, R.anim.slidefromright_in, R.anim.slidefromright_out)
         }
     }
 }

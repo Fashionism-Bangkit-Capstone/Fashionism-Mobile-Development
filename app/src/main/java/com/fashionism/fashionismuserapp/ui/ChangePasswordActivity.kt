@@ -1,6 +1,7 @@
 package com.fashionism.fashionismuserapp.ui
 
 import android.os.Bundle
+import com.fashionism.fashionismuserapp.tools.finishWithAnim
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -61,8 +62,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         }
 
         binding.btnBackChangePassword.setOnClickListener {
-            finish()
-            overridePendingTransition(R.anim.slidefromleft_in, R.anim.slidefromleft_out)
+            finishWithAnim(R.anim.slidefromleft_in, R.anim.slidefromleft_out)
         }
 
         binding.saveChangesPassword.setOnClickListener {

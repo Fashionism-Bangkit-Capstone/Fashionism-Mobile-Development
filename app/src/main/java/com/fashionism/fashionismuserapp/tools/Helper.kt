@@ -1,8 +1,15 @@
 package com.fashionism.fashionismuserapp.tools
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.view.View
+import androidx.annotation.AnimRes
+import androidx.annotation.ColorInt
+import androidx.core.app.ActivityOptionsCompat
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -36,4 +43,25 @@ object Helper {
         return "$shortenedText..."
     }
 
+}
+fun Context.startActivityWithAnim(intent: Intent, @AnimRes enter: Int, @AnimRes exit: Int) =
+    startActivity(intent, ActivityOptionsCompat.makeCustomAnimation(this, enter, exit).toBundle())
+
+fun Activity.finishWithAnim(@AnimRes enter: Int, @AnimRes exit: Int) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_CLOSE, enter, exit)
+        finish()
+    } else {
+        finish()
+        @Suppress("DEPRECATION")
+        overridePendingTransition(enter, exit)
+    }
+}
+
+// ponytail: no-op on API 35+ where edge-to-edge is enforced; coloring the status bar there needs insets + a background behind it
+fun Activity.setStatusBarColorCompat(@ColorInt color: Int) {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+        @Suppress("DEPRECATION")
+        window.statusBarColor = color
+    }
 }

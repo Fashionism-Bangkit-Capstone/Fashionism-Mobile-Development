@@ -49,7 +49,7 @@ class FavProductHomeItemAdapter(private val list: List<Product>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = list[position]
         holder.bind(data)
-        holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(list[holder.adapterPosition]) }
+        holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(list[holder.bindingAdapterPosition]) }
     }
 
     override fun getItemCount(): Int {

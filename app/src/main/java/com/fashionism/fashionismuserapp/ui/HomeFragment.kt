@@ -1,6 +1,7 @@
 package com.fashionism.fashionismuserapp.ui
 
 import android.app.Activity.RESULT_OK
+import com.fashionism.fashionismuserapp.tools.startActivityWithAnim
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -240,8 +241,7 @@ class HomeFragment : Fragment() {
     private fun setupListeners() {
         binding.profileAccountNavigate.setOnClickListener {
             val intent = Intent(requireContext(), ChangeProfileActivity::class.java)
-            startActivity(intent)
-            activity?.overridePendingTransition(R.anim.slidefromtop_in, R.anim.slidefromtop_out)
+            requireContext().startActivityWithAnim(intent, R.anim.slidefromtop_in, R.anim.slidefromtop_out)
         }
 
         binding.searchFashionItem.setOnClickListener {
@@ -365,8 +365,7 @@ class HomeFragment : Fragment() {
     private fun showSelectedFashion(fashionItem: Product) {
         val intent = Intent(requireContext(), DetailFashionActivity::class.java)
         intent.putExtra(EXTRA_FASHION_ITEM, fashionItem)
-        startActivity(intent)
-        activity?.overridePendingTransition(R.anim.slidefromright_in, R.anim.slidefromright_out)
+        requireContext().startActivityWithAnim(intent, R.anim.slidefromright_in, R.anim.slidefromright_out)
     }
 
     override fun onDestroyView() {

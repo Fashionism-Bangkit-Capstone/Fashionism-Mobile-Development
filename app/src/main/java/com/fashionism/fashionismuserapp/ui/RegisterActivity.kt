@@ -1,6 +1,8 @@
 package com.fashionism.fashionismuserapp.ui
 
 import android.content.Intent
+import com.fashionism.fashionismuserapp.tools.finishWithAnim
+import com.fashionism.fashionismuserapp.tools.startActivityWithAnim
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
@@ -46,8 +48,7 @@ class RegisterActivity : AppCompatActivity() {
             if (sessionTrue) {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-                overridePendingTransition(R.anim.slidefromright_in, R.anim.slidefromright_out)
+                startActivityWithAnim(intent, R.anim.slidefromright_in, R.anim.slidefromright_out)
             }
         }
 
@@ -93,13 +94,11 @@ class RegisterActivity : AppCompatActivity() {
 
             llLoginNavigate.setOnClickListener {
                 val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-                startActivity(intent)
-                overridePendingTransition(R.anim.slide_up_enter, R.anim.slide_up_exit)
+                startActivityWithAnim(intent, R.anim.slide_up_enter, R.anim.slide_up_exit)
             }
 
             btnBackRegister.setOnClickListener {
-                finish()
-                overridePendingTransition(R.anim.slidefromleft_in, R.anim.slidefromleft_out)
+                finishWithAnim(R.anim.slidefromleft_in, R.anim.slidefromleft_out)
             }
         }
     }
