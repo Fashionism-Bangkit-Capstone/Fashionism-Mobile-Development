@@ -1,5 +1,7 @@
 package com.fashionism.fashionismuserapp.tools
 
+import android.widget.Toast
+import android.content.ActivityNotFoundException
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -27,7 +29,11 @@ object CameraUtils {
 
             currentPhotoPath = it.absolutePath
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-            activity.startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+            try {
+                activity.startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+            } catch (e: ActivityNotFoundException) {
+                Toast.makeText(activity, R.string.camera_unavailable, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

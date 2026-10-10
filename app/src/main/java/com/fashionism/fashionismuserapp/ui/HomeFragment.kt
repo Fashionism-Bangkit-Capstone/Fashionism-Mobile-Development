@@ -1,5 +1,6 @@
 package com.fashionism.fashionismuserapp.ui
 
+import android.content.ActivityNotFoundException
 import android.app.Activity.RESULT_OK
 import com.fashionism.fashionismuserapp.tools.startActivityWithAnim
 import android.app.Dialog
@@ -298,7 +299,11 @@ class HomeFragment : Fragment() {
             )
             currentPhotoPath = it.absolutePath
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-            launcherIntentCamera.launch(intent)
+            try {
+                launcherIntentCamera.launch(intent)
+            } catch (e: ActivityNotFoundException) {
+                Toast.makeText(requireContext(), R.string.camera_unavailable, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

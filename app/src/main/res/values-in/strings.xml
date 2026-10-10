@@ -111,4 +111,5 @@
     <string name="category_changing_contentDescription">untuk merubah kategori fashion</string>
 
     <string name="app_version">Versi %1$s</string>
+    <string name="camera_unavailable">Tidak ada aplikasi kamera di perangkat ini</string>
 </resources>
