@@ -11,23 +11,57 @@ import androidx.annotation.AnimRes
 import androidx.core.app.ActivityOptionsCompat
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileOutputStream
+import kotlin.math.roundToInt
 
 object Helper {
-    fun reduceFileImage(file: File): File {
-        val bitmap = BitmapFactory.decodeFile(file.path)
-        var compressQuality = 100
-        var streamLength: Int
-        do {
-            val bmpStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
-            val bmpPicByteArray = bmpStream.toByteArray()
-            streamLength = bmpPicByteArray.size
-            compressQuality -= 5
-        } while (streamLength > 1000000)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
+    /**
+     * Shrinks a photo in place before upload: scales the long side down to [maxDimension] px,
+     * then lowers JPEG quality until it fits in [maxBytes] (stopping at [MIN_JPEG_QUALITY]).
+     * A file that is not a decodable image is returned untouched.
+     */
+    fun reduceFileImage(file: File, maxBytes: Int = 1_000_000, maxDimension: Int = 1920): File {
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        BitmapFactory.decodeFile(file.path, bounds)
+        val options = BitmapFactory.Options().apply {
+            // Decode already shrunk: a full-size 50 MP photo does not fit in memory
+            inSampleSize = inSampleSizeFor(bounds.outWidth, bounds.outHeight, maxDimension)
+        }
+        val decoded = BitmapFactory.decodeFile(file.path, options) ?: return file
+        val bitmap = decoded.scaledToFit(maxDimension)
+        try {
+            var quality = 95
+            var bytes = bitmap.toJpeg(quality)
+            while (bytes.size > maxBytes && quality > MIN_JPEG_QUALITY) {
+                quality = maxOf(quality - 10, MIN_JPEG_QUALITY)
+                bytes = bitmap.toJpeg(quality)
+            }
+            file.writeBytes(bytes)
+        } finally {
+            bitmap.recycle()
+            decoded.recycle()
+        }
         return file
     }
+
+    /** Largest power of two that still decodes the long side at [maxDimension] px or more. */
+    internal fun inSampleSizeFor(width: Int, height: Int, maxDimension: Int): Int {
+        val longSide = maxOf(width, height)
+        var sampleSize = 1
+        while (longSide / (sampleSize * 2) >= maxDimension) sampleSize *= 2
+        return sampleSize
+    }
+
+    private fun Bitmap.scaledToFit(maxDimension: Int): Bitmap {
+        val longSide = maxOf(width, height)
+        if (longSide <= maxDimension) return this
+        val scale = maxDimension.toFloat() / longSide
+        return Bitmap.createScaledBitmap(this, (width * scale).roundToInt(), (height * scale).roundToInt(), true)
+    }
+
+    private fun Bitmap.toJpeg(quality: Int): ByteArray =
+        ByteArrayOutputStream().also { compress(Bitmap.CompressFormat.JPEG, quality, it) }.toByteArray()
+
+    private const val MIN_JPEG_QUALITY = 40
 
     fun showLoading(isLoading: Boolean, view: View) {
         view.visibility = if (isLoading) View.VISIBLE else View.GONE
