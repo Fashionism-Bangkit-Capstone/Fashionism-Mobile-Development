@@ -10,10 +10,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.alcorp.fashionism_umkm.R
-import com.alcorp.fashionism_umkm.ViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.alcorp.fashionism_umkm.data.remote.response.ProfileData
 import com.alcorp.fashionism_umkm.databinding.FragmentProfileBinding
 import com.alcorp.fashionism_umkm.ui.auth.login.LoginActivity
@@ -36,9 +35,7 @@ class ProfileFragment : Fragment(), View.OnClickListener, SwipeRefreshLayout.OnR
     private lateinit var pref: SharedPreferences
     private lateinit var prefEdit: SharedPreferences.Editor
     private lateinit var profileData: ProfileData
-    private val profileViewModel: ProfileViewModel by viewModels {
-        ViewModelFactory.getInstance(requireActivity())
-    }
+    private val profileViewModel: ProfileViewModel by viewModel()
 
     private val editProfileLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == EDIT_PROFILE_RESULT) loadData()

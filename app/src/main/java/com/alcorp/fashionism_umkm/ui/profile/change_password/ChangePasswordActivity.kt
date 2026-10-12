@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.alcorp.fashionism_umkm.R
-import com.alcorp.fashionism_umkm.ViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.alcorp.fashionism_umkm.databinding.ActivityChangePasswordBinding
 import com.alcorp.fashionism_umkm.utils.Helper.showToast
 import com.alcorp.fashionism_umkm.utils.LoadingDialog
@@ -19,9 +18,7 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityChangePasswordBinding
     private lateinit var loadingDialog: LoadingDialog
-    private val changePasswordViewModel: ChangePasswordViewModel by viewModels {
-        ViewModelFactory.getInstance(this)
-    }
+    private val changePasswordViewModel: ChangePasswordViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -10,9 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.alcorp.fashionism_umkm.R
-import com.alcorp.fashionism_umkm.ViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.alcorp.fashionism_umkm.databinding.FragmentHomeBinding
 import com.alcorp.fashionism_umkm.ui.auth.login.LoginActivity
 import com.alcorp.fashionism_umkm.utils.Helper.showToast
@@ -33,9 +32,7 @@ class HomeFragment : Fragment() {
     private lateinit var loadingDialog: LoadingDialog
     private lateinit var pref: SharedPreferences
     private lateinit var chartArrayList: ArrayList<Entry<*>>
-    private val homeViewModel: HomeViewModel by viewModels {
-        ViewModelFactory.getInstance(requireContext())
-    }
+    private val homeViewModel: HomeViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.alcorp.fashionism_umkm.MainActivity
 import com.alcorp.fashionism_umkm.R
-import com.alcorp.fashionism_umkm.ViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.alcorp.fashionism_umkm.databinding.ActivityLoginBinding
 import com.alcorp.fashionism_umkm.ui.auth.register.RegisterActivity
 import com.alcorp.fashionism_umkm.utils.Helper.checkEmailFormat
@@ -26,9 +25,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var loadingDialog: LoadingDialog
     private lateinit var pref: SharedPreferences
     private lateinit var prefEdit: SharedPreferences.Editor
-    private val loginViewModel: LoginViewModel by viewModels {
-        ViewModelFactory.getInstance(this)
-    }
+    private val loginViewModel: LoginViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

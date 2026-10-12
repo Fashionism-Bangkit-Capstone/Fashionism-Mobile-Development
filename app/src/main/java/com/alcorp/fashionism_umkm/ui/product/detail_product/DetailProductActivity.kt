@@ -3,13 +3,12 @@ package com.alcorp.fashionism_umkm.ui.product.detail_product
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.alcorp.fashionism_umkm.R
-import com.alcorp.fashionism_umkm.ViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.alcorp.fashionism_umkm.data.remote.response.DetailProductData
 import com.alcorp.fashionism_umkm.databinding.ActivityDetailProductBinding
 import com.alcorp.fashionism_umkm.ui.product.add_or_edit_product.AddEditProductActivity
@@ -30,9 +29,7 @@ class DetailProductActivity : AppCompatActivity(), View.OnClickListener,
     private lateinit var loadingDialog: LoadingDialog
     private lateinit var id: String
     private lateinit var detailProductData: DetailProductData
-    private val detailProductViewModel: DetailProductViewModel by viewModels {
-        ViewModelFactory.getInstance(this)
-    }
+    private val detailProductViewModel: DetailProductViewModel by viewModel()
 
     private val editProductLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == PRODUCT_DETAIL_RESULT) {

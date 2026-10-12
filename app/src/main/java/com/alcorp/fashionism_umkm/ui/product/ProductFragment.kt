@@ -13,11 +13,10 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.alcorp.fashionism_umkm.R
-import com.alcorp.fashionism_umkm.ViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.alcorp.fashionism_umkm.data.remote.response.CategoryData
 import com.alcorp.fashionism_umkm.databinding.FragmentProductBinding
 import com.alcorp.fashionism_umkm.ui.product.add_or_edit_product.AddEditProductActivity
@@ -40,12 +39,8 @@ class ProductFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     private lateinit var dialog: Dialog
     private lateinit var loadingDialog: LoadingDialog
-    private val productViewModel: ProductViewModel by viewModels {
-        ViewModelFactory.getInstance(requireActivity())
-    }
-    private val addEditProductViewModel: AddEditProductViewModel by viewModels {
-        ViewModelFactory.getInstance(requireActivity())
-    }
+    private val productViewModel: ProductViewModel by viewModel()
+    private val addEditProductViewModel: AddEditProductViewModel by viewModel()
 
     private val productLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == PRODUCT_LIST_RESULT) loadData()

@@ -3,10 +3,9 @@ package com.alcorp.fashionism_umkm.ui.auth.register
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.alcorp.fashionism_umkm.R
-import com.alcorp.fashionism_umkm.ViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.alcorp.fashionism_umkm.databinding.ActivityRegisterBinding
 import com.alcorp.fashionism_umkm.utils.Helper
 import com.alcorp.fashionism_umkm.utils.Helper.showToast
@@ -19,9 +18,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var loadingDialog: LoadingDialog
-    private val registerViewModel: RegisterViewModel by viewModels {
-        ViewModelFactory.getInstance(this)
-    }
+    private val registerViewModel: RegisterViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

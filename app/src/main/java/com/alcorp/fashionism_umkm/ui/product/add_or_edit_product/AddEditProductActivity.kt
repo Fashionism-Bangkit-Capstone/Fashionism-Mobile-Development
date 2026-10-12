@@ -13,13 +13,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.alcorp.fashionism_umkm.R
-import com.alcorp.fashionism_umkm.ViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.alcorp.fashionism_umkm.data.remote.response.CategoryData
 import com.alcorp.fashionism_umkm.data.remote.response.DetailProductData
 import com.alcorp.fashionism_umkm.databinding.ActivityAddEditProductBinding
@@ -52,9 +51,7 @@ class AddEditProductActivity : AppCompatActivity(), View.OnClickListener,
     private val listCategoryId: ArrayList<String> = ArrayList()
     private lateinit var binding: ActivityAddEditProductBinding
     private lateinit var loadingDialog: LoadingDialog
-    private val addEditProductViewModel: AddEditProductViewModel by viewModels {
-        ViewModelFactory.getInstance(this)
-    }
+    private val addEditProductViewModel: AddEditProductViewModel by viewModel()
 
     private val launcherIntentCameraX = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()

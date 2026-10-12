@@ -50,15 +50,4 @@ class AppRepository(private val apiService: ApiService) {
     fun getTypeList(token: String) = apiService.getTypeList(token)
 
     fun getCategoryList(token: String) = apiService.getCategoryList(token)
-
-    companion object {
-        @Volatile
-        private var instance: AppRepository? = null
-        fun getInstance(
-            apiService: ApiService
-        ): AppRepository =
-            instance ?: synchronized(this) {
-                instance ?: AppRepository(apiService)
-            }.also { instance = it }
-    }
 }

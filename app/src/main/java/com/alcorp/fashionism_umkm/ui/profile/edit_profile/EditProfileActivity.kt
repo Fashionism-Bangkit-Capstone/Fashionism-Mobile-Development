@@ -11,13 +11,12 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.alcorp.fashionism_umkm.R
-import com.alcorp.fashionism_umkm.ViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.alcorp.fashionism_umkm.data.remote.response.ProfileData
 import com.alcorp.fashionism_umkm.databinding.ActivityEditProfileBinding
 import com.alcorp.fashionism_umkm.ui.product.add_or_edit_product.camera.CameraActivity
@@ -42,9 +41,7 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
     private var getFile: File? = null
     private lateinit var binding: ActivityEditProfileBinding
     private lateinit var loadingDialog: LoadingDialog
-    private val editProfileViewModel: EditProfileViewModel by viewModels {
-        ViewModelFactory.getInstance(this)
-    }
+    private val editProfileViewModel: EditProfileViewModel by viewModel()
 
     private val launcherIntentCameraX = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
