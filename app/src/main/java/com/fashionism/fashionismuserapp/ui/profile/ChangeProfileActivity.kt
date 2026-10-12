@@ -2,11 +2,11 @@ package com.fashionism.fashionismuserapp.ui.profile
 
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.bumptech.glide.signature.ObjectKey
 import com.fashionism.fashionismuserapp.R
 import com.fashionism.fashionismuserapp.databinding.ActivityChangeProfileBinding
 import com.fashionism.fashionismuserapp.tools.Helper.showLoading
@@ -32,8 +32,12 @@ class ChangeProfileActivity : AppCompatActivity() {
 
     private val photoPicker = PhotoPicker(this, { this }) { photo ->
         newAvatar = photo
-        binding.profileImage.setImageURI(null) // the picker reuses file paths, so force a reload
-        binding.profileImage.setImageURI(Uri.fromFile(photo))
+        // Glide applies the EXIF rotation on every API level; the signature defeats its cache,
+        // since the picker reuses file paths
+        Glide.with(this)
+            .load(photo)
+            .signature(ObjectKey(photo.lastModified()))
+            .into(binding.profileImage)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
