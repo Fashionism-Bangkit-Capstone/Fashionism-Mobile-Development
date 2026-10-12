@@ -1,10 +1,7 @@
 package com.alcorp.fashionism_umkm.ui.product.add_or_edit_product.camera
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.view.WindowInsets
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -17,6 +14,8 @@ import com.alcorp.fashionism_umkm.databinding.ActivityCameraBinding
 import com.alcorp.fashionism_umkm.ui.product.add_or_edit_product.AddEditProductActivity.Companion.CAMERA_X_RESULT
 import com.alcorp.fashionism_umkm.utils.Helper.showToast
 import com.alcorp.fashionism_umkm.utils.UploadImage.createFile
+import com.alcorp.fashionism_umkm.utils.setupEdgeToEdge
+import com.alcorp.fashionism_umkm.utils.hideStatusBar
 
 class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
@@ -27,6 +26,7 @@ class CameraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupEdgeToEdge(binding.root)
 
         binding.captureImage.setOnClickListener { takePhoto() }
         binding.switchCamera.setOnClickListener {
@@ -100,15 +100,7 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private fun hideSystemUI() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
+        hideStatusBar()
         supportActionBar?.hide()
     }
 }

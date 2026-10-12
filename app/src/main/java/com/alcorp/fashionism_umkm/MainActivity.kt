@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.alcorp.fashionism_umkm.databinding.ActivityMainBinding
 import com.alcorp.fashionism_umkm.ui.auth.login.LoginActivity
+import com.alcorp.fashionism_umkm.utils.setupEdgeToEdge
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupEdgeToEdge(binding.root)
 
         init()
     }

@@ -2,18 +2,17 @@ package com.alcorp.fashionism_umkm.ui.splash
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.WindowInsets
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.alcorp.fashionism_umkm.R
 import com.alcorp.fashionism_umkm.databinding.ActivitySplashBinding
 import com.alcorp.fashionism_umkm.ui.auth.login.LoginActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.alcorp.fashionism_umkm.utils.setupEdgeToEdge
+import com.alcorp.fashionism_umkm.utils.hideStatusBar
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
@@ -24,6 +23,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupEdgeToEdge(binding.root, padTop = false)
 
         init()
     }
@@ -35,15 +35,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun setupToolbar() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
+        hideStatusBar()
         supportActionBar?.hide()
     }
 

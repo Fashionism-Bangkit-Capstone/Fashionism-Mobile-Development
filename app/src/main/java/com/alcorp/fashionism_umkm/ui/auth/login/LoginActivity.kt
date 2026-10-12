@@ -2,10 +2,8 @@ package com.alcorp.fashionism_umkm.ui.auth.login
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -19,6 +17,8 @@ import com.alcorp.fashionism_umkm.utils.Helper.checkEmailFormat
 import com.alcorp.fashionism_umkm.utils.Helper.showToast
 import com.alcorp.fashionism_umkm.utils.LoadingDialog
 import com.alcorp.fashionism_umkm.utils.Status
+import com.alcorp.fashionism_umkm.utils.setupEdgeToEdge
+import com.alcorp.fashionism_umkm.utils.hideStatusBar
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -34,6 +34,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupEdgeToEdge(binding.root, padTop = false)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
         init()
@@ -46,15 +47,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setupToolbar() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
+        hideStatusBar()
         supportActionBar?.hide()
     }
 

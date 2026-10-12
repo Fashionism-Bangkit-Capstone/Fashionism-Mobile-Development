@@ -26,6 +26,7 @@ import com.alcorp.fashionism_umkm.utils.Helper.showToast
 import com.alcorp.fashionism_umkm.utils.LoadingDialog
 import com.alcorp.fashionism_umkm.utils.PrefData
 import com.alcorp.fashionism_umkm.utils.Status
+import androidx.activity.result.contract.ActivityResultContracts
 
 class ProductFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     AdapterView.OnItemSelectedListener {
@@ -44,6 +45,10 @@ class ProductFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     }
     private val addEditProductViewModel: AddEditProductViewModel by viewModels {
         ViewModelFactory.getInstance(requireActivity())
+    }
+
+    private val productLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == PRODUCT_LIST_RESULT) loadData()
     }
 
     override fun onCreateView(
@@ -76,7 +81,7 @@ class ProductFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         binding.toolbar.btnAdd.visibility = View.VISIBLE
         binding.toolbar.btnAdd.setOnClickListener {
             val intent = Intent(requireContext(), AddEditProductActivity::class.java)
-            startActivityForResult(intent, PRODUCT_LIST_RESULT)
+            productLauncher.launch(intent)
         }
     }
 
@@ -202,7 +207,7 @@ class ProductFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                     loadingDialog.showLoading(false)
                     it.data?.let { data ->
                         checkIfFragmentAttached {
-                            val productAdapter = data.data?.let { listProduct -> ProductAdapter(listProduct) }
+                            val productAdapter = data.data?.let { listProduct -> ProductAdapter(listProduct) { productLauncher.launch(it) } }
                             binding.rvProduct.setHasFixedSize(true)
                             binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
                             binding.rvProduct.adapter = productAdapter
@@ -228,7 +233,7 @@ class ProductFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                     loadingDialog.showLoading(false)
                     it.data?.let { data ->
                         checkIfFragmentAttached {
-                            val productAdapter = data.data?.let { listProduct -> ProductAdapter(listProduct) }
+                            val productAdapter = data.data?.let { listProduct -> ProductAdapter(listProduct) { productLauncher.launch(it) } }
                             binding.rvProduct.setHasFixedSize(true)
                             binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
                             binding.rvProduct.adapter = productAdapter
@@ -254,7 +259,7 @@ class ProductFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                     loadingDialog.showLoading(false)
                     it.data?.let { data ->
                         checkIfFragmentAttached {
-                            val productAdapter = data.data?.let { listProduct -> ProductAdapter(listProduct) }
+                            val productAdapter = data.data?.let { listProduct -> ProductAdapter(listProduct) { productLauncher.launch(it) } }
                             binding.rvProduct.setHasFixedSize(true)
                             binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
                             binding.rvProduct.adapter = productAdapter
@@ -278,13 +283,6 @@ class ProductFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     override fun onRefresh() {
         loadData()
         binding.refreshProductList.isRefreshing = false
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == PRODUCT_LIST_RESULT) {
-            loadData()
-        }
     }
 
     private fun checkIfFragmentAttached(operation: Context.() -> Unit) {

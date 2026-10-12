@@ -25,6 +25,7 @@ import com.alcorp.fashionism_umkm.utils.LoadingDialog
 import com.alcorp.fashionism_umkm.utils.PrefData
 import com.alcorp.fashionism_umkm.utils.Status
 import com.bumptech.glide.Glide
+import androidx.activity.result.contract.ActivityResultContracts
 
 class ProfileFragment : Fragment(), View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
@@ -37,6 +38,10 @@ class ProfileFragment : Fragment(), View.OnClickListener, SwipeRefreshLayout.OnR
     private lateinit var profileData: ProfileData
     private val profileViewModel: ProfileViewModel by viewModels {
         ViewModelFactory.getInstance(requireActivity())
+    }
+
+    private val editProfileLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == EDIT_PROFILE_RESULT) loadData()
     }
 
     override fun onCreateView(
@@ -108,7 +113,7 @@ class ProfileFragment : Fragment(), View.OnClickListener, SwipeRefreshLayout.OnR
             binding.btnUpdateProfile -> {
                 val intent = Intent(requireContext(), EditProfileActivity::class.java)
                 intent.putExtra(EXTRA_EDIT_PROFILE, profileData)
-                startActivityForResult(intent, EDIT_PROFILE_RESULT)
+                editProfileLauncher.launch(intent)
             }
             binding.btnChangePassword -> {
                 val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
@@ -140,13 +145,6 @@ class ProfileFragment : Fragment(), View.OnClickListener, SwipeRefreshLayout.OnR
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == EDIT_PROFILE_RESULT) {
-            loadData()
-        }
     }
 
     companion object {

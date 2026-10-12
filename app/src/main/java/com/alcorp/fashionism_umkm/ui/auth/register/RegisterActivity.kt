@@ -1,9 +1,7 @@
 package com.alcorp.fashionism_umkm.ui.auth.register
 
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +12,8 @@ import com.alcorp.fashionism_umkm.utils.Helper
 import com.alcorp.fashionism_umkm.utils.Helper.showToast
 import com.alcorp.fashionism_umkm.utils.LoadingDialog
 import com.alcorp.fashionism_umkm.utils.Status
+import com.alcorp.fashionism_umkm.utils.setupEdgeToEdge
+import com.alcorp.fashionism_umkm.utils.hideStatusBar
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -27,6 +27,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupEdgeToEdge(binding.root, padTop = false)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
         init()
@@ -38,15 +39,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setupToolbar() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
+        hideStatusBar()
         supportActionBar?.hide()
     }
 

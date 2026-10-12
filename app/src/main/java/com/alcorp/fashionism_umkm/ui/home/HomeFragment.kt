@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var loadingDialog: LoadingDialog
     private lateinit var pref: SharedPreferences
-    private lateinit var chartArrayList: ArrayList<Entry>
+    private lateinit var chartArrayList: ArrayList<Entry<*>>
     private val homeViewModel: HomeViewModel by viewModels {
         ViewModelFactory.getInstance(requireContext())
     }

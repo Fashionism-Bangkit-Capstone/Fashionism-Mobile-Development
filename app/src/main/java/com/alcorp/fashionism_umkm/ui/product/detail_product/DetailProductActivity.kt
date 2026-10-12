@@ -19,6 +19,9 @@ import com.alcorp.fashionism_umkm.utils.LoadingDialog
 import com.alcorp.fashionism_umkm.utils.PrefData
 import com.alcorp.fashionism_umkm.utils.Status
 import com.bumptech.glide.Glide
+import com.alcorp.fashionism_umkm.utils.setupEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
+import com.alcorp.fashionism_umkm.ui.product.ProductFragment.Companion.PRODUCT_LIST_RESULT
 
 class DetailProductActivity : AppCompatActivity(), View.OnClickListener,
     SwipeRefreshLayout.OnRefreshListener {
@@ -31,10 +34,18 @@ class DetailProductActivity : AppCompatActivity(), View.OnClickListener,
         ViewModelFactory.getInstance(this)
     }
 
+    private val editProductLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == PRODUCT_DETAIL_RESULT) {
+            loadData()
+            setResult(PRODUCT_LIST_RESULT) // product changed, let the list refresh too
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupEdgeToEdge(binding.root)
 
         init()
     }
@@ -109,6 +120,7 @@ class DetailProductActivity : AppCompatActivity(), View.OnClickListener,
                     loadingDialog.showLoading(false)
                     it.data?.let { data ->
                         showToast(this@DetailProductActivity, data.message.toString())
+                        setResult(PRODUCT_LIST_RESULT)
                         finish()
                     }
                 }
@@ -126,7 +138,7 @@ class DetailProductActivity : AppCompatActivity(), View.OnClickListener,
             binding.btnUpdate -> {
                 val intent = Intent(this, AddEditProductActivity::class.java)
                 intent.putExtra(EXTRA_EDIT_PRODUCT, detailProductData)
-                startActivityForResult(intent, PRODUCT_DETAIL_RESULT)
+                editProductLauncher.launch(intent)
             }
             binding.btnDelete -> {
                 deleteDialog()
@@ -137,13 +149,6 @@ class DetailProductActivity : AppCompatActivity(), View.OnClickListener,
     override fun onRefresh() {
         loadData()
         binding.refreshProductDetail.isRefreshing = false
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == PRODUCT_DETAIL_RESULT) {
-            loadData()
-        }
     }
 
     companion object {

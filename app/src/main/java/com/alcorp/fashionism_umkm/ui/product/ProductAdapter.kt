@@ -1,6 +1,5 @@
 package com.alcorp.fashionism_umkm.ui.product
 
-import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,13 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alcorp.fashionism_umkm.R
 import com.alcorp.fashionism_umkm.data.remote.response.ProductData
 import com.alcorp.fashionism_umkm.databinding.ItemProductBinding
-import com.alcorp.fashionism_umkm.ui.product.ProductFragment.Companion.PRODUCT_LIST_RESULT
 import com.alcorp.fashionism_umkm.ui.product.detail_product.DetailProductActivity
 import com.alcorp.fashionism_umkm.ui.product.detail_product.DetailProductActivity.Companion.EXTRA_DETAIL_PRODUCT
 import com.bumptech.glide.Glide
 
 
-class ProductAdapter(private val listOufit: List<ProductData>): RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+class ProductAdapter(
+    private val listOufit: List<ProductData>,
+    private val onItemClick: (Intent) -> Unit
+): RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = ItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(view)
@@ -36,7 +37,7 @@ class ProductAdapter(private val listOufit: List<ProductData>): RecyclerView.Ada
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailProductActivity::class.java)
                     intent.putExtra(EXTRA_DETAIL_PRODUCT, this.id.toString())
-                    (itemView.context as Activity).startActivityForResult(intent, PRODUCT_LIST_RESULT)
+                    onItemClick(intent)
                 }
             }
         }
